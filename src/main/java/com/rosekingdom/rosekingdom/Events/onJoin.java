@@ -6,6 +6,7 @@ import com.rosekingdom.rosekingdom.RoseKingdom;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,14 +15,19 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class onJoin implements Listener {
 
     private final RoseKingdom plugin;
-    public onJoin(RoseKingdom plugin){
+    public onJoin(RoseKingdom plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent e){
         Player player = e.getPlayer();
-
+        plugin.players++;
+        player.sendPlayerListHeader(Component.text("\nRoseKingdom\n", TextColor.fromHexString("#ff0000")));
+        for(Player p : Bukkit.getServer().getOnlinePlayers()){
+            p.sendPlayerListFooter(Component.text("\nOnline Players: ",TextColor.fromHexString("#ffb415"))
+                        .append(Component.text(plugin.players,TextColor.fromHexString("#2eff31"))));
+        }
         //Join Message
         e.joinMessage(
                 Component.text("[", TextColor.fromHexString("#696969"))
@@ -36,7 +42,7 @@ public class onJoin implements Listener {
         }
 
         //Add player to Database
-        if(!UserTable.exists(plugin.sql.getConnection(), player.getUniqueId())){
+        if(!UserTable.exists(plugin.sql.getConnection(), player.getUniqueId())) {
             UserTable.insert(plugin.sql.getConnection(), player.getName(), player.getUniqueId().toString());
         }
     }
