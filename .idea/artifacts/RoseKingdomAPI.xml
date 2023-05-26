@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RoseKingdomAPI">
+    <output-path>$PROJECT_DIR$/../../../Servers/PluginServer/plugins</output-path>
+    <root id="archive" name="RoseKingdomAPI.jar">
+      <element id="module-output" name="RoseKingdom.main" />
+    </root>
+  </artifact>
+</component>
