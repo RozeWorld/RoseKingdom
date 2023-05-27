@@ -7,6 +7,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,6 +30,11 @@ public class onJoin implements Listener {
             p.sendPlayerListFooter(Component.text("\nOnline Players: ",TextColor.fromHexString("#ffb415"))
                         .append(Component.text(plugin.players,TextColor.fromHexString("#2eff31"))));
         }
+      
+        Bukkit.getOnlinePlayers();
+        for(Player p : Bukkit.getOnlinePlayers())
+            p.sendPlayerListFooter(Component.text("Count: "+ Bukkit.getOnlinePlayers()));
+      
         //Join Message
         e.joinMessage(
                 Component.text("[", TextColor.fromHexString("#696969"))
@@ -45,5 +52,7 @@ public class onJoin implements Listener {
         if(!UserTable.exists(plugin.sql.getConnection(), player.getUniqueId())) {
             UserTable.insert(plugin.sql.getConnection(), player.getName(), player.getUniqueId().toString());
         }
+
+
     }
 }

@@ -40,5 +40,4 @@ public final class RoseKingdom extends JavaPlugin {
         sql.disconnect();
         getLogger().info("Successful shutdown!");
     }
-
 }
