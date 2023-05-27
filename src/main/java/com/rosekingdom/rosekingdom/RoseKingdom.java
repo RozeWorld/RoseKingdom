@@ -3,12 +3,13 @@ package com.rosekingdom.rosekingdom;
 import com.rosekingdom.rosekingdom.Database.Database;
 import com.rosekingdom.rosekingdom.Events.onDead;
 import com.rosekingdom.rosekingdom.Events.onJoin;
+import com.rosekingdom.rosekingdom.Events.onLeave;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
 
 public final class RoseKingdom extends JavaPlugin {
-
+    public static int players=0;
     public Database sql;
     @Override
     public void onEnable() {
@@ -28,6 +29,7 @@ public final class RoseKingdom extends JavaPlugin {
         sql.createDatabaseTables();
 
         getServer().getPluginManager().registerEvents(new onDead(), this);
+        getServer().getPluginManager().registerEvents(new onLeave(), this);
         getServer().getPluginManager().registerEvents(new onJoin(this), this);
         getLogger().info("RoseKindgom Loaded!");
     }
@@ -38,6 +40,4 @@ public final class RoseKingdom extends JavaPlugin {
         sql.disconnect();
         getLogger().info("Successful shutdown!");
     }
-
-
 }
