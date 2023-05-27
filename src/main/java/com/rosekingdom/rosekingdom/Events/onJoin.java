@@ -1,39 +1,27 @@
 package com.rosekingdom.rosekingdom.Events;
 
 import com.rosekingdom.rosekingdom.Database.Database;
-import com.rosekingdom.rosekingdom.Database.Tables.UserTable;
+import com.rosekingdom.rosekingdom.Database.Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Premissions.Teams;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
-
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class onJoin implements Listener {
-
-    private final RoseKingdom plugin;
-    public onJoin(RoseKingdom plugin) {
-        this.plugin = plugin;
-    }
-
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent e){
         Player player = e.getPlayer();
-        plugin.players++;
+        RoseKingdom.players++;
         player.sendPlayerListHeader(Component.text("\nRoseKingdom\n", TextColor.fromHexString("#ff0000")));
         for(Player p : Bukkit.getServer().getOnlinePlayers()){
             p.sendPlayerListFooter(Component.text("\nOnline Players: ",TextColor.fromHexString("#ffb415"))
-                        .append(Component.text(plugin.players,TextColor.fromHexString("#2eff31"))));
+                        .append(Component.text(RoseKingdom.players,TextColor.fromHexString("#2eff31"))));
         }
-      
-        Bukkit.getOnlinePlayers();
-        for(Player p : Bukkit.getOnlinePlayers())
-            p.sendPlayerListFooter(Component.text("Count: "+ Bukkit.getOnlinePlayers()));
       
         //Join Message
         e.joinMessage(
@@ -49,10 +37,8 @@ public class onJoin implements Listener {
         }
 
         //Add player to Database
-        if(!UserTable.exists(plugin.sql.getConnection(), player.getUniqueId())) {
-            UserTable.insert(plugin.sql.getConnection(), player.getName(), player.getUniqueId().toString());
+        if(!UserStatement.exists(Database.getConnection(), player.getUniqueId())) {
+            UserStatement.insert(Database.getConnection(), player.getName(), player.getUniqueId().toString());
         }
-
-
     }
 }

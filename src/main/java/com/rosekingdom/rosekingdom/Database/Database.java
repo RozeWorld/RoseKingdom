@@ -11,24 +11,24 @@ import java.sql.Statement;
 public class Database {
 
     //TODO get credentials from config
-    private String host = "localhost";
-    private String port = "3306";
-    private String database = "test";
-    private String username = "root";
-    private String password = "asdasd";
+    private static String host = "localhost";
+    private static String port = "3306";
+    private static String database = "test";
+    private static String username = "root";
+    private static String password = "asdasd";
 
-    private Connection connection;
+    private static Connection connection;
 
-    public boolean isConnected(){
+    public static boolean isConnected(){
         return (connection != null);
     }
-    public void connect() throws ClassNotFoundException, SQLException{
+    public static void connect() throws ClassNotFoundException, SQLException{
         if(!isConnected()){
             connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
         }
     }
 
-    public void disconnect(){
+    public static void disconnect(){
         if(isConnected()){
             try{
                 connection.close();
@@ -40,15 +40,16 @@ public class Database {
         }
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 
-    public void createDatabaseTables(){
+    public static void createDatabaseTables(){
         try {
             if(isConnected()){
                 Statement statement = connection.createStatement();
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS user(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),name varchar(16),uuid varchar(64))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS user(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),name varchar(16),uuid varchar(64),rk_rank varchar(100))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS ranks(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),rk_rank varchar(100),hasOp bit)");
                 statement.close();
             }
         }catch (SQLException e){

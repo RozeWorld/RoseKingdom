@@ -1,4 +1,6 @@
-package com.rosekingdom.rosekingdom.Database.Tables;
+package com.rosekingdom.rosekingdom.Database.Statements;
+
+import com.rosekingdom.rosekingdom.Database.Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +8,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class UserTable {
+
+public class UserStatement {
+
+    public static void addRank(String uuid, String rank){
+        PreparedStatement ps;
+        try {
+            ps = Database.getConnection().prepareStatement("UPDATE user SET rk_rank=? WHERE uuid=?");
+            ps.setString(1, rank);
+            ps.setString(2, uuid);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void insert(Connection connection, String name, String uuid){
         PreparedStatement ps;
         try {
