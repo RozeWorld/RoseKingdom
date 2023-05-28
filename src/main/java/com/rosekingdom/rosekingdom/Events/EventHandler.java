@@ -9,6 +9,7 @@ public class EventHandler {
         getServer().getPluginManager().registerEvents(new onDead(), plugin);
         getServer().getPluginManager().registerEvents(new onJoin(), plugin);
         getServer().getPluginManager().registerEvents(new onLeave(), plugin);
+        getServer().getPluginManager().registerEvents(new onChatEvent(), plugin);
     }
 
 }

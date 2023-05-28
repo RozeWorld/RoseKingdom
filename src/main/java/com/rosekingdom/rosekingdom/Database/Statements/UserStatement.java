@@ -49,4 +49,17 @@ public class UserStatement {
         }
         return false;
     }
+
+    public static boolean hasRank(String uuid, String rank){
+        try {
+            PreparedStatement ps = Database.getConnection().prepareStatement("SELECT * FROM user WHERE uuid=? AND rk_rank=?");
+            ps.setString(1, uuid);
+            ps.setString(2, rank);
+            ResultSet result = ps.executeQuery();
+            return result.next();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
