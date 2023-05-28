@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom;
 
 import com.rosekingdom.rosekingdom.Database.Database;
+import com.rosekingdom.rosekingdom.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Events.onDead;
 import com.rosekingdom.rosekingdom.Events.onJoin;
 import com.rosekingdom.rosekingdom.Premissions.Teams;
@@ -27,9 +28,7 @@ public final class RoseKingdom extends JavaPlugin {
 
         Database.createDatabaseTables();
 
-        getServer().getPluginManager().registerEvents(new onDead(), this);
-        getServer().getPluginManager().registerEvents(new onJoin(), this);
-        getServer().getPluginManager().registerEvents(new onLeave(), this);
+        EventHandler.events(this);
 
         getLogger().info("RoseKindgom Loaded!");
     }
