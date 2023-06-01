@@ -14,7 +14,7 @@ public class UserStatement {
     public static void addRank(String uuid, String rank){
         PreparedStatement ps;
         try {
-            ps = Database.getConnection().prepareStatement("UPDATE user SET rk_rank=? WHERE uuid=?");
+            ps = Database.getConnection().prepareStatement("UPDATE rk_user SET rk_rank=? WHERE uuid=?");
             ps.setString(1, rank);
             ps.setString(2, uuid);
             ps.executeUpdate();
@@ -27,7 +27,7 @@ public class UserStatement {
     public static void insert(Connection connection, String name, String uuid){
         PreparedStatement ps;
         try {
-            ps = connection.prepareStatement("INSERT INTO user (name, uuid) VALUES (?, ?)");
+            ps = connection.prepareStatement("INSERT INTO rk_user (name, uuid) VALUES (?, ?)");
             ps.setString(1, name);
             ps.setString(2, uuid);
             ps.executeUpdate();
@@ -39,7 +39,7 @@ public class UserStatement {
 
     public static boolean exists(Connection connection, UUID uuid){
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE uuid=?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_user WHERE uuid=?");
             ps.setString(1, uuid.toString());
 
             ResultSet result = ps.executeQuery();
@@ -52,7 +52,7 @@ public class UserStatement {
 
     public static boolean hasRank(String uuid, String rank){
         try {
-            PreparedStatement ps = Database.getConnection().prepareStatement("SELECT * FROM user WHERE uuid=? AND rk_rank=?");
+            PreparedStatement ps = Database.getConnection().prepareStatement("SELECT * FROM rk_user WHERE uuid=? AND rk_rank=?");
             ps.setString(1, uuid);
             ps.setString(2, rank);
             ResultSet result = ps.executeQuery();
@@ -61,5 +61,18 @@ public class UserStatement {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static String getRank(String uuid){
+        try {
+            PreparedStatement ps = Database.getConnection().prepareStatement("SELECT rk_rank FROM rk_user WHERE uuid=?");
+            ps.setString(1, uuid);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getString("rk_rank");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

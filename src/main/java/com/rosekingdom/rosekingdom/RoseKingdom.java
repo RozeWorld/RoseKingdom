@@ -30,6 +30,8 @@ public final class RoseKingdom extends JavaPlugin {
 
         EventHandler.events(this);
 
+        Teams.createTeams();
+
         getLogger().info("RoseKindgom Loaded!");
     }
 
