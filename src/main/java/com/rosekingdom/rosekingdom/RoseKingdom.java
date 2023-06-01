@@ -2,10 +2,6 @@ package com.rosekingdom.rosekingdom;
 
 import com.rosekingdom.rosekingdom.Database.Database;
 import com.rosekingdom.rosekingdom.Events.EventHandler;
-import com.rosekingdom.rosekingdom.Events.onDead;
-import com.rosekingdom.rosekingdom.Events.onJoin;
-import com.rosekingdom.rosekingdom.Premissions.Teams;
-import com.rosekingdom.rosekingdom.Events.onLeave;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
