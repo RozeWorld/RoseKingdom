@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Events;
 
 import com.rosekingdom.rosekingdom.Database.Database;
 import com.rosekingdom.rosekingdom.Database.Statements.UserStatement;
-import com.rosekingdom.rosekingdom.Premissions.Teams;
+import com.rosekingdom.rosekingdom.Items.GuideBook;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -34,6 +34,7 @@ public class onJoin implements Listener {
             player.sendMessage(Component.text("=====================================================\n",TextColor.fromHexString("#f5b431"))
                     .append(Component.text("              Welcome to RoseKingdom!\n",TextColor.fromHexString("#f5b431")))
                     .append(Component.text("=====================================================",TextColor.fromHexString("#f5b431"))));
+            GuideBook.book(player);
         }
 
         //Add player to Database
