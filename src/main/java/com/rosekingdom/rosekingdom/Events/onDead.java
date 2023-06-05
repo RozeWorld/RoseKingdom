@@ -1,14 +1,19 @@
 package com.rosekingdom.rosekingdom.Events;
 
+import com.rosekingdom.rosekingdom.Database.Statements.GraveStatement;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
 
 public class onDead implements Listener {
 
@@ -19,7 +24,7 @@ public class onDead implements Listener {
         player.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
         for(ItemStack i : player.getInventory()){
             if(i!=null) {
-                onRightClick.customInventory.addItem(i);
+                GraveStatement.insert(1, i.serializeAsBytes(), i.getAmount());
             }else continue;
         }
             player.getInventory().clear();

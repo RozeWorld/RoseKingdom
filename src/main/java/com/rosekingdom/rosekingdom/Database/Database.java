@@ -48,8 +48,8 @@ public class Database {
         try {
             if(isConnected()){
                 Statement statement = connection.createStatement();
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS user(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),name varchar(16),uuid varchar(64),rk_rank varchar(100))");
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS ranks(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),rk_rank varchar(100),hasOp bit)");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_user(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),id int,name varchar(16),uuid varchar(64),rk_rank varchar(100),INDEX(id)");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_grave(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),id int,data binary,amount int,INDEX(id)");
                 statement.close();
             }
         }catch (SQLException e){

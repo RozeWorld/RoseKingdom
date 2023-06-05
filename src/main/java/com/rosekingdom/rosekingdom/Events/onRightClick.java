@@ -1,5 +1,6 @@
 package com.rosekingdom.rosekingdom.Events;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -11,14 +12,17 @@ import org.bukkit.inventory.Inventory;
 
 
 public class onRightClick implements  Listener {
-    public static Inventory customInventory = Bukkit.createInventory(null, 45, "Custom Inv");
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onRightClickEvent(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
-        if(event.getRightClicked().getType()== EntityType.ZOMBIE){
+        if(event.getRightClicked().getType()== EntityType.INTERACTION){
             event.setCancelled(true);
-            player.openInventory(customInventory);
+            player.openInventory(createInventory(player));
         }
+    }
+
+    public Inventory createInventory(Player player){
+        return Bukkit.createInventory(null, 45, player.displayName().append(Component.text(" Grave")));
     }
 }
