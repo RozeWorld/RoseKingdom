@@ -27,7 +27,8 @@ public class onDead implements Listener {
                 GraveStatement.insert(1, i.serializeAsBytes(), i.getAmount());
             }else continue;
         }
-            player.getInventory().clear();
-            player.sendMessage(Component.text("You died at ", TextColor.fromHexString("#fcc603")).append(Component.text(loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ(), TextColor.fromHexString("#d60606"))));
-        }
+        player.getInventory().clear();
+        player.sendMessage(Component.text("You died at ", TextColor.fromHexString("#fcc603")).append(Component.text(loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ(), TextColor.fromHexString("#d60606"))));
+        player.getInventory().addItem(ItemStack.deserializeBytes(GraveStatement.getData()));
     }
+}

@@ -34,4 +34,17 @@ public class GraveStatement {
         }
         return null;
     }
+
+    public static byte[] getAmount(){
+        try {
+            PreparedStatement ps = Database.getConnection().prepareStatement("SELECT * FROM rk_grave WHERE id=? LIMIT 1");
+            ps.setInt(1, 1);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getBytes("amount");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
