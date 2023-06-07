@@ -15,10 +15,10 @@ public class onRespawn_test implements Listener {
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e){
         Player player = e.getPlayer();
-        int n = GraveStatement.items(UserStatement.getId(player.getUniqueId()));
+        int n = GraveStatement.items(player,1);
         player.sendMessage(Component.text(n));
-        for(int k = 0; k<n;k++){
-            player.getInventory().addItem(ItemStack.deserializeBytes(GraveStatement.getData(UserStatement.getId(player.getUniqueId()))));
-        }
+//        for(int k = 0; k<n;k++){
+//            player.getInventory().addItem(ItemStack.deserializeBytes(GraveStatement.getData(UserStatement.getId(player.getUniqueId()))));
+//        }
     }
 }
