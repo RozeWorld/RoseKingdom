@@ -33,7 +33,6 @@ public class onGraveClick implements  Listener {
     }
 
 
-    //TODO:get inventory on close and save it if there is any change
     @EventHandler
     public void graveClose(InventoryCloseEvent e){
         Player player = (Player) e.getPlayer();
