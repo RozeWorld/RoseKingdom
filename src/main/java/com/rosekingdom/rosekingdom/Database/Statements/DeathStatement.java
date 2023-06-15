@@ -8,25 +8,31 @@ import org.bukkit.entity.Player;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class DeathStatement extends Database {
 
-    public static void insert(Player player, Location loc){
+    public static void insert(Player player, Location loc, LocalTime time, UUID interaction, UUID grave){
         PreparedStatement ps;
         try {
-            ps = getConnection().prepareStatement("INSERT INTO rk_death(id,numberOfDeaths,x,y,z,dim) VALUES (?,?,?,?,?,?)");
+            ps = getConnection().prepareStatement("INSERT INTO rk_death(id,numberOfDeaths,time,x,y,z,dim,inter_uuid,grave_uuid) VALUES (?,?,?,?,?,?,?,?)");
             ps.setInt(1, UserStatement.getId(player.getUniqueId()));
-            if(!exists(player)){
+            if(exists(player)){
                 ps.setInt(2, getDeaths(player)+1);
             }else{
                 ps.setInt(2, 1);
             }
-            ps.setInt(3, loc.getBlockX());
-            ps.setInt(4, loc.getBlockY());
-            ps.setInt(5, loc.getBlockZ());
-            ps.setString(6, loc.getWorld().getName());
+            ps.setTime(3, Time.valueOf(time));
+            ps.setDouble(5, loc.x());
+            ps.setDouble(6, loc.y());
+            ps.setDouble(7, loc.z());
+            ps.setString(8, loc.getWorld().getName());
+            ps.setString(3, interaction.toString());
+            ps.setString(4, grave.toString());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,6 +51,34 @@ public class DeathStatement extends Database {
         return false;
     }
 
+    public static UUID getInteraction(Player player, int grave_num) {
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM rk_death WHERE id=? AND numberOfDeaths=?");
+            ps.setInt(1, UserStatement.getId(player.getUniqueId()));
+            ps.setInt(2, grave_num);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return UUID.fromString(rs.getString("inter_uuid"));
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static UUID getDisplayGrave(Player player, int grave_num) {
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM rk_death WHERE id=? AND numberOfDeaths=?");
+            ps.setInt(1, UserStatement.getId(player.getUniqueId()));
+            ps.setInt(2, grave_num);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return UUID.fromString(rs.getString("grave_uuid"));
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static int getDeaths(Player player){
         PreparedStatement ps;
         try {
@@ -53,6 +87,51 @@ public class DeathStatement extends Database {
             ResultSet set = ps.executeQuery();
             set.next();
             return set.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static boolean hasDiedOnLocation(Player player, Location loc){
+        PreparedStatement ps;
+        try {
+            ps = getConnection().prepareStatement("SELECT * FROM rk_death WHERE id=? AND x=? AND y=? AND z=?");
+            ps.setInt(1, UserStatement.getId(player.getUniqueId()));
+            ps.setDouble(2, loc.x());
+            ps.setDouble(3, loc.y());
+            ps.setDouble(4, loc.z());
+            ResultSet set = ps.executeQuery();
+            return set.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void deleteDeath(Player player, int num){
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("DELETE FROM rk_death WHERE id=? AND numberOfDeaths=?");
+            ps.setInt(1, UserStatement.getId(player.getUniqueId()));
+            ps.setInt(2, num);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int getGraveNum(Player player, Location loc){
+        PreparedStatement ps;
+        try {
+            ps = getConnection().prepareStatement("SELECT * FROM rk_death WHERE id=? AND x=? AND y=? AND z=?");
+            ps.setInt(1, UserStatement.getId(player.getUniqueId()));
+            ps.setDouble(2, loc.x());
+            ps.setDouble(3, loc.y());
+            ps.setDouble(4, loc.z());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt("numberOfDeaths");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,9 +150,9 @@ public class DeathStatement extends Database {
                 rs.next();
                 locations.add(new Location(
                         Bukkit.getServer().getWorld(rs.getString("dim")),
-                        rs.getInt("x"),
-                        rs.getInt("y"),
-                        rs.getInt("z")
+                        rs.getDouble("x"),
+                        rs.getDouble("y"),
+                        rs.getDouble("z")
                 ));
             }
             return locations;

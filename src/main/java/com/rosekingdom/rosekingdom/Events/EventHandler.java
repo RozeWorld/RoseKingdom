@@ -9,9 +9,8 @@ public class EventHandler {
         getServer().getPluginManager().registerEvents(new onDead(), plugin);
         getServer().getPluginManager().registerEvents(new onJoin(), plugin);
         getServer().getPluginManager().registerEvents(new onLeave(), plugin);
-        getServer().getPluginManager().registerEvents(new onRightClick(), plugin);
+        getServer().getPluginManager().registerEvents(new onGraveClick(), plugin);
         getServer().getPluginManager().registerEvents(new onRespawn_test(), plugin);
-        getServer().getPluginManager().registerEvents(new onInventoryMoveItem(), plugin);
     }
 
 }

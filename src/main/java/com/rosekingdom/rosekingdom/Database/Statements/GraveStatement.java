@@ -1,9 +1,13 @@
 package com.rosekingdom.rosekingdom.Database.Statements;
 
 import com.rosekingdom.rosekingdom.Database.Database;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +24,8 @@ public class GraveStatement extends Database{
             ps = getConnection().prepareStatement("INSERT INTO rk_grave(id, grave_num, data) VALUES (?, ?, ?)");
             ps.setInt(1, id);
             ps.setInt(2, num);
-            ps.setBytes(3, data);
+            Blob blob = new SerialBlob(data);
+            ps.setBlob(3, blob);
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -28,15 +33,57 @@ public class GraveStatement extends Database{
         }
     }
 
-    public static List<ItemStack> getItems(Player player){
+    public static void insertInventory(Player player){
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("INSERT INTO rk_grave(id, grave_num, data) VALUES (?, ?, ?)");
+            ps.setInt(1, UserStatement.getId(player.getUniqueId()));
+            ps.setInt(2, DeathStatement.getDeaths(player));
+            for(ItemStack i : player.getInventory().getContents()) {
+                if (i != null) {
+                    Blob blob = new SerialBlob(i.serializeAsBytes());
+                    ps.setBlob(3, blob);
+                    ps.executeUpdate();
+                }
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void UpdateInventory(Player player,Inventory grave, int grave_num){
+        deleteGrave(UserStatement.getId(player.getUniqueId()), grave_num);
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("INSERT INTO rk_grave(id, grave_num, data) VALUES (?, ?, ?)");
+            ps.setInt(1, UserStatement.getId(player.getUniqueId()));
+            ps.setInt(2, grave_num);
+            for(ItemStack i : grave.getContents()) {
+                if (i != null) {
+                    Blob blob = new SerialBlob(i.serializeAsBytes());
+                    ps.setBlob(3, blob);
+                    ps.executeUpdate();
+                }
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<ItemStack> getItems(Player player, int graveNum){
         List<ItemStack> items = new ArrayList<>();
         try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM rk_grave WHERE id=?");
+            PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM rk_grave WHERE id=? AND grave_num=?");
             ps.setInt(1, UserStatement.getId(player.getUniqueId()));
+            ps.setInt(2, graveNum);
             ResultSet rs = ps.executeQuery();
-            for(int k = 0; k<items(player, 1);k++){
+            for(int k = 0; k<items(player, graveNum);k++){
                 rs.next();
-                items.add(ItemStack.deserializeBytes(rs.getBytes("data")));
+                Blob blob = rs.getBlob("data");
+                int blobLength = (int) blob.length();
+                byte[] blobAsBytes = blob.getBytes(1, blobLength);
+                blob.free();
+                items.add(ItemStack.deserializeBytes(blobAsBytes));
             }
             return items;
         }catch (SQLException e){
@@ -45,10 +92,11 @@ public class GraveStatement extends Database{
         return null;
     }
 
-    public static void removeData(byte[] bytes, int num){
+    public static void removeItem(byte[] bytes, int num){
         try {
-            PreparedStatement ps = getConnection().prepareStatement("DELETE FROM rk_grave WHERE data=? AND grave_num=? LIMIT 1");
-            ps.setBytes(1, bytes);
+            PreparedStatement ps = getConnection().prepareStatement("DELETE FROM rk_grave WHERE data=? AND grave_num=?");
+            Blob blob = new SerialBlob(bytes);
+            ps.setBlob(1, blob);
             ps.setInt(2, num);
             ps.executeUpdate();
         }catch (SQLException e){
