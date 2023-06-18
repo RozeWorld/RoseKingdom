@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Commands.Manager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -10,6 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandManager implements CommandExecutor {
+    Plugin plugin;
+    public CommandManager(Plugin plugin){
+        this.plugin = plugin;
+    }
+
+
     ArrayList<CommandRK> commands;
 
     public ArrayList<CommandRK> getCommands() {
