@@ -19,7 +19,7 @@ public class DeathStatement extends Database {
     public static void insert(Player player, Location loc, LocalTime time, UUID interaction, UUID grave){
         PreparedStatement ps;
         try {
-            ps = getConnection().prepareStatement("INSERT INTO rk_death(id,numberOfDeaths,time,x,y,z,dim,inter_uuid,grave_uuid) VALUES (?,?,?,?,?,?,?,?)");
+            ps = getConnection().prepareStatement("INSERT INTO rk_death(id,numberOfDeaths,time,x,y,z,dim,inter_uuid,grave_uuid) VALUES (?,?,?,?,?,?,?,?,?)");
             ps.setInt(1, UserStatement.getId(player.getUniqueId()));
             if(exists(player)){
                 ps.setInt(2, getDeaths(player)+1);
@@ -27,12 +27,12 @@ public class DeathStatement extends Database {
                 ps.setInt(2, 1);
             }
             ps.setTime(3, Time.valueOf(time));
-            ps.setDouble(5, loc.x());
-            ps.setDouble(6, loc.y());
-            ps.setDouble(7, loc.z());
-            ps.setString(8, loc.getWorld().getName());
-            ps.setString(3, interaction.toString());
-            ps.setString(4, grave.toString());
+            ps.setDouble(4, loc.x());
+            ps.setDouble(5, loc.y());
+            ps.setDouble(6, loc.z());
+            ps.setString(7, loc.getWorld().getName());
+            ps.setString(8, interaction.toString());
+            ps.setString(9, grave.toString());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

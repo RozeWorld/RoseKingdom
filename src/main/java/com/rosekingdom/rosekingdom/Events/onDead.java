@@ -36,12 +36,13 @@ public class onDead implements Listener {
             return;
         }
 
-        ItemStack item = new ItemStack(Material.COBBLESTONE);
+        ItemStack item = new ItemStack(Material.PAPER);
         ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(1000);
+        meta.setCustomModelData(5);
         item.setItemMeta(meta);
         ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(loc.toCenterLocation(), EntityType.ITEM_DISPLAY);
         display.setItemStack(item);
+        display.setRotation(player.getBodyYaw(), 0);
         Interaction interaction = (Interaction) e.getPlayer().getWorld().spawnEntity(loc, EntityType.INTERACTION);
 
         DeathStatement.insert(player, loc, LocalTime.now(),interaction.getUniqueId(), display.getUniqueId());
