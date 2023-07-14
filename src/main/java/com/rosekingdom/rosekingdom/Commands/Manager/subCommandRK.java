@@ -17,9 +17,14 @@ public abstract class subCommandRK {
         }
         aliases.put(aliases.size()+1, alias);
     }
+
+    public String getName(){
+        return aliases.get(1);
+    }
+
     public void addSubCommand(subCommandRK subCommand){
         subCommands.put(subCommands.size()+1, subCommand);
     }
 
-    public abstract void execute(CommandSender sender, String[] args);
+    public abstract void executeSub(CommandSender sender, String[] args);
 }

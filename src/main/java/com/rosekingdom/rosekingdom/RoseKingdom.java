@@ -1,5 +1,6 @@
 package com.rosekingdom.rosekingdom;
 
+import com.rosekingdom.rosekingdom.Commands.Manager.CommandManager;
 import com.rosekingdom.rosekingdom.Database.Database;
 import com.rosekingdom.rosekingdom.Events.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +12,8 @@ public final class RoseKingdom extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("RoseKindgom Started Loading!");
+        new CommandManager(this);
+
 
         try {
             Database.connect();
