@@ -10,3 +10,6 @@ commands:
   test:
     description: test command
     usage: /<command>
+    aliases:
+      - t
+      - try

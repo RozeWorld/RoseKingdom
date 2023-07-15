@@ -1,31 +1,41 @@
 package com.rosekingdom.rosekingdom.Commands.Manager;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public abstract class CommandRK {
-    public HashMap<Integer, String> aliases = new HashMap<>();
-    public HashMap<Integer, subCommandRK> subCommands = new HashMap<>();
+    private final ArrayList<String> aliases = new ArrayList<>();
+    private final ArrayList<subCommandRK> subCommands = new ArrayList<>();
 
     public void setName(String name) {
-        aliases.put(1, name);
+        aliases.add(name);
+    }
+    public ArrayList<subCommandRK> getSubCommands() {
+        return subCommands;
     }
 
     public void addAlias(String alias) {
         if (aliases.size() == 0) {
             throw new RuntimeException("Missing command name!");
         }
-        aliases.put(aliases.size() + 1, alias);
+        aliases.add(alias);
+    }
+
+    public ArrayList<String> getAliases() {
+        return aliases;
     }
 
     public String getName() {
         return aliases.get(1);
     }
 
+    public boolean hasSubCommands(){
+        return subCommands.size() > 0;
+    }
+
     public void addSubCommand(subCommandRK subCommand) {
-        subCommands.put(subCommands.size() + 1, subCommand);
+        subCommands.add(subCommand);
     }
 
     public abstract void execute(CommandSender sender, String[] args);

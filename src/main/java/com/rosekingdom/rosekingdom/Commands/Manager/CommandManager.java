@@ -1,16 +1,14 @@
 package com.rosekingdom.rosekingdom.Commands.Manager;
 
-import com.rosekingdom.rosekingdom.Commands.test;
+import com.rosekingdom.rosekingdom.Commands.tests.test;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class CommandManager implements CommandExecutor {
@@ -49,10 +47,34 @@ public class CommandManager implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        for(CommandRK rk : getCommands()){
-            rk.execute(sender, args);
-            return true;
+        try {
+            for (CommandRK rk : getCommands()) {
+                if(args.length > 0 && rk.hasSubCommands()){
+                    subCommandManager(sender, args, rk.getSubCommands());
+                    return true;
+                }
+                rk.execute(sender, args);
+                return true;
+            }
+        }catch (Exception e){
+            sender.sendMessage(Component.text("Something have gone wrong!"));
+            e.printStackTrace();
         }
         return false;
+    }
+
+    private void subCommandManager(CommandSender sender, String[] args, ArrayList<subCommandRK> sub){
+        for(subCommandRK rk : sub){
+            for(int arg = 0; arg < args.length; arg++){
+                for(String alias : rk.getAliases()) {
+                    if ((args[arg].equals(alias) && rk.correctArg(arg)) && arg == args.length - 1) {
+                        rk.executeSub(sender, args);
+                        return;
+                    } else if ((args[arg].equals(alias) && rk.correctArg(arg)) && rk.hasSubCommands()) {
+                        subCommandManager(sender, args, rk.getSubCommands());
+                    }
+                }
+            }
+        }
     }
 }

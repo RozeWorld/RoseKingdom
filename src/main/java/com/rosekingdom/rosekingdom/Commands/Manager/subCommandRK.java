@@ -2,20 +2,29 @@ package com.rosekingdom.rosekingdom.Commands.Manager;
 
 import org.bukkit.command.CommandSender;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public abstract class subCommandRK {
-    public HashMap<Integer, String> aliases;
-    public HashMap<Integer, subCommandRK> subCommands;
+    private final ArrayList<String> aliases = new ArrayList<>();
+    private final ArrayList<subCommandRK> subCommands = new ArrayList<>();
+
+    public int subCommandArg;
+    public subCommandRK(int arg){
+        subCommandArg = arg;
+    }
 
     public void setName(String name){
-        aliases.put(1, name);
+        aliases.add(name);
     }
     public void addAlias(String alias){
         if(aliases.size()==0){
             throw new RuntimeException("Missing command name!");
         }
-        aliases.put(aliases.size()+1, alias);
+        aliases.add(alias);
+    }
+
+    public ArrayList<String> getAliases(){
+        return aliases;
     }
 
     public String getName(){
@@ -23,8 +32,19 @@ public abstract class subCommandRK {
     }
 
     public void addSubCommand(subCommandRK subCommand){
-        subCommands.put(subCommands.size()+1, subCommand);
+        subCommands.add(subCommand);
+    }
+    public boolean hasSubCommands(){
+        return subCommands.size() > 0;
     }
 
     public abstract void executeSub(CommandSender sender, String[] args);
+
+    public boolean correctArg(int arg) {
+        return subCommandArg == arg;
+    }
+
+    public ArrayList<subCommandRK> getSubCommands() {
+        return subCommands;
+    }
 }
