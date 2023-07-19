@@ -13,3 +13,5 @@ commands:
     aliases:
       - t
       - try
+  testtwo:
+    description: test two

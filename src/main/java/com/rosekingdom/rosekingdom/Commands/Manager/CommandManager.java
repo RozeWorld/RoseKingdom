@@ -1,19 +1,23 @@
 package com.rosekingdom.rosekingdom.Commands.Manager;
 
 import com.rosekingdom.rosekingdom.Commands.tests.test;
+import com.rosekingdom.rosekingdom.Commands.tests.testtwo;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class CommandManager implements CommandExecutor {
+public class CommandManager implements TabExecutor {
     JavaPlugin plugin;
-    ArrayList<CommandRK> commands;
+    List<CommandRK> commands;
+    List<String> tabComplete;
     public CommandManager(JavaPlugin plugin){
         this.plugin = plugin;
         commands = new ArrayList<>();
@@ -22,10 +26,11 @@ public class CommandManager implements CommandExecutor {
     }
 
     private void commandList(){
+        addCommand(new testtwo());
         addCommand(new test());
     }
 
-    public ArrayList<CommandRK> getCommands() {
+    public List<CommandRK> getCommands() {
         return commands;
     }
 
@@ -49,12 +54,14 @@ public class CommandManager implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         try {
             for (CommandRK rk : getCommands()) {
-                if(args.length > 0 && rk.hasSubCommands()){
-                    subCommandManager(sender, args, rk.getSubCommands());
+                if(label.equals(rk.getName().toLowerCase())) {
+                    if (args.length > 0 && rk.hasSubCommands()) {
+                        subCommandManager(sender, args, rk.getSubCommands());
+                        return true;
+                    }
+                    rk.execute(sender, args);
                     return true;
                 }
-                rk.execute(sender, args);
-                return true;
             }
         }catch (Exception e){
             sender.sendMessage(Component.text("Something have gone wrong!"));
@@ -63,7 +70,7 @@ public class CommandManager implements CommandExecutor {
         return false;
     }
 
-    private void subCommandManager(CommandSender sender, String[] args, ArrayList<subCommandRK> sub){
+    private void subCommandManager(CommandSender sender, String[] args, List<subCommandRK> sub){
         for(subCommandRK rk : sub){
             for(int arg = 0; arg < args.length; arg++){
                 for(String alias : rk.getAliases()) {
@@ -76,5 +83,15 @@ public class CommandManager implements CommandExecutor {
                 }
             }
         }
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        for(CommandRK rk : getCommands()){
+            if(label.equals(rk.getName().toLowerCase())){
+                return rk.tabComplete(sender,args);
+            }
+        }
+        return null;
     }
 }

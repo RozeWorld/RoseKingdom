@@ -3,15 +3,16 @@ package com.rosekingdom.rosekingdom.Commands.Manager;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class CommandRK {
-    private final ArrayList<String> aliases = new ArrayList<>();
-    private final ArrayList<subCommandRK> subCommands = new ArrayList<>();
+    private final List<String> aliases = new ArrayList<>();
+    private final List<subCommandRK> subCommands = new ArrayList<>();
 
     public void setName(String name) {
         aliases.add(name);
     }
-    public ArrayList<subCommandRK> getSubCommands() {
+    public List<subCommandRK> getSubCommands() {
         return subCommands;
     }
 
@@ -22,12 +23,12 @@ public abstract class CommandRK {
         aliases.add(alias);
     }
 
-    public ArrayList<String> getAliases() {
+    public List<String> getAliases() {
         return aliases;
     }
 
     public String getName() {
-        return aliases.get(1);
+        return aliases.get(0);
     }
 
     public boolean hasSubCommands(){
@@ -39,4 +40,5 @@ public abstract class CommandRK {
     }
 
     public abstract void execute(CommandSender sender, String[] args);
+    public abstract List<String> tabComplete(CommandSender sender, String[] args);
 }
