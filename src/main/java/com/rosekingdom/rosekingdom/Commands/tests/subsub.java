@@ -4,6 +4,8 @@ import com.rosekingdom.rosekingdom.Commands.Manager.subCommandRK;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
+import java.util.List;
+
 public class subsub extends subCommandRK {
 
     public subsub(int arg){
@@ -14,5 +16,10 @@ public class subsub extends subCommandRK {
     @Override
     public void executeSub(CommandSender sender, String[] args) {
         sender.sendMessage(Component.text("I'm the sub sub command from the first sub command!"));
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        return null;
     }
 }
