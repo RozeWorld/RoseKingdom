@@ -7,8 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CoordinatesShare extends CommandRK {
@@ -37,6 +37,12 @@ public class CoordinatesShare extends CommandRK {
                 for (Player players : Bukkit.getOnlinePlayers()) {
                     onlinePlayers.add(players.getName());
                 }
+                if(args[0].equals(player.getName())){
+                    player.sendMessage(Component.text(
+                            "Your coordinates are: "
+                    ).append(Component.text(xyz)));
+                    return;
+                }
                 if (onlinePlayers.contains(args[0])) {
                     Bukkit.getPlayer(args[0]).sendMessage(Component.text(player.getName())
                             .append(Component.text("'s current coordinates: "))
@@ -46,6 +52,7 @@ public class CoordinatesShare extends CommandRK {
                 }
                 if (args[0].equals("all")) {
                     for (Player players : Bukkit.getOnlinePlayers()) {
+                        if(player.getName().equals(players.getName())) continue;
                         players.sendMessage(Component.text(player.getName())
                                 .append(Component.text("'s current coordinates: "))
                                 .append(Component.text(xyz))
@@ -60,6 +67,14 @@ public class CoordinatesShare extends CommandRK {
 
     @Override
     public List<String> tabComplete(CommandSender sender, String[] args) {
+        List<String> sgt = new ArrayList<>();
+        if(args.length == 1){
+            for(Player player : Bukkit.getOnlinePlayers()){
+                sgt.add(player.getName());
+            }
+            sgt.add("all");
+            return sgt;
+        }
         return null;
     }
 }
