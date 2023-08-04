@@ -17,13 +17,16 @@ public abstract class CommandRK {
     }
 
     public void addAlias(String alias) {
-        if (aliases.size() == 0) {
+        if (aliases.isEmpty()) {
             throw new RuntimeException("Missing command name!");
         }
         aliases.add(alias);
     }
 
     public List<String> getAliases() {
+        for(String alias : aliases){
+            alias = alias.toLowerCase();
+        }
         return aliases;
     }
 
@@ -32,7 +35,7 @@ public abstract class CommandRK {
     }
 
     public boolean hasSubCommands(){
-        return subCommands.size() > 0;
+        return !subCommands.isEmpty();
     }
 
     public void addSubCommand(subCommandRK subCommand) {

@@ -32,14 +32,15 @@ public class test extends CommandRK {
 
     @Override
     public List<String> tabComplete(CommandSender sender, String[] args) {
-        List<String> tab = new ArrayList<>();
-        if(args.length == 1){
-            tab.add("sub");
-            return tab;
+        List<String> tabs = new ArrayList<>();
+        switch (args.length){
+            case 1 -> {
+                tabs.add("sub");
+                tabs.add("s");
+            }
+            case 2 -> tabs.add("subsub");
+            case 3 -> tabs.add("megasub");
         }
-        if(args.length > 1){
-            return List.of();
-        }
-        return null;
+        return tabs;
     }
 }

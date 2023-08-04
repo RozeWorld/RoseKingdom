@@ -4,6 +4,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public abstract class subCommandRK {
     private final List<String> aliases = new ArrayList<>();
@@ -17,12 +18,16 @@ public abstract class subCommandRK {
         aliases.add(name);
     }
     public void addAlias(String alias){
-        if(aliases.size()==0){
+        if(aliases.isEmpty()){
             throw new RuntimeException("Missing command name!");
         }
         aliases.add(alias);
     }
     public List<String> getAliases(){
+        ListIterator<String> iterator = aliases.listIterator();
+        while (iterator.hasNext()){
+            iterator.set(iterator.next().toLowerCase());
+        }
         return aliases;
     }
     public String getName(){
@@ -38,8 +43,7 @@ public abstract class subCommandRK {
         subCommands.add(subCommand);
     }
     public boolean hasSubCommands(){
-        return subCommands.size() > 0;
+        return !subCommands.isEmpty();
     }
     public abstract void executeSub(CommandSender sender, String[] args);
-    public abstract List<String> tabComplete(CommandSender sender, String[] args);
 }
