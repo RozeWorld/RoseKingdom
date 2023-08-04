@@ -4,9 +4,6 @@ import com.rosekingdom.rosekingdom.Commands.Manager.subCommandRK;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class sub extends subCommandRK {
 
     public sub(int arg){
