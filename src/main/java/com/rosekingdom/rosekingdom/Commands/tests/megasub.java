@@ -5,6 +5,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.CommandSender;
 
+import java.util.List;
+
 public class megasub extends subCommandRK {
 
     public megasub(int arg){
