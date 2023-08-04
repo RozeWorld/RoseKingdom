@@ -18,4 +18,9 @@ public class megasub extends subCommandRK {
     public void executeSub(CommandSender sender, String[] args) {
         sender.sendMessage(Component.text("And I'm the Ultra Mega Sub Command!", TextColor.fromHexString("#0cedaa")));
     }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        return null;
+    }
 }

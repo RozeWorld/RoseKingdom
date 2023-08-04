@@ -17,4 +17,9 @@ public class subsub extends subCommandRK {
     public void executeSub(CommandSender sender, String[] args) {
         sender.sendMessage(Component.text("I'm the sub sub command from the first sub command!"));
     }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        return null;
+    }
 }
