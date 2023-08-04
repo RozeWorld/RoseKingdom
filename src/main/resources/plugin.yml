@@ -13,8 +13,6 @@ commands:
     aliases:
       - t
       - try
-  testtwo:
-    description: test two
   coordinates:
     description: Gives you the ability to share your coordinates easier
     aliases:
