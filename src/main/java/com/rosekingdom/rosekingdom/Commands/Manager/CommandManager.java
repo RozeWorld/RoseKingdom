@@ -17,7 +17,6 @@ import java.util.Objects;
 public class CommandManager implements TabExecutor {
     JavaPlugin plugin;
     List<CommandRK> commands;
-    List<String> tabComplete;
     public CommandManager(JavaPlugin plugin){
         this.plugin = plugin;
         commands = new ArrayList<>();
@@ -54,7 +53,7 @@ public class CommandManager implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         try {
             for (CommandRK rk : getCommands()) {
-                if(label.equals(rk.getName().toLowerCase())) {
+                if(rk.getAliases().contains(label)) {
                     if (args.length > 0 && rk.hasSubCommands()) {
                         subCommandManager(sender, args, rk.getSubCommands());
                         return true;
@@ -87,9 +86,9 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        for(CommandRK rk : getCommands()){
-            if(label.equals(rk.getName().toLowerCase())){
-                return rk.tabComplete(sender,args);
+        for(CommandRK cmd : getCommands()){
+            if(cmd.getAliases().contains(label)){
+                return cmd.tabComplete(sender, args);
             }
         }
         return null;
