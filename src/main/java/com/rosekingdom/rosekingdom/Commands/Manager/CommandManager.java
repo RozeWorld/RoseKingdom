@@ -2,7 +2,6 @@ package com.rosekingdom.rosekingdom.Commands.Manager;
 
 import com.rosekingdom.rosekingdom.Commands.CoordinatesShare;
 import com.rosekingdom.rosekingdom.Commands.tests.test;
-import com.rosekingdom.rosekingdom.Commands.tests.testtwo;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -26,7 +25,6 @@ public class CommandManager implements TabExecutor {
     }
 
     private void commandList(){
-        addCommand(new testtwo());
         addCommand(new test());
         addCommand(new CoordinatesShare());
     }
