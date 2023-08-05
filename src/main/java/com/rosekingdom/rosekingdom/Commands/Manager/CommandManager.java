@@ -1,5 +1,6 @@
 package com.rosekingdom.rosekingdom.Commands.Manager;
 
+import com.rosekingdom.rosekingdom.Commands.CoordinatesShare;
 import com.rosekingdom.rosekingdom.Commands.tests.test;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
@@ -25,6 +26,7 @@ public class CommandManager implements TabExecutor {
 
     private void commandList(){
         addCommand(new test());
+        addCommand(new CoordinatesShare());
     }
 
     public List<CommandRK> getCommands() {
@@ -86,7 +88,12 @@ public class CommandManager implements TabExecutor {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         for(CommandRK cmd : getCommands()){
             if(cmd.getAliases().contains(label)){
-                return cmd.tabComplete(sender, args);
+                List<String> tabs = cmd.tabComplete(sender, args);
+                if(tabs != null){
+                    return List.copyOf(tabs);
+                }else {
+                    return List.of();
+                }
             }
         }
         return null;

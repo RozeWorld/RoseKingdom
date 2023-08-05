@@ -4,6 +4,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public abstract class CommandRK {
     private final List<String> aliases = new ArrayList<>();
@@ -24,8 +25,9 @@ public abstract class CommandRK {
     }
 
     public List<String> getAliases() {
-        for(String alias : aliases){
-            alias = alias.toLowerCase();
+        ListIterator<String> iterator = aliases.listIterator();
+        while (iterator.hasNext()){
+            iterator.set(iterator.next().toLowerCase());
         }
         return aliases;
     }
