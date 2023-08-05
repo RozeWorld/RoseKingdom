@@ -4,3 +4,17 @@ main: com.rosekingdom.rosekingdom.RoseKingdom
 api-version: 1.19
 authors: [TMG8047KG]
 prefix: RoseKingdom
+
+
+commands:
+  test:
+    description: test command
+    usage: /<command>
+    aliases:
+      - t
+      - try
+  coordinates:
+    description: Gives you the ability to share your coordinates easier
+    aliases:
+      - coords
+      - xyz
