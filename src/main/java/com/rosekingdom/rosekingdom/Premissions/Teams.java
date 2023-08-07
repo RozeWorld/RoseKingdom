@@ -46,6 +46,6 @@ public class Teams {
 
     public static void joinTeam(Player player, String team){
         teams.get(team).addPlayer(player);
-        player.displayName(teams.get(team).prefix().append(Component.text(" ").append(Component.text(player.getName()))));
+        player.displayName(teams.get(team).prefix().append(Component.text(player.getName())));
     }
 }
