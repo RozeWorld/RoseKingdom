@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Events;
 import com.rosekingdom.rosekingdom.Database.Database;
 import com.rosekingdom.rosekingdom.Database.Statements.UserStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
+import com.rosekingdom.rosekingdom.Utils.ResourcePackLoader;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ public class onJoin implements Listener {
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent e){
         Player player = e.getPlayer();
+        new ResourcePackLoader().setResourcePack(player);
         RoseKingdom.players++;
         player.sendPlayerListHeader(Component.text("\nRoseKingdom\n", TextColor.fromHexString("#ff0000")));
         for(Player p : Bukkit.getServer().getOnlinePlayers()){
@@ -39,5 +41,11 @@ public class onJoin implements Listener {
         if(!UserStatement.exists(Database.getConnection(), player.getUniqueId())) {
             UserStatement.insert(Database.getConnection(), player.getName(), player.getUniqueId().toString());
         }
+
+        if(UserStatement.getRank(player.getUniqueId().toString())==null){
+            UserStatement.addRank(player.getUniqueId().toString(), "default");
+        }
+        Teams.joinTeam(player, UserStatement.getRank(player.getUniqueId().toString()));
+        Teams.UpdateScoreboard();
     }
 }
