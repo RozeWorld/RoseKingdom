@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class UserStatement {
 
-    public static void addRank(String uuid, String rank){
+    public static void setRank(String uuid, String rank){
         PreparedStatement ps;
         try {
             ps = Database.getConnection().prepareStatement("UPDATE rk_user SET rk_rank=? WHERE uuid=?");
@@ -27,9 +27,10 @@ public class UserStatement {
     public static void insert(Connection connection, String name, String uuid){
         PreparedStatement ps;
         try {
-            ps = connection.prepareStatement("INSERT INTO rk_user (name, uuid) VALUES (?, ?)");
+            ps = connection.prepareStatement("INSERT INTO rk_user (name, uuid, rk_rank) VALUES (?, ?, ?)");
             ps.setString(1, name);
             ps.setString(2, uuid);
+            ps.setString(3, "default");
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
