@@ -18,7 +18,8 @@ public class ResourcePackLoader {
             player.setResourcePack(
                     resourcePackPath,
                     getHash(),
-                    Component.text("You stink"),
+                    Component.text("This is required for things to work!")
+                            .append(Component.text("\nFor help or more info contact the staff!")),
                     true
             );
         } catch (IOException | NoSuchAlgorithmException e) {
@@ -31,9 +32,6 @@ public class ResourcePackLoader {
     private byte[] getHash() throws IOException, NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-1");
         final URLConnection urlConnection = new URL(resourcePackPath).openConnection();
-
-        // Notify size of file
-        final int sizeInMB = urlConnection.getContentLength() / 1024 / 1024;
 
         final InputStream fis = urlConnection.getInputStream();
         int n = 0;
