@@ -15,7 +15,7 @@ public class Database {
     private static String port = "3306";
     private static String database = "test";
     private static String username = "root";
-    private static String password = "asdasd";
+    private static String password = "asdasd12";
 
     private static Connection connection;
 

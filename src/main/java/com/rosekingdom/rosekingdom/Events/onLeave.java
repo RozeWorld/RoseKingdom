@@ -22,7 +22,7 @@ public class onLeave implements Listener {
         e.quitMessage(Component.text("[", TextColor.fromHexString("#696969"))
                         .append(Component.text("-", TextColor.fromHexString("#d90d12"))
                         .append(Component.text("] ", TextColor.fromHexString("#696969")))
-                        .append(player.displayName().color(TextColor.fromHexString("#7d7d7d")))));
+                        .append(Component.text(player.getName(), TextColor.fromHexString("#7d7d7d")))));
     }
 
 }
