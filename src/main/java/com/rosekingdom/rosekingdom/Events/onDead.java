@@ -1,23 +1,21 @@
 package com.rosekingdom.rosekingdom.Events;
 
-import com.rosekingdom.rosekingdom.Database.Statements.DeathStatement;
+import com.rosekingdom.rosekingdom.Database.Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Utils.Grave;
+import com.rosekingdom.rosekingdom.GUI.GraveGUI;
 import com.rosekingdom.rosekingdom.Database.Statements.GraveStatement;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Interaction;
-import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.time.LocalTime;
-import java.util.Timer;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class onDead implements Listener {
 
@@ -25,7 +23,6 @@ public class onDead implements Listener {
     public void onDeadEvent(PlayerDeathEvent e) {
         Player player = e.getPlayer();
         Location loc = player.getLocation();
-        loc = new Location(player.getWorld(), loc.getBlockX()+0.5, loc.getBlockY(), loc.getBlockZ()+0.5);
 
         player.sendMessage(Component.text()
                 .append(Component.text("You have died on ", TextColor.fromHexString("#fcc603")))
@@ -36,16 +33,35 @@ public class onDead implements Listener {
             return;
         }
 
-        ItemStack item = new ItemStack(Material.PAPER);
-        ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(5);
-        item.setItemMeta(meta);
-        ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(loc.toCenterLocation(), EntityType.ITEM_DISPLAY);
-        display.setItemStack(item);
-        display.setRotation(player.getBodyYaw(), 0);
-        Interaction interaction = (Interaction) e.getPlayer().getWorld().spawnEntity(loc, EntityType.INTERACTION);
+        if(GraveStatement.total_graves(player) != 3){
+            e.getDrops().clear();
 
-        DeathStatement.insert(player, loc, LocalTime.now(),interaction.getUniqueId(), display.getUniqueId());
-        GraveStatement.insertInventory(player);
+            Grave grave = new Grave(player);
+            grave.CreateGrave();
+            Grave.addGrave(grave);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onInteract(PlayerInteractEntityEvent e) {
+        Player player = e.getPlayer();
+        Entity clicked = e.getRightClicked();
+        if(clicked.getType() == EntityType.INTERACTION){
+            GraveGUI gui = new GraveGUI(player, GraveStatement.getGrave(clicked));
+            player.openInventory(gui.getInventory());
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void graveClose(InventoryCloseEvent e){
+        Player player = (Player) e.getPlayer();
+        int id = UserStatement.getId(player.getUniqueId());
+        if(e.getInventory().getHolder() instanceof GraveGUI grave){
+            GraveStatement.UpdateInventory(id, e.getInventory(), grave.getGrave_num());
+            if(e.getInventory().isEmpty()){
+                GraveStatement.purge(id, grave.getGrave_num());
+            }
+        }
     }
 }

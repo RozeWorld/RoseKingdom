@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 
-public class UserStatement {
+public class UserStatement extends Database {
 
     public static void addRank(String uuid, String rank){
         PreparedStatement ps;
@@ -83,6 +83,32 @@ public class UserStatement {
             ResultSet rs = ps.executeQuery();
             rs.next();
             return rs.getString("rk_rank");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getName(int id) {
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("SELECT name FROM rk_user WHERE rowid=?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getUUID(int id) {
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("SELECT uuid FROM rk_user WHERE rowid=?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getString(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }

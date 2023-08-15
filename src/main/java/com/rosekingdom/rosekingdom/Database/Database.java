@@ -11,11 +11,11 @@ import java.sql.Statement;
 public class Database {
 
     //TODO get credentials from config
-    private static String host = "localhost";
-    private static String port = "3306";
-    private static String database = "test";
-    private static String username = "root";
-    private static String password = "asdasd12";
+    private static final String host = "localhost";
+    private static final String port = "3306";
+    private static final String database = "test";
+    private static final String username = "root";
+    private static final String password = "asdasd12";
 
     private static Connection connection;
 
