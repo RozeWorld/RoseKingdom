@@ -37,8 +37,8 @@ public class onJoin implements Listener {
         }
 
         //Add player to Database
-        if(!UserStatement.exists(Database.getConnection(), player.getUniqueId())) {
-            UserStatement.insert(Database.getConnection(), player.getName(), player.getUniqueId().toString());
+        if(!UserStatement.exists(player.getUniqueId())) {
+            UserStatement.insert(player.getName(), player.getUniqueId().toString());
         }
 
         if(UserStatement.getRank(player.getUniqueId().toString())==null){
