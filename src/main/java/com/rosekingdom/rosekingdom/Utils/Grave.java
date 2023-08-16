@@ -23,15 +23,15 @@ public class Grave {
     int id;
     int time;
     int task;
-    int grave_num;
+    String graveId;
     public static List<Grave> graveList = new ArrayList<>();
     public Grave(Player player){
         this.player = player;
         this.id = UserStatement.getId(player.getUniqueId());
     }
-    public Grave(int id, int graveNum) {
+    public Grave(int id, String graveId) {
         this.id = id;
-        this.grave_num = graveNum;
+        this.graveId = graveId;
     }
 
     public static void addGrave(Grave grave){
@@ -55,10 +55,9 @@ public class Grave {
         display.setRotation(player.getBodyYaw(), 0);
         Interaction interaction = (Interaction) player.getWorld().spawnEntity(loc, EntityType.INTERACTION);
 
-        GraveStatement.insert(player, loc, display.getUniqueId(), interaction.getUniqueId());
-        GraveStatement.insertInventory(player);
+        graveId = GraveStatement.insert(player, loc, display.getUniqueId(), interaction.getUniqueId());
+        GraveStatement.insertInventory(id, graveId, player);
         timer(3600);
-        grave_num = GraveStatement.total_graves(player);
     }
 
     public void timer(int duration){
@@ -67,24 +66,24 @@ public class Grave {
         task = scheduler.scheduleSyncRepeatingTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
             time--;
             if(time <= 0){
-                removeGrave(id, grave_num);
+                removeGrave(id, graveId);
                 scheduler.cancelTask(task);
             }
         }, 0, 20);
     }
 
-    private void removeGrave(int id, int grave_num) {
-        Location loc = GraveStatement.getLocation(id, grave_num);
-        for(ItemStack items : GraveStatement.getItems(id, grave_num)){
+    private void removeGrave(int id, String graveId) {
+        Location loc = GraveStatement.getLocation(id, graveId);
+        for(ItemStack items : GraveStatement.getItems(id, graveId)){
             if (loc != null) {
                 loc.getWorld().dropItemNaturally(loc, items);
             }
         }
-        GraveStatement.deleteGrave(id, grave_num);
-        GraveStatement.purge(id, grave_num);
+        GraveStatement.deleteGrave(id, graveId);
+        GraveStatement.purge(id, graveId);
     }
 
     public void save() {
-        GraveStatement.saveTime(id, grave_num, time);
+        GraveStatement.saveTime(id, graveId, time);
     }
 }
