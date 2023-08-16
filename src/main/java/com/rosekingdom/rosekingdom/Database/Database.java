@@ -24,7 +24,6 @@ public class Database {
     }
     public static void connect() throws ClassNotFoundException, SQLException{
         if(!isConnected()){
-            //connection = DriverManager.getConnection("jdbc:mysql://u13140_HlXlfIMNrV:7X.V%40!1yKFR6KvfnWs9Z3x7D@ger-by-mysql.rawpower.network:3306/s13140_Server");
             connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
         }
     }
