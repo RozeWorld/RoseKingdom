@@ -53,9 +53,9 @@ public final class RoseKingdom extends JavaPlugin {
 
         getLogger().info("Loading grave timers...");
         for(int id : GraveStatement.getGraveOwners()){
-            for(int grave_num : GraveStatement.getGraves(id)){
-                Grave grave = new Grave(id, grave_num);
-                grave.timer(GraveStatement.getTime(id, grave_num));
+            for(String graveId : GraveStatement.getGraves(id)){
+                Grave grave = new Grave(id, graveId);
+                grave.timer(GraveStatement.getTime(id, graveId));
                 Grave.addGrave(grave);
                 total_graves_loaded++;
             }

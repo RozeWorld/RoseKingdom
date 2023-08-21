@@ -6,6 +6,11 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 public class Rank extends CommandRK {
+
+    public Rank(){
+        this.setName("rank");
+    }
+
     @Override
     public void execute(CommandSender sender, String[] args) {
 

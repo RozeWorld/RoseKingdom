@@ -58,9 +58,9 @@ public class onDead implements Listener {
         Player player = (Player) e.getPlayer();
         int id = UserStatement.getId(player.getUniqueId());
         if(e.getInventory().getHolder() instanceof GraveGUI grave){
-            GraveStatement.UpdateInventory(id, e.getInventory(), grave.getGrave_num());
+            GraveStatement.UpdateInventory(id, e.getInventory(), grave.getGraveId());
             if(e.getInventory().isEmpty()){
-                GraveStatement.purge(id, grave.getGrave_num());
+                GraveStatement.purge(id, grave.getGraveId());
             }
         }
     }

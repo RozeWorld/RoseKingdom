@@ -12,11 +12,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class GraveGUI implements InventoryHolder {
     int id;
-    int grave_num;
+    String graveId;
 
-    public GraveGUI(Player player, int grave_num){
+    public GraveGUI(Player player, String graveId){
         this.id = UserStatement.getId(player.getUniqueId());
-        this.grave_num = grave_num;
+        this.graveId = graveId;
     }
 
     @Override
@@ -27,12 +27,12 @@ public class GraveGUI implements InventoryHolder {
     }
 
     private void getItems(Inventory inventory){
-        for (ItemStack itemStack : GraveStatement.getItems(id, grave_num)) {
+        for (ItemStack itemStack : GraveStatement.getItems(id, graveId)) {
             inventory.addItem(itemStack);
         }
     }
 
-    public int getGrave_num() {
-        return grave_num;
+    public String getGraveId() {
+        return graveId;
     }
 }
