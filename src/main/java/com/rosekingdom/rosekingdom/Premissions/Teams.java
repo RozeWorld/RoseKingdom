@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class Teams {
     private static final Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-    private static Map<String, Team> teams = new HashMap<>();
+    private static final Map<String, Team> teams = new HashMap<>();
     private static Team team;
 
     public static void UpdateScoreboard(){
