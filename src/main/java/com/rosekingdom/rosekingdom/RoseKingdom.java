@@ -32,7 +32,6 @@ public final class RoseKingdom extends JavaPlugin {
             e.printStackTrace();
         }
 
-
         EventHandler.events(this);
 
         Teams.createTeams();

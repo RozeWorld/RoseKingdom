@@ -22,7 +22,6 @@ public class Config {
     public String DATABASE;
     public String JDBC;
 
-
     static {
         D_VAlUES.put("use_fullURL", "false");
         D_VAlUES.put("host", "localhost:3306");
@@ -31,8 +30,6 @@ public class Config {
         D_VAlUES.put("database", "test");
         D_VAlUES.put("jdbc", "");
     }
-
-    //TODO: method for adding the missing properties
 
     private void readValues(){
         USE_FULLURL = config.getBoolean("use_fullURL");
