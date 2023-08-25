@@ -1,0 +1,6 @@
+host: localhost:3306
+username: root
+password: 12345
+database: test
+use_fullURL: false
+jdbc:

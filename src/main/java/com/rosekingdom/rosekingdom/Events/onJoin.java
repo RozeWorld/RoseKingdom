@@ -1,6 +1,5 @@
 package com.rosekingdom.rosekingdom.Events;
 
-import com.rosekingdom.rosekingdom.Database.Database;
 import com.rosekingdom.rosekingdom.Database.Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Premissions.Teams;
 import com.rosekingdom.rosekingdom.RoseKingdom;

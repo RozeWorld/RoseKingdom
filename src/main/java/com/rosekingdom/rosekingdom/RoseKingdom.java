@@ -1,14 +1,17 @@
 package com.rosekingdom.rosekingdom;
 
 import com.rosekingdom.rosekingdom.Commands.Manager.CommandManager;
+import com.rosekingdom.rosekingdom.Config.Config;
 import com.rosekingdom.rosekingdom.Database.Database;
 import com.rosekingdom.rosekingdom.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Premissions.Teams;
 import com.rosekingdom.rosekingdom.Utils.Grave;
 import com.rosekingdom.rosekingdom.Database.Statements.GraveStatement;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public final class RoseKingdom extends JavaPlugin {
     public static int players=0;
@@ -17,19 +20,21 @@ public final class RoseKingdom extends JavaPlugin {
         getLogger().info("RoseKingdom Started Loading!");
         new CommandManager(this);
 
+        new Config();
 
         try {
             Database.connect();
+            Bukkit.getLogger().info("Database is connected!");
+            Database.createDatabaseTables();
+            loadGraves();
         }catch (ClassNotFoundException | SQLException e){
-            getLogger().info("Database connection unsuccessful!");
+            getLogger().info("No connected database!");
+            e.printStackTrace();
         }
 
-        if(Database.isConnected()){
-            getLogger().info("Database is connected!");
-        }
-        Database.createDatabaseTables();
+
         EventHandler.events(this);
-        loadGraves();
+
         Teams.createTeams();
 
         getLogger().info("RoseKingdom Loaded!");
@@ -39,7 +44,7 @@ public final class RoseKingdom extends JavaPlugin {
     public void onDisable() {
         getLogger().info("Started Shutting Down!");
 
-        getLogger().info("Saving Grave times...");
+        getLogger().info("Saving Graves...");
         for(Grave grave : Grave.graveList){
             grave.save();
         }
@@ -51,7 +56,7 @@ public final class RoseKingdom extends JavaPlugin {
     private void loadGraves(){
         int total_graves_loaded = 0;
 
-        getLogger().info("Loading grave timers...");
+        getLogger().info("Loading graves...");
         for(int id : GraveStatement.getGraveOwners()){
             for(String graveId : GraveStatement.getGraves(id)){
                 Grave grave = new Grave(id, graveId);
@@ -60,7 +65,7 @@ public final class RoseKingdom extends JavaPlugin {
                 total_graves_loaded++;
             }
         }
-        getLogger().info("Loaded " + total_graves_loaded + " timers!");
+        getLogger().info("Loaded " + total_graves_loaded + " graves!");
     }
 
 
