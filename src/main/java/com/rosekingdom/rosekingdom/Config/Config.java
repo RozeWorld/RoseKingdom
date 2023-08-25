@@ -4,10 +4,8 @@ import com.rosekingdom.rosekingdom.RoseKingdom;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Config {
     protected JavaPlugin plugin;

@@ -2,9 +2,7 @@ package com.rosekingdom.rosekingdom.Database;
 
 import com.rosekingdom.rosekingdom.Config.Config;
 import com.rosekingdom.rosekingdom.RoseKingdom;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.C;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -7,11 +7,9 @@ import com.rosekingdom.rosekingdom.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Premissions.Teams;
 import com.rosekingdom.rosekingdom.Utils.Grave;
 import com.rosekingdom.rosekingdom.Database.Statements.GraveStatement;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public final class RoseKingdom extends JavaPlugin {
     public static int players=0;
@@ -24,7 +22,7 @@ public final class RoseKingdom extends JavaPlugin {
 
         try {
             Database.connect();
-            Bukkit.getLogger().info("Database is connected!");
+            getLogger().info("Database is connected!");
             Database.createDatabaseTables();
             loadGraves();
         }catch (ClassNotFoundException | SQLException e){
