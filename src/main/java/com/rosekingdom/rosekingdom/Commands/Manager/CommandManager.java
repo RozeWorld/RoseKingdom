@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Commands.Manager;
 
 import com.rosekingdom.rosekingdom.Commands.CoordinatesShare;
 import com.rosekingdom.rosekingdom.Commands.FeatureTests.Demoscreen;
-import com.rosekingdom.rosekingdom.Commands.FeatureTests.Rank;
+import com.rosekingdom.rosekingdom.Commands.Rank;
 import com.rosekingdom.rosekingdom.Commands.tests.test;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;

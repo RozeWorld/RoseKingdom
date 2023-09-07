@@ -39,11 +39,6 @@ public class onJoin implements Listener {
         if(!UserStatement.exists(player.getUniqueId())) {
             UserStatement.insert(player.getName(), player.getUniqueId().toString());
         }
-
-        if(UserStatement.getRank(player.getUniqueId().toString())==null){
-            UserStatement.addRank(player.getUniqueId().toString(), "default");
-        }
         Teams.joinTeam(player, UserStatement.getRank(player.getUniqueId().toString()));
-        Teams.UpdateScoreboard();
     }
 }
