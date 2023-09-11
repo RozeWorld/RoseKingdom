@@ -12,13 +12,12 @@ import java.util.UUID;
 public class UserStatement extends Database {
 
     public static void setRank(String uuid, String rank){
-        PreparedStatement ps;
-        try {
-            ps = Database.getConnection().prepareStatement("UPDATE rk_user SET rk_rank=? WHERE uuid=?");
+        try(Connection connection = Database.getConnection();
+        PreparedStatement ps = connection.prepareStatement("UPDATE rk_user SET rk_rank=? WHERE uuid=?");)
+        {
             ps.setString(1, rank);
             ps.setString(2, uuid);
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -39,80 +38,97 @@ public class UserStatement extends Database {
     }
 
     public static boolean exists(UUID uuid){
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM rk_user WHERE uuid=?");
+        boolean exists = false;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_user WHERE uuid=?"))
+        {
             ps.setString(1, uuid.toString());
-
-            ResultSet result = ps.executeQuery();
-            return result.next();
-        }catch (SQLException e){
+            try(ResultSet result = ps.executeQuery()){
+                exists = result.next();
+            }
+        } catch (SQLException e){
             e.printStackTrace();
         }
-        return false;
+        return exists;
     }
 
     public static int getId(UUID uuid){
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM rk_user WHERE uuid=?");
+        int id = 0;
+        try (Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_user WHERE uuid=?"))
+        {
             ps.setString(1, uuid.toString());
-            ResultSet result = ps.executeQuery();
-            result.next();
-            return result.getInt("rowid");
+            try(ResultSet result = ps.executeQuery()) {
+                result.next();
+                id = result.getInt("rowid");
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return 0;
+        return id;
     }
 
     public static boolean hasRank(String uuid, String rank){
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM rk_user WHERE uuid=? AND rk_rank=?");
+        boolean hasRank = false;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_user WHERE uuid=? AND rk_rank=?");
+        ) {
             ps.setString(1, uuid);
             ps.setString(2, rank);
-            ResultSet result = ps.executeQuery();
-            return result.next();
+            try(ResultSet result = ps.executeQuery()){
+                hasRank = result.next();
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return false;
+        return hasRank;
     }
 
     public static String getRank(String uuid){
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT rk_rank FROM rk_user WHERE uuid=?");
+        String rank = null;
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT rk_rank FROM rk_user WHERE uuid=?");
+        ){
             ps.setString(1, uuid);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getString("rk_rank");
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                rank = rs.getString("rk_rank");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return rank;
     }
 
     public static String getName(int id) {
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT name FROM rk_user WHERE rowid=?");
+        String name = null;
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT name FROM rk_user WHERE rowid=?");
+        ) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getString(1);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                name = rs.getString(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return name;
     }
 
     public static String getUUID(int id) {
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT uuid FROM rk_user WHERE rowid=?");
+        String uuid = null;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT uuid FROM rk_user WHERE rowid=?"))
+        {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getString(1);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                uuid = rs.getString(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return uuid;
     }
 }

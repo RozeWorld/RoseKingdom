@@ -9,10 +9,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.sql.rowset.serial.SerialBlob;
-import java.sql.Blob;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -41,34 +38,40 @@ public class GraveStatement extends Database {
     }
 
     public static int total_graves(Player player) {
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT count(graveId) FROM rk_death WHERE id=?");
+        int graves = 0;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT count(graveId) FROM rk_death WHERE id=?");
+        ) {
             ps.setInt(1, UserStatement.getId(player.getUniqueId()));
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getInt(1);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                graves = rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+        return graves;
     }
 
 
     public static String getGrave(Entity interaction) {
-        try{
-            PreparedStatement ps = getConnection().prepareStatement("SELECT graveId FROM rk_death WHERE x=? AND y=? AND z=? AND dim=?");
+        String grave = null;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT graveId FROM rk_death WHERE x=? AND y=? AND z=? AND dim=?");
+        ){
             Location loc = interaction.getLocation();
             ps.setInt(1, loc.getBlockX());
             ps.setInt(2, loc.getBlockY());
             ps.setInt(3, loc.getBlockZ());
             ps.setString(4, loc.getWorld().getName());
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getString(1);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                grave = rs.getString(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return grave;
     }
 
 //==============================
@@ -131,24 +134,25 @@ public class GraveStatement extends Database {
 
     public static List<ItemStack> getItems(int id, String graveId){
         List<ItemStack> items = new ArrayList<>();
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM rk_grave WHERE id=? AND graveId=?");
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_grave WHERE id=? AND graveId=?");
+        ) {
             ps.setInt(1, id);
             ps.setString(2, graveId);
-            ResultSet rs = ps.executeQuery();
-            for(int k = 0; k<items(id, graveId);k++){
-                rs.next();
-                Blob blob = rs.getBlob("data");
-                int blobLength = (int) blob.length();
-                byte[] blobAsBytes = blob.getBytes(1, blobLength);
-                blob.free();
-                items.add(ItemStack.deserializeBytes(blobAsBytes));
+            try (ResultSet rs = ps.executeQuery()){
+                for(int k = 0; k<items(id, graveId);k++){
+                    rs.next();
+                    Blob blob = rs.getBlob("data");
+                    int blobLength = (int) blob.length();
+                    byte[] blobAsBytes = blob.getBytes(1, blobLength);
+                    blob.free();
+                    items.add(ItemStack.deserializeBytes(blobAsBytes));
+                }
             }
-            return items;
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return null;
+        return items;
     }
 
     public static void removeItem(byte[] bytes, String graveId){
@@ -158,24 +162,27 @@ public class GraveStatement extends Database {
             ps.setBlob(1, blob);
             ps.setString(2, graveId);
             ps.executeUpdate();
+            ps.close();
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
 
     public static int items(int id, String graveId){
-        PreparedStatement ps;
-        try {
-            ps = getConnection().prepareStatement("SELECT count(id) FROM rk_grave WHERE id=? AND graveId=?");
+        int items = 0;
+        try(Connection connection = getConnection();
+        PreparedStatement ps = connection.prepareStatement("SELECT count(id) FROM rk_grave WHERE id=? AND graveId=?");
+        ) {
             ps.setInt(1, id);
             ps.setString(2, graveId);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getInt(1);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                items = rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+        return items;
     }
 
     public static void deleteGrave(int id, String graveId){
@@ -184,45 +191,54 @@ public class GraveStatement extends Database {
             ps.setInt(1, id);
             ps.setString(2, graveId);
             ps.executeUpdate();
+            ps.close();
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
 
     public static void purge(int id, String graveId) {
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM rk_death WHERE id=? AND graveId=?");
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_death WHERE id=? AND graveId=?");
+        ) {
             ps.setInt(1, id);
             ps.setString(2, graveId);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
-                Bukkit.getEntity(UUID.fromString(rs.getString("IA_uuid"))).remove();
-                Bukkit.getEntity(UUID.fromString(rs.getString("BD_uuid"))).remove();
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Bukkit.getEntity(UUID.fromString(rs.getString("IA_uuid"))).remove();
+                    Bukkit.getEntity(UUID.fromString(rs.getString("BD_uuid"))).remove();
+                }
             }
-            rs.close();
-            ps = getConnection().prepareStatement("DELETE FROM rk_death WHERE id=? AND graveId=?");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM rk_death WHERE id=? AND graveId=?"))
+        {
             ps.setInt(1, id);
             ps.setString(2, graveId);
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static Location getLocation(int id, String graveId) {
-        try{
-            PreparedStatement ps = getConnection().prepareStatement("SELECT x,y,z,dim FROM rk_death WHERE id=? AND graveId=?");
+        Location loc = null;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT x,y,z,dim FROM rk_death WHERE id=? AND graveId=?");
+        ){
             ps.setInt(1, id);
             ps.setString(2, graveId);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
-                return new Location(Bukkit.getWorld(rs.getString(4)), rs.getInt(1), rs.getInt(2), rs.getInt(3));
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()) {
+                    loc = new Location(Bukkit.getWorld(rs.getString(4)), rs.getInt(1), rs.getInt(2), rs.getInt(3));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return loc;
     }
 
     public static void saveTime(int id, String graveId, int time) {
@@ -232,53 +248,58 @@ public class GraveStatement extends Database {
             ps.setInt(2, id);
             ps.setString(3, graveId);
             ps.executeUpdate();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static List<Integer> getGraveOwners() {
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT id FROM rk_death");
-            ResultSet rs = ps.executeQuery();
-            List<Integer> ids = new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT id FROM rk_death");
+             ResultSet rs = ps.executeQuery();
+        ){
             while(rs.next()){
                 ids.add(rs.getInt(1));
             }
-            return ids;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return ids;
     }
 
     public static List<String> getGraves(int id) {
-        try {
-            PreparedStatement ps = getConnection().prepareStatement("SELECT graveId FROM rk_death WHERE id=?");
+        List<String> graveId = new ArrayList<>();
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT graveId FROM rk_death WHERE id=?");
+        ) {
             ps.setInt(1, id);
-            ResultSet rs =  ps.executeQuery();
-            List<String> graveId = new ArrayList<>();
-            while(rs.next()){
-                graveId.add(rs.getString(1));
+            try(ResultSet rs =  ps.executeQuery()){
+                while(rs.next()){
+                    graveId.add(rs.getString(1));
+                }
             }
-            return graveId;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return graveId;
     }
 
     public static int getTime(int id, String graveId){
-        try{
-            PreparedStatement ps = getConnection().prepareStatement("SELECT TBR FROM rk_death WHERE id=? AND graveId=?");
+        int time = 0;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT TBR FROM rk_death WHERE id=? AND graveId=?");
+        ){
             ps.setInt(1, id);
             ps.setString(2, graveId);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getInt(1);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                time = rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+        return time;
     }
 }

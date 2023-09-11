@@ -20,15 +20,10 @@ public final class RoseKingdom extends JavaPlugin {
 
         new Config();
 
-        try {
-            Database.connect();
-            getLogger().info("Database is connected!");
-            Database.createDatabaseTables();
-            loadGraves();
-        }catch (ClassNotFoundException | SQLException e){
-            getLogger().info("No connected database!");
-            e.printStackTrace();
-        }
+        Database.readData();
+        Database.createDatabaseTables();
+        getLogger().info("Database is connected!");
+        loadGraves();
 
         EventHandler.events(this);
 
@@ -46,7 +41,6 @@ public final class RoseKingdom extends JavaPlugin {
             grave.save();
         }
 
-        Database.disconnect();
         getLogger().info("Successful shutdown!");
     }
 
