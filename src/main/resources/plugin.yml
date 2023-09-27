@@ -7,18 +7,54 @@ prefix: RoseKingdom
 database: true
 
 commands:
+  pt:
+    description: protocol test
+    permission: rk.owner
   test:
+    permission: rk.admin
     description: test command
     usage: /<command>
     aliases:
       - t
       - try
   coordinates:
+    permission: rk.default
     description: Gives you the ability to share your coordinates easier
     aliases:
       - coords
       - xyz
   demo:
+    permission: rk.admin
     description: demoscreen testing
   rank:
+    permission: rk.owner
     description: sets/removes ranks
+  perms:
+    description: check your permissions
+  bugs:
+    description: Link for reporting bugs
+
+permissions:
+  rk.owner:
+    default: op
+    children:
+      - rk.admin
+      - rk.mod
+      - rk.default
+    description: Owner's permissions
+  rk.admin:
+    default: op
+    children:
+      - rk.mod
+      - rk.default
+    description: Admins permissions
+  rk.mod:
+    default: op
+    children:
+      - rk.default
+    description: Mods permissions
+  rk.default:
+    default: not op
+    description: Default permissions for all players
+
+
