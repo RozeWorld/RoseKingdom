@@ -16,7 +16,6 @@ public class ProtocolTest extends CommandRK {
         if(!(sender instanceof Player player)){
             return;
         }
-        //Left for testing and experimenting with packets
     }
 
     @Override

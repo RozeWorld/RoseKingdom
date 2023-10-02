@@ -5,7 +5,9 @@ import com.rosekingdom.rosekingdom.Core.CommandManager.ExampleCommands.test;
 import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.CheckPermissions;
 import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.Demoscreen;
 import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.ProtocolTest;
+import com.rosekingdom.rosekingdom.Locations.Locations;
 import com.rosekingdom.rosekingdom.Moderation.Bugs;
+import com.rosekingdom.rosekingdom.Moderation.Feedback;
 import com.rosekingdom.rosekingdom.Rank;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
@@ -36,7 +38,9 @@ public class CommandManager implements TabExecutor {
         addCommand(new Rank());
         addCommand(new CheckPermissions());
         addCommand(new Bugs());
+        addCommand(new Feedback());
         addCommand(new ProtocolTest());
+        addCommand(new Locations());
     }
 
     public List<CommandRK> getCommands() {

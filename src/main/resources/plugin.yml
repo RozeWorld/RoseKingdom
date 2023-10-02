@@ -23,6 +23,11 @@ commands:
     aliases:
       - coords
       - xyz
+  locations:
+    description: Saves location coordinates
+    aliases:
+      - loc
+      - l
   demo:
     permission: rk.admin
     description: demoscreen testing
@@ -33,6 +38,8 @@ commands:
     description: check your permissions
   bugs:
     description: Link for reporting bugs
+  feedback:
+    description: Link for suggesting your ideas
 
 permissions:
   rk.owner:
