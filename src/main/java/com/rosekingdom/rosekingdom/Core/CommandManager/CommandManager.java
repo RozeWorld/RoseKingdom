@@ -5,6 +5,7 @@ import com.rosekingdom.rosekingdom.Core.CommandManager.ExampleCommands.test;
 import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.CheckPermissions;
 import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.Demoscreen;
 import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.ProtocolTest;
+import com.rosekingdom.rosekingdom.Graves.GraveCommand;
 import com.rosekingdom.rosekingdom.Locations.Locations;
 import com.rosekingdom.rosekingdom.Moderation.Bugs;
 import com.rosekingdom.rosekingdom.Moderation.Feedback;
@@ -41,6 +42,7 @@ public class CommandManager implements TabExecutor {
         addCommand(new Feedback());
         addCommand(new ProtocolTest());
         addCommand(new Locations());
+        addCommand(new GraveCommand());
     }
 
     public List<CommandRK> getCommands() {

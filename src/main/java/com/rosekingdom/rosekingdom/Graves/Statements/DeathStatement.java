@@ -98,6 +98,7 @@ public class DeathStatement extends Database {
             e.printStackTrace();
         }
         return ids;
+
     }
 
     public static Location getLocation(int id, String graveId) {

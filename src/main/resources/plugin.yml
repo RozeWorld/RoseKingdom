@@ -23,6 +23,8 @@ commands:
     aliases:
       - coords
       - xyz
+  grave:
+    description: Open the grave
   locations:
     description: Saves location coordinates
     aliases:
