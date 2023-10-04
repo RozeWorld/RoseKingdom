@@ -5,6 +5,7 @@ import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.permissions.PermissionRemovedExecutor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,4 +70,28 @@ public class LocationStatement extends Database {
         }
         return locations;
     }
+
+    public static void deleteLocation(int id,String name){
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM rk_location WHERE id=? AND name=?")){
+            ps.setInt(1, id);
+            ps.setString(2, name);
+        } catch (SQLException e) {
+            Message.Exception("Unsuccessful deletion!");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

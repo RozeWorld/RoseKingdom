@@ -11,7 +11,7 @@ import java.util.List;
 public class test extends CommandRK {
     public test(){
         this.setName("test");
-        this.addSubCommand(new sub(0));
+        this.addSubCommand(new sub(10));
         this.addAlias("t");
     }
 

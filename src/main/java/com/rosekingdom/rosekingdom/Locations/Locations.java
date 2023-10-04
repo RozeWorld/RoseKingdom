@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Locations;
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Locations.Statements.LocationStatement;
+import com.rosekingdom.rosekingdom.Locations.subCommands.create;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -16,6 +17,7 @@ public class Locations extends CommandRK {
         setName("locations");
         addAlias("loc");
         addAlias("l");
+        addSubCommand(new create(0));
     }
 
     @Override
@@ -31,9 +33,6 @@ public class Locations extends CommandRK {
                     .append(Component.text(loc.getBlockX()))
                     .append(Component.text(" " + loc.getBlockY() + " "))
                     .append(Component.text(loc.getBlockZ())));
-        }
-        if(args.length==2 && args[0].equalsIgnoreCase("create")){
-            LocationStatement.insertLocation(id, args[1], player.getLocation(),false);
         }
     }
 
