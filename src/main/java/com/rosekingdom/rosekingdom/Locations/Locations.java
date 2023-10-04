@@ -22,9 +22,7 @@ public class Locations extends CommandRK {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(!(sender instanceof Player player)){
-            return;
-        }
+        Player player = (Player) sender;
 
         int id = UserStatement.getId(player.getUniqueId());
         if(args.length==1 && LocationStatement.getLocations(id).contains(args[0])){

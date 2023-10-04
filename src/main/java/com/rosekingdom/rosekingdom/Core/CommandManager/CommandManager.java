@@ -72,7 +72,6 @@ public class CommandManager implements TabExecutor {
                 if(rk.getAliases().contains(label)) {
                     if (args.length > 0 && rk.hasSubCommands()) {
                         subCommandManager(sender, args, rk.getSubCommands());
-                        return true;
                     }
                     rk.execute(sender, args);
                     return true;
@@ -86,15 +85,11 @@ public class CommandManager implements TabExecutor {
     }
 
     private void subCommandManager(CommandSender sender, String[] args, List<subCommandRK> sub){
-        for(subCommandRK rk : sub){
-            for(int arg = 0; arg < args.length; arg++){
-                for(String alias : rk.getAliases()) {
-                    if ((args[arg].equals(alias) && rk.correctArg(arg)) && arg == args.length - 1) {
-                        rk.executeSub(sender, args);
-                        return;
-                    } else if ((args[arg].equals(alias) && rk.correctArg(arg)) && rk.hasSubCommands()) {
-                        subCommandManager(sender, args, rk.getSubCommands());
-                    }
+        for(int arg = args.length-1; arg>=0; arg--){
+            for(subCommandRK rk : sub){
+                if(rk.getAliases().contains(args[arg]) && rk.correctArg(arg)){
+                    rk.executeSub(sender, args);
+                    return;
                 }
             }
         }

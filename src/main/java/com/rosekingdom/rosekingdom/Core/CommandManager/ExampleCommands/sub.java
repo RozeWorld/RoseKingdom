@@ -8,9 +8,8 @@ public class sub extends subCommandRK {
 
     public sub(int arg){
         super(arg);
-        this.setName("sub");
-        this.addSubCommand(new subsub(1));
-        this.addAlias("s");
+        setName("sub");
+        addAlias("s");
     }
     @Override
     public void executeSub(CommandSender sender, String[] args) {

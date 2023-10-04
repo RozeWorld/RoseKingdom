@@ -37,7 +37,7 @@ public final class RoseKingdom extends JavaPlugin {
         getLogger().info("Started Shutting Down!");
 
         getLogger().info("Saving Graves...");
-        for(Grave grave : Grave.graveList){
+        for(Grave grave : Grave.getGraveList()){
             grave.save();
         }
 

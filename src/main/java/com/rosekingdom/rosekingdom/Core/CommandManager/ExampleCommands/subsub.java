@@ -9,7 +9,6 @@ public class subsub extends subCommandRK {
     public subsub(int arg){
         super(arg);
         this.setName("subsub");
-        this.addSubCommand(new megasub(2));
     }
     @Override
     public void executeSub(CommandSender sender, String[] args) {

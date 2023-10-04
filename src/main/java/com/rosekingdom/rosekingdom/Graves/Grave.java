@@ -38,6 +38,9 @@ public class Grave {
     public static void addGrave(Grave grave){
         graveList.add(grave);
     }
+    public static List<Grave> getGraveList(){
+        return graveList;
+    }
 
     public void CreateGrave(){
         Location loc = player.getLocation();
