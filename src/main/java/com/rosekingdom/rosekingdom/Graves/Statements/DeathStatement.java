@@ -98,7 +98,6 @@ public class DeathStatement extends Database {
             e.printStackTrace();
         }
         return ids;
-
     }
 
     public static Location getLocation(int id, String graveId) {
@@ -117,7 +116,6 @@ public class DeathStatement extends Database {
         }
         return loc;
     }
-
     public static boolean isGrave(Location loc){
         boolean isGraveOnLocation = false;
         try(Connection connection = getConnection();
