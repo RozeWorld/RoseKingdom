@@ -25,11 +25,14 @@ commands:
       - xyz
   grave:
     description: Open the grave
+    permission: rk.mod
   locations:
     description: Saves location coordinates
     aliases:
       - loc
       - l
+  profile:
+    description: Opens your game profile
   demo:
     permission: rk.admin
     description: demoscreen testing

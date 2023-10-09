@@ -1,4 +1,4 @@
-package com.rosekingdom.rosekingdom;
+package com.rosekingdom.rosekingdom.Locations;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import net.kyori.adventure.text.Component;
@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoordinatesShare extends CommandRK {
+public class CoordinatesBC extends CommandRK {
 
-    public CoordinatesShare(){
+    public CoordinatesBC(){
         this.setName("Coordinates");
         this.addAlias("Coords");
         this.addAlias("xyz");

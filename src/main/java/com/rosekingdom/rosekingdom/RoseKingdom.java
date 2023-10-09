@@ -14,7 +14,6 @@ public final class RoseKingdom extends JavaPlugin {
     public static int players=0;
     @Override
     public void onEnable() {
-        EventHandler.setProtocolManager();
         getLogger().info("RoseKingdom Started Loading!");
         new CommandManager(this);
 
