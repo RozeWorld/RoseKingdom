@@ -5,7 +5,6 @@ import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.permissions.PermissionRemovedExecutor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,8 +27,7 @@ public class LocationStatement extends Database {
             ps.setBoolean(7, publicity);
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Trying to save data to the DB failed!");
-            e.printStackTrace();
+            Message.Exception("Trying to save data to the DB failed!" + e.getMessage());
         }
     }
 

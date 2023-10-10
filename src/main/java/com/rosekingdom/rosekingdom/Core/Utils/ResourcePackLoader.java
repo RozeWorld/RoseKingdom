@@ -23,7 +23,7 @@ public class ResourcePackLoader {
                     true
             );
         } catch (IOException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Message.Exception("Failed to set ResourcePack\n" + e.getMessage());
         }
     }
 

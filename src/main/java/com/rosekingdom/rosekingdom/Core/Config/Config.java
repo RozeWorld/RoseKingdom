@@ -45,7 +45,6 @@ public class Config {
     }
 
     private void checkMissing(){
-        int default_values = D_VAlUES.size();
         for(Map.Entry<String, String> entry : D_VAlUES.entrySet()) {
             final String key = entry.getKey();
             final String value = entry.getValue();

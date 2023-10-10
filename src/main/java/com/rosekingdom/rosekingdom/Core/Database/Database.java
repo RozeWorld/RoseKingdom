@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.Database;
 
 import com.rosekingdom.rosekingdom.Core.Config.Config;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,7 +40,7 @@ public class Database {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_death(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),id int,graveId varchar(64),x double,y double,z double,dim varchar(100),IA_uuid varchar(64),BD_uuid varchar(64),TBR int, INDEX(id,graveId,IA_uuid))");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_location(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), id int, name varchar(32), x int, y int, z int, dim varchar(100), public boolean, INDEX(id,public,name,x,y,z))");
         }catch (SQLException e){
-            e.printStackTrace();
+            Message.Exception("Unable to initialize tables!" + e.getMessage());
         }
     }
 }

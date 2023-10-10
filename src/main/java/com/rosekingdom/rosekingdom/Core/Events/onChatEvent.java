@@ -1,4 +1,4 @@
-package com.rosekingdom.rosekingdom.Core.Utils.Events;
+package com.rosekingdom.rosekingdom.Core.Events;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;

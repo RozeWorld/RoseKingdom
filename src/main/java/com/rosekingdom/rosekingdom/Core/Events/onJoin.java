@@ -1,4 +1,4 @@
-package com.rosekingdom.rosekingdom.Core.Utils.Events;
+package com.rosekingdom.rosekingdom.Core.Events;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.Premissions.Teams;

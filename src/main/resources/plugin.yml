@@ -28,6 +28,7 @@ commands:
     permission: rk.mod
   locations:
     description: Saves location coordinates
+    usage: /<command> <location or subcommand>
     aliases:
       - loc
       - l
@@ -39,6 +40,7 @@ commands:
   rank:
     permission: rk.owner
     description: sets/removes ranks
+    usage: /<command> <player> <rank>
   perms:
     description: check your permissions
   bugs:

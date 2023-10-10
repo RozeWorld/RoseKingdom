@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Graves.Statements;
 
 import com.rosekingdom.rosekingdom.Core.Database.Database;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +26,7 @@ public class GraveStatement extends Database {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Unsuccessful Insertion!");
         }
     }
 
@@ -43,7 +44,7 @@ public class GraveStatement extends Database {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
     }
 
@@ -64,7 +65,7 @@ public class GraveStatement extends Database {
                 }
             }
         }catch (SQLException e){
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
         return items;
     }
@@ -80,7 +81,7 @@ public class GraveStatement extends Database {
                 items = rs.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
         return items;
     }
@@ -92,7 +93,7 @@ public class GraveStatement extends Database {
             ps.setString(2, graveId);
             ps.executeUpdate();
         }catch (SQLException e){
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
     }
 }

@@ -18,6 +18,7 @@ public class Locations extends CommandRK {
         setName("locations");
         addAlias("loc");
         addAlias("l");
+        setArgumentRequirement(true);
         addSubCommand(new create(0));
         addSubCommand(new delete(0));
     }

@@ -12,6 +12,7 @@ import com.rosekingdom.rosekingdom.Moderation.Bugs;
 import com.rosekingdom.rosekingdom.Moderation.Feedback;
 import com.rosekingdom.rosekingdom.Moderation.Rank;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -72,6 +73,10 @@ public class CommandManager implements TabExecutor {
         try {
             for (CommandRK rk : getCommands()) {
                 if(rk.getAliases().contains(label)) {
+                    if(rk.getArgumentRequirement()){
+                        sender.sendMessage(Component.text("Missing Arguments!", TextColor.fromHexString("#e30000")));
+                        return false;
+                    }
                     if (args.length > 0 && rk.hasSubCommands()) {
                         subCommandManager(sender, args, rk.getSubCommands());
                     }

@@ -15,16 +15,13 @@ import java.util.UUID;
 public class Rank extends CommandRK {
 
     public Rank(){
-        this.setName("rank");
+        setName("rank");
+        setArgumentRequirement(true);
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         Player player;
-        if(args.length <= 1){
-            sender.sendMessage(Component.text("Missing arguments!"));
-            return;
-        }
         player = Bukkit.getPlayer(args[0]);
         if(player == null){
             sender.sendMessage(Component.text("There is no such player!"));

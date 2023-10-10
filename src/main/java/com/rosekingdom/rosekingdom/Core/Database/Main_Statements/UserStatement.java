@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.Database.Main_Statements;
 
 import com.rosekingdom.rosekingdom.Core.Database.Database;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ public class UserStatement extends Database {
             ps.setString(3, "default");
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Unsuccessful Insertion!");
         }
     }
 
@@ -31,7 +32,7 @@ public class UserStatement extends Database {
                 exists = result.next();
             }
         } catch (SQLException e){
-            e.printStackTrace();
+            Message.Exception("Non-existing or broken connection");
         }
         return exists;
     }
@@ -46,7 +47,7 @@ public class UserStatement extends Database {
                 hasRank = result.next();
             }
         }catch (SQLException e){
-            e.printStackTrace();
+            Message.Exception("Non-existing or broken connection");
         }
         return hasRank;
     }
@@ -58,7 +59,7 @@ public class UserStatement extends Database {
             ps.setString(2, uuid);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Unable to set the Rank");
         }
     }
 
@@ -72,7 +73,7 @@ public class UserStatement extends Database {
                 id = result.getInt("rowid");
             }
         }catch (SQLException e){
-            e.printStackTrace();
+            Message.Exception("Non-existing or broken connection");
         }
         return id;
     }
@@ -87,7 +88,7 @@ public class UserStatement extends Database {
                 rank = rs.getString("rk_rank");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Non-existing or broken connection");
         }
         return rank;
     }
@@ -102,7 +103,7 @@ public class UserStatement extends Database {
                 name = rs.getString(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Non-existing or broken connection");
         }
         return name;
     }
@@ -117,7 +118,7 @@ public class UserStatement extends Database {
                 uuid = rs.getString(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Non-existing or broken connection");
         }
         return uuid;
     }

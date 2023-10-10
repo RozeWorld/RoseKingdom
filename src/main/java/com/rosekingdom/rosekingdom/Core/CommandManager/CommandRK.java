@@ -9,7 +9,7 @@ import java.util.ListIterator;
 public abstract class CommandRK {
     private final List<String> aliases = new ArrayList<>();
     private final List<subCommandRK> subCommands = new ArrayList<>();
-
+    private boolean requiredArguments = false;
     public void setName(String name) {
         aliases.add(name);
     }
@@ -42,6 +42,14 @@ public abstract class CommandRK {
 
     public void addSubCommand(subCommandRK subCommand) {
         subCommands.add(subCommand);
+    }
+
+    public void setArgumentRequirement(boolean requirement){
+        requiredArguments = requirement;
+    }
+
+    public boolean getArgumentRequirement(){
+        return requiredArguments;
     }
 
     public abstract void execute(CommandSender sender, String[] args);

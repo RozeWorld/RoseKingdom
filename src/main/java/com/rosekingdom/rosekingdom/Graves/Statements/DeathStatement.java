@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Graves.Statements;
 
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class DeathStatement extends Database {
@@ -31,7 +33,7 @@ public class DeathStatement extends Database {
             ps.setString(8, BD.toString());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Unsuccessful Insertion!\n" + e.getMessage());
         }
         return id;
     }
@@ -50,7 +52,7 @@ public class DeathStatement extends Database {
                 grave = rs.getString(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
         return grave;
     }
@@ -65,7 +67,7 @@ public class DeathStatement extends Database {
                 graves = rs.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
         return graves;
     }
@@ -81,7 +83,7 @@ public class DeathStatement extends Database {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
         return graveId;
     }
@@ -95,7 +97,7 @@ public class DeathStatement extends Database {
                 ids.add(rs.getInt(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
         return ids;
     }
@@ -112,7 +114,7 @@ public class DeathStatement extends Database {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
         return loc;
     }
@@ -127,7 +129,7 @@ public class DeathStatement extends Database {
                 isGraveOnLocation = rs.next();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
         return isGraveOnLocation;
     }
@@ -143,7 +145,7 @@ public class DeathStatement extends Database {
                 time = rs.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
         return time;
     }
@@ -156,7 +158,7 @@ public class DeathStatement extends Database {
             ps.setString(3, graveId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
     }
 
@@ -167,12 +169,12 @@ public class DeathStatement extends Database {
             ps.setString(2, graveId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Bukkit.getEntity(UUID.fromString(rs.getString("IA_uuid"))).remove();
-                    Bukkit.getEntity(UUID.fromString(rs.getString("BD_uuid"))).remove();
+                    Objects.requireNonNull(Bukkit.getEntity(UUID.fromString(rs.getString("IA_uuid")))).remove();
+                    Objects.requireNonNull(Bukkit.getEntity(UUID.fromString(rs.getString("BD_uuid")))).remove();
                 }
             }
         }catch (SQLException e){
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("DELETE FROM rk_death WHERE id=? AND graveId=?")) {
@@ -180,7 +182,7 @@ public class DeathStatement extends Database {
             ps.setString(2, graveId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Message.Exception("Bad Connection to the DB");
         }
     }
 }

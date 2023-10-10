@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
+import com.rosekingdom.rosekingdom.Profiles.Items.PlayerHead;
 import com.rosekingdom.rosekingdom.Profiles.UserGUI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,9 +20,9 @@ public class Profiles extends CommandRK {
         if(!(sender instanceof Player player)){
             return;
         }
-        //TODO: when the item creator is done add the information items
 
         Inventory inventory = new UserGUI(player).getInventory();
+        inventory.addItem(new PlayerHead(player));
         player.openInventory(inventory);
     }
 
