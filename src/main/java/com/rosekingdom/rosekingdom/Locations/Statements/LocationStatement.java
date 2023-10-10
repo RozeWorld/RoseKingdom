@@ -76,10 +76,12 @@ public class LocationStatement extends Database {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM rk_location WHERE id=? AND name=?")){
             ps.setInt(1, id);
             ps.setString(2, name);
+            ps.executeUpdate();
         } catch (SQLException e) {
             Message.Exception("Unsuccessful deletion!");
         }
     }
+
 
 
 

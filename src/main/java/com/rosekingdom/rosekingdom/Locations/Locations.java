@@ -4,6 +4,7 @@ import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Locations.Statements.LocationStatement;
 import com.rosekingdom.rosekingdom.Locations.subCommands.create;
+import com.rosekingdom.rosekingdom.Locations.subCommands.delete;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -18,6 +19,7 @@ public class Locations extends CommandRK {
         addAlias("loc");
         addAlias("l");
         addSubCommand(new create(0));
+        addSubCommand(new delete(0));
     }
 
     @Override
@@ -40,9 +42,10 @@ public class Locations extends CommandRK {
             return null;
         }
         int id = UserStatement.getId(player.getUniqueId());
-        if(args.length == 1){
+        if(args[0].equals("delete") || args.length == 1){
             return LocationStatement.getLocations(id);
         }
+
         return null;
     }
 }
