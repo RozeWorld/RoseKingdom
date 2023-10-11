@@ -73,7 +73,7 @@ public class CommandManager implements TabExecutor {
         try {
             for (CommandRK rk : getCommands()) {
                 if(rk.getAliases().contains(label)) {
-                    if(rk.getArgumentRequirement()){
+                    if(rk.getArgumentRequirement() && args.length==0){
                         sender.sendMessage(Component.text("Missing Arguments!", TextColor.fromHexString("#e30000")));
                         return false;
                     }
