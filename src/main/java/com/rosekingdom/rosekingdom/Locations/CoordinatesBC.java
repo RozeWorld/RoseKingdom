@@ -1,7 +1,11 @@
 package com.rosekingdom.rosekingdom.Locations;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
+import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Locations.Statements.LocationStatement;
+import com.rosekingdom.rosekingdom.Locations.subCommands.LocationBC;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -16,6 +20,7 @@ public class CoordinatesBC extends CommandRK {
         this.setName("Coordinates");
         this.addAlias("Coords");
         this.addAlias("xyz");
+        addSubCommand(new LocationBC(1));
     }
 
     @Override
@@ -37,15 +42,16 @@ public class CoordinatesBC extends CommandRK {
                     onlinePlayers.add(players.getName());
                 }
                 if(args[0].equals(player.getName())){
-                    player.sendMessage(Component.text(
-                            "Your coordinates are: "
-                    ).append(Component.text(xyz)));
+                    player.sendMessage(Component.text("Your coordinates are: ")
+                            .append(Component.text(xyz))
+                            .color(TextColor.fromHexString("#6be649")));
                     return;
                 }
                 if (onlinePlayers.contains(args[0])) {
                     Bukkit.getPlayer(args[0]).sendMessage(Component.text(player.getName())
                             .append(Component.text("'s current coordinates: "))
                             .append(Component.text(xyz))
+                            .color(TextColor.fromHexString("#6be649"))
                     );
                     return;
                 }
@@ -55,11 +61,12 @@ public class CoordinatesBC extends CommandRK {
                         players.sendMessage(Component.text(player.getName())
                                 .append(Component.text("'s current coordinates: "))
                                 .append(Component.text(xyz))
+                                .color(TextColor.fromHexString("#6be649"))
                         );
                     }
                     return;
                 }
-                player.sendMessage(Component.text("Incorrect argument or unexciting player!"));
+                player.sendMessage(Component.text( "Incorrect argument or unexciting player!", TextColor.fromHexString("#e30000")));
             }
         }
     }
@@ -73,6 +80,14 @@ public class CoordinatesBC extends CommandRK {
             }
             sgt.add("all");
             return sgt;
+        }
+        Player player = (Player) sender;
+        int id = UserStatement.getId(player.getUniqueId());
+        if(args.length == 2){
+            return List.of("location");
+        }
+        if(args.length == 3 && args[1].equals("location")){
+            return LocationStatement.getLocations(id);
         }
         return null;
     }
