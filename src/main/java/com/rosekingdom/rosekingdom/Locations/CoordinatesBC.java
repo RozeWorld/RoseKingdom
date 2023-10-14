@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Locations;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -59,7 +60,7 @@ public class CoordinatesBC extends CommandRK {
                     }
                     return;
                 }
-                player.sendMessage(Component.text("Incorrect argument or unexciting player!"));
+                player.sendMessage(Message.Warning("Incorrect argument or unexciting player!"));
             }
         }
     }

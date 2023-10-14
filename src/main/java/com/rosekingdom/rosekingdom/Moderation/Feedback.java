@@ -1,9 +1,9 @@
 package com.rosekingdom.rosekingdom.Moderation;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,9 +22,8 @@ public class Feedback extends CommandRK {
         if(!(sender instanceof Player player)){
             return;
         }
-        player.sendMessage(Component.text()
-                .append(Component.text("Suggest something we can change or add ", TextColor.fromHexString("#ebb22f")))
-                .append(Component.text("here!", TextColor.fromHexString("#ebb22f")).clickEvent(ClickEvent.openUrl("hi")).decorate(TextDecoration.UNDERLINED)));
+        player.sendMessage(Message.Info("Suggest something we can change or add ")
+                .append(Component.text("here!").clickEvent(ClickEvent.openUrl("hi")).decorate(TextDecoration.UNDERLINED)));
     }
 
     @Override
