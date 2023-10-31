@@ -47,6 +47,9 @@ commands:
     description: Link for reporting bugs
   feedback:
     description: Link for suggesting your ideas
+  texturetesting:
+    description: Removes and Sets the server resource pack
+    permission: rk.mod
 
 permissions:
   rk.owner:
