@@ -1,12 +1,14 @@
 package com.rosekingdom.rosekingdom.Profiles;
 
+import com.rosekingdom.rosekingdom.Profiles.Items.PlayerHead;
+import com.rosekingdom.rosekingdom.Profiles.Items.ProfilePlayTime;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
-public class UserGUI implements InventoryHolder {
+public class UserGUI implements InventoryHolder{
 
     Player player;
 
@@ -16,6 +18,9 @@ public class UserGUI implements InventoryHolder {
 
     @Override
     public @NotNull Inventory getInventory() {
-        return Bukkit.createInventory(this, 27, player.displayName());
+        Inventory profile = Bukkit.createInventory(this, 27, player.displayName());
+        profile.setItem(10, new PlayerHead(player));
+        profile.setItem(21, new ProfilePlayTime(player));
+        return profile;
     }
 }
