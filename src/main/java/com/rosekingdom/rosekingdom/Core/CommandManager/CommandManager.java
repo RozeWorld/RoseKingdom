@@ -1,10 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.CommandManager;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.ExampleCommands.test;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.CheckPermissions;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.Demoscreen;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.ProtocolTest;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.ResourcePackTesting;
+import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.*;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Graves.GraveCommand;
 import com.rosekingdom.rosekingdom.Locations.CoordinatesBC;
@@ -48,6 +45,7 @@ public class CommandManager implements TabExecutor {
         addCommand(new GraveCommand());
         addCommand(new Profile());
         addCommand(new ResourcePackTesting());
+        addCommand(new PlayTime());
     }
 
     public List<CommandRK> getCommands() {

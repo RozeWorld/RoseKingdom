@@ -50,6 +50,8 @@ commands:
   texturetesting:
     description: Removes and Sets the server resource pack
     permission: rk.mod
+  playtime:
+    description: Returns play time on the server
 
 permissions:
   rk.owner:
