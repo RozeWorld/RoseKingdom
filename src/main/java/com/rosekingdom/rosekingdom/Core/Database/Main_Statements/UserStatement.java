@@ -3,20 +3,18 @@ package com.rosekingdom.rosekingdom.Core.Database.Main_Statements;
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.UUID;
 
 
 public class UserStatement extends Database {
     public static void insert(String name, String uuid){
         try (Connection connection = getConnection();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_user (name, uuid, rk_rank) VALUES (?, ?, ?)")){
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_user (name, uuid, rk_rank, join_date) VALUES (?, ?, ?, ?)")){
             ps.setString(1, name);
             ps.setString(2, uuid);
             ps.setString(3, "default");
+            ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             ps.executeUpdate();
         } catch (SQLException e) {
             Message.Exception("Unsuccessful Insertion!");
@@ -121,5 +119,20 @@ public class UserStatement extends Database {
             Message.Exception("Non-existing or broken connection");
         }
         return uuid;
+    }
+
+    public static String getJoinDate(int id){
+        String date = null;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT join_date FROM rk_user WHERE rowid=?")) {
+            ps.setInt(1, id);
+            try(ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                date = rs.getTimestamp(1).toString();
+            }
+        }catch (SQLException e){
+            Message.Exception("Non-existing or broken connection");
+        }
+        return date;
     }
 }
