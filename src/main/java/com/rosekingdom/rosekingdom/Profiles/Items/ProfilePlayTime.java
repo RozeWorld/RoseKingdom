@@ -5,15 +5,15 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
 public class ProfilePlayTime extends ItemStack {
-    public ProfilePlayTime(Player player){
+    public ProfilePlayTime(OfflinePlayer player){
         int rawTime = player.getStatistic(Statistic.PLAY_ONE_MINUTE)/20;
         int days = rawTime/86400;
         int hours = (rawTime%86400) / 3600;
@@ -27,12 +27,10 @@ public class ProfilePlayTime extends ItemStack {
         setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(5001);
-        meta.displayName(Component.text(""));
-        meta.lore(List.of(
-                Component.text(time, TextColor.fromHexString("#17fc32"))
-                        .decoration(TextDecoration.ITALIC, false),
-                Component.text(joinDate, TextColor.fromHexString("#17fc32"))
-                        .decoration(TextDecoration.ITALIC, false)));
+        meta.displayName(Component.text(time, TextColor.fromHexString("#17fc32"))
+                .decoration(TextDecoration.ITALIC, false));
+        meta.lore(List.of(Component.text(joinDate, TextColor.fromHexString("#17fc32"))
+                .decoration(TextDecoration.ITALIC, false)));
         setItemMeta(meta);
     }
 }

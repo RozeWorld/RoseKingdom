@@ -121,6 +121,21 @@ public class UserStatement extends Database {
         return uuid;
     }
 
+    public static String getUUID(String name) {
+        String uuid = null;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT uuid FROM rk_user WHERE name=?")) {
+            ps.setString(1, name);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                uuid = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            Message.Exception("Non-existing or broken connection");
+        }
+        return uuid;
+    }
+
     public static String getJoinDate(int id){
         String date = null;
         try(Connection connection = getConnection();
