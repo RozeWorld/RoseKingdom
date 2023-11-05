@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class ResourcePackLoader {
     String resourcePackPath = "https://www.dropbox.com/scl/fi/nky6hoo7sldrwg0hy6tja/RoseKingdom-s-Pack.zip?rlkey=1mv7qh4vra9wawk58036ij9h8&dl=1";
@@ -16,9 +17,10 @@ public class ResourcePackLoader {
 
     public void setResourcePack(Player player){
         try {
+            byte[] hash = getHash(resourcePackPath);
             player.setResourcePack(
-                    resourcePackPath,
-                    getHash(resourcePackPath),
+                    resourcePackPath+"#"+ Arrays.toString(hash),
+                    hash,
                     Component.text("This is required for things to work!")
                             .append(Component.text("\nFor help or more info contact the staff!")),
                     true
@@ -42,8 +44,6 @@ public class ResourcePackLoader {
         }
     }
 
-
-    //We hope this works
     private byte[] getHash(String resourcePack) throws IOException, NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-1");
         final URLConnection urlConnection = new URL(resourcePack).openConnection();
