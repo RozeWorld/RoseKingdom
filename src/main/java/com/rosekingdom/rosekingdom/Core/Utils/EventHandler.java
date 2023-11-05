@@ -5,6 +5,7 @@ import com.rosekingdom.rosekingdom.Core.Events.onJoin;
 import com.rosekingdom.rosekingdom.Core.Events.onLeave;
 import com.rosekingdom.rosekingdom.Graves.onDead;
 import com.rosekingdom.rosekingdom.Profiles.GUIhandler;
+import com.rosekingdom.rosekingdom.Ranks.AFKstatus;
 import org.bukkit.plugin.Plugin;
 
 import static org.bukkit.Bukkit.getServer;
@@ -16,5 +17,6 @@ public class EventHandler {
         getServer().getPluginManager().registerEvents(new onLeave(), plugin);
         getServer().getPluginManager().registerEvents(new onChatEvent(), plugin);
         getServer().getPluginManager().registerEvents(new GUIhandler(), plugin);
+        getServer().getPluginManager().registerEvents(new AFKstatus(), plugin);
     }
 }

@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Core.Database.Main_Statements;
 
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
+import com.rosekingdom.rosekingdom.Ranks.Rank;
 
 import java.sql.*;
 import java.util.UUID;
@@ -13,7 +14,7 @@ public class UserStatement extends Database {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_user (name, uuid, rk_rank, join_date) VALUES (?, ?, ?, ?)")){
             ps.setString(1, name);
             ps.setString(2, uuid);
-            ps.setString(3, "default");
+            ps.setString(3, Rank.DEFAULT.name());
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -57,7 +58,7 @@ public class UserStatement extends Database {
             ps.setString(2, uuid);
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unable to set the Rank");
+            Message.Exception("Unable to set the AssignRank");
         }
     }
 
@@ -76,11 +77,11 @@ public class UserStatement extends Database {
         return id;
     }
 
-    public static String getRank(String uuid){
-        String rank = null;
+    public static String getRank(UUID uuid){
+        String rank = Rank.DEFAULT.name();
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT rk_rank FROM rk_user WHERE uuid=?")){
-            ps.setString(1, uuid);
+            ps.setString(1, uuid.toString());
             try(ResultSet rs = ps.executeQuery()){
                 rs.next();
                 rank = rs.getString("rk_rank");

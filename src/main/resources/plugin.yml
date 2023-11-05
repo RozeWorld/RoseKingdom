@@ -9,71 +9,86 @@ database: true
 commands:
   pt:
     description: protocol test
-    permission: rk.owner
+    permission: rk.OWNER
+
   test:
-    permission: rk.admin
+    permission: rk.ADMIN
     description: test command
     usage: /<command>
     aliases:
       - t
       - try
+
   coordinates:
-    permission: rk.default
+    permission: rk.DEFAULT
     description: Gives you the ability to share your coordinates easier
     aliases:
       - coords
       - xyz
+
   grave:
     description: Open the grave
-    permission: rk.mod
+    permission: rk.MOD
+
   locations:
     description: Saves location coordinates
     usage: /<command> <location or subcommand>
     aliases:
       - loc
       - l
+
   profile:
     description: Opens your game profile
+
   demo:
-    permission: rk.admin
+    permission: rk.ADMIN
     description: demoscreen testing
+
   rank:
-    permission: rk.owner
+    permission: rk.OWNER
     description: sets/removes ranks
     usage: /<command> <player> <rank>
+
   perms:
     description: check your permissions
+
   bugs:
     description: Link for reporting bugs
+
   feedback:
     description: Link for suggesting your ideas
+
   texturetesting:
     description: Removes and Sets the server resource pack
-    permission: rk.mod
+    permission: rk.MOD
+
   playtime:
     description: Returns play time on the server
 
 permissions:
-  rk.owner:
-    default: op
+  rk.OWNER:
+    default: false
     children:
-      - rk.admin
-      - rk.mod
-      - rk.default
+      - rk.ADMIN
+      - rk.MOD
+      - rk.DEFAULT
     description: Owner's permissions
-  rk.admin:
-    default: op
+  rk.ADMIN:
+    default: false
     children:
-      - rk.mod
-      - rk.default
+      - rk.MOD
+      - rk.DEFAULT
     description: Admins permissions
-  rk.mod:
-    default: op
+  rk.MOD:
+    default: false
     children:
-      - rk.default
+      - rk.DEFAULT
     description: Mods permissions
-  rk.default:
-    default: not op
-    description: Default permissions for all players
-
-
+  rk.artist:
+    default: false
+    children:
+      - rk.DEFAULT
+    description: For the people that make the assets
+  rk.DEFAULT:
+    default: true
+    description: Permissions all players have
