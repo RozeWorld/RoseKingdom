@@ -22,7 +22,7 @@ public class AFKstatus implements Listener {
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.runTaskTimerAsynchronously(plugin, () -> {
             for(Map.Entry<Player, Long> moved : lastMoved.entrySet()){
-                if((System.currentTimeMillis()-moved.getValue()) >= 3 * 60 * 60 * 1000){
+                if((System.currentTimeMillis()-moved.getValue()) >= 3 * 60 * 1000){
                     Player player = moved.getKey();
                     RankSystem.setStatusAFK(player);
                     player.sendMessage(Component.text("You are now AFK!"));
