@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Core.Database.Main_Statements;
 
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
+import org.bukkit.OfflinePlayer;
 
 import java.sql.*;
 import java.util.UUID;
@@ -65,6 +66,22 @@ public class UserStatement extends Database {
         int id = 0;
         try (Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_user WHERE uuid=?")) {
+            ps.setString(1, uuid.toString());
+            try(ResultSet result = ps.executeQuery()) {
+                result.next();
+                id = result.getInt("rowid");
+            }
+        }catch (SQLException e){
+            Message.Exception("Non-existing or broken connection");
+        }
+        return id;
+    }
+
+    public static int getId(OfflinePlayer player){
+        UUID uuid = player.getUniqueId();
+        int id = 0;
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_user WHERE uuid=?")) {
             ps.setString(1, uuid.toString());
             try(ResultSet result = ps.executeQuery()) {
                 result.next();

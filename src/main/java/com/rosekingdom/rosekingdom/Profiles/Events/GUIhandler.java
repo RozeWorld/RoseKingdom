@@ -1,5 +1,6 @@
-package com.rosekingdom.rosekingdom.Profiles;
+package com.rosekingdom.rosekingdom.Profiles.Events;
 
+import com.rosekingdom.rosekingdom.Profiles.UserGUI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
