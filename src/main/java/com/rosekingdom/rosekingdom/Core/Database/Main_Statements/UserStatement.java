@@ -94,7 +94,7 @@ public class UserStatement extends Database {
         return id;
     }
 
-    public static String getRank(String uuid){
+    public static String getRank(UUID uuid){
         String rank = Rank.DEFAULT.name();
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT rk_rank FROM rk_user WHERE uuid=?")){
