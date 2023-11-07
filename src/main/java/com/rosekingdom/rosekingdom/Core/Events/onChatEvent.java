@@ -12,6 +12,7 @@ public class onChatEvent implements Listener {
     public void AsyncChatEvent(AsyncChatEvent e){
         e.renderer((source, sourceDisplayName, message, viewer) ->
                 Component.text()
+                        .append(Component.text("\uDAFF\uDFFD"))
                         .append(e.getPlayer().displayName().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + e.getPlayer().getName() + " ")))
                         .append(Component.text(": ",TextColor.fromHexString("#9b9b9b")))
                         .append(message)

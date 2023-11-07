@@ -3,10 +3,11 @@ package com.rosekingdom.rosekingdom;
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandManager;
 import com.rosekingdom.rosekingdom.Core.Config.Config;
 import com.rosekingdom.rosekingdom.Core.Database.Database;
-import com.rosekingdom.rosekingdom.Core.Premissions.Teams;
 import com.rosekingdom.rosekingdom.Core.Utils.EventHandler;
 import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
+import com.rosekingdom.rosekingdom.Ranks.AFKstatus;
+import com.rosekingdom.rosekingdom.Ranks.RankSystem;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -26,7 +27,8 @@ public final class RoseKingdom extends JavaPlugin {
 
         EventHandler.events(this);
 
-        Teams.createTeams();
+        RankSystem.registerAllRanks();
+        AFKstatus.check(this);
 
         getLogger().info("RoseKingdom Loaded!");
     }

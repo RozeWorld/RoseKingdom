@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Profiles.Items;
 
 import net.kyori.adventure.text.Component;
+
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class PlayerHead extends ItemStack {
     public PlayerHead(OfflinePlayer player){
         setAmount(1);
+
         setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
         //TODO: get the rank symbol
