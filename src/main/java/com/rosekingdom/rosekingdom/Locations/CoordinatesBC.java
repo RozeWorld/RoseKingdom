@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Locations;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Locations.Statements.LocationStatement;
 import com.rosekingdom.rosekingdom.Locations.subCommands.LocationBC;
 import net.kyori.adventure.text.Component;
@@ -66,7 +67,7 @@ public class CoordinatesBC extends CommandRK {
                     }
                     return;
                 }
-                player.sendMessage(Component.text( "Incorrect argument or unexciting player!", TextColor.fromHexString("#e30000")));
+                player.sendMessage(Message.Warning( "Incorrect argument or no such player!").color(TextColor.fromHexString("#e30000")));
             }
         }
     }

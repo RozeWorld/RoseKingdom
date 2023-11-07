@@ -1,18 +1,16 @@
 package com.rosekingdom.rosekingdom.Core.CommandManager;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.ExampleCommands.test;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.CheckPermissions;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.Demoscreen;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.Profiles;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.ProtocolTest;
+import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.*;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Graves.GraveCommand;
 import com.rosekingdom.rosekingdom.Locations.CoordinatesBC;
 import com.rosekingdom.rosekingdom.Locations.Locations;
+import com.rosekingdom.rosekingdom.Moderation.AssignRank;
 import com.rosekingdom.rosekingdom.Moderation.Bugs;
 import com.rosekingdom.rosekingdom.Moderation.Feedback;
-import com.rosekingdom.rosekingdom.Moderation.Rank;
+import com.rosekingdom.rosekingdom.Profiles.Profile;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -38,14 +36,16 @@ public class CommandManager implements TabExecutor {
         addCommand(new test());
         addCommand(new CoordinatesBC());
         addCommand(new Demoscreen());
-        addCommand(new Rank());
+        addCommand(new AssignRank());
         addCommand(new CheckPermissions());
         addCommand(new Bugs());
         addCommand(new Feedback());
         addCommand(new ProtocolTest());
         addCommand(new Locations());
         addCommand(new GraveCommand());
-        addCommand(new Profiles());
+        addCommand(new Profile());
+        addCommand(new ResourcePackTesting());
+        addCommand(new PlayTime());
     }
 
     public List<CommandRK> getCommands() {
@@ -74,7 +74,7 @@ public class CommandManager implements TabExecutor {
             for (CommandRK rk : getCommands()) {
                 if(rk.getAliases().contains(label)) {
                     if(rk.getArgumentRequirement() && args.length==0){
-                        sender.sendMessage(Component.text("Missing Arguments!", TextColor.fromHexString("#e30000")));
+                        sender.sendMessage(Message.Warning("Missing Arguments!"));
                         return false;
                     }
                     if (args.length > 0 && rk.hasSubCommands()) {

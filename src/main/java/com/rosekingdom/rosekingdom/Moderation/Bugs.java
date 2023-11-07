@@ -1,9 +1,9 @@
 package com.rosekingdom.rosekingdom.Moderation;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,9 +21,8 @@ public class Bugs extends CommandRK {
         if(!(sender instanceof Player player)){
             return;
         }
-        player.sendMessage(Component.text()
-                        .append(Component.text("Report any bugs or issues ", TextColor.fromHexString("#ebb22f")))
-                        .append(Component.text("here!", TextColor.fromHexString("#ebb22f")).clickEvent(ClickEvent.openUrl("https://github.com/RozeWorld/RoseKingdom/issues")).decorate(TextDecoration.UNDERLINED)));
+        player.sendMessage(Message.Info("Report any bugs or issues ")
+                .append(Component.text("here!").clickEvent(ClickEvent.openUrl("https://github.com/RozeWorld/RoseKingdom/issues")).decorate(TextDecoration.UNDERLINED)));
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.rosekingdom.rosekingdom.Core.Events;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
-import com.rosekingdom.rosekingdom.Core.Premissions.Teams;
 import com.rosekingdom.rosekingdom.Core.Utils.ResourcePackLoader;
+import com.rosekingdom.rosekingdom.Ranks.RankSystem;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -31,7 +31,7 @@ public class onJoin implements Listener {
 //            player.showDemoScreen();
 //        }
 
-        player.sendPlayerListHeader(Component.text("\uEff3\n\n\n\n"));
+        player.sendPlayerListHeader(Component.text("\n\nRoseKingdom :3\n\n"));
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
             for(Player p : Bukkit.getServer().getOnlinePlayers()){
@@ -43,6 +43,6 @@ public class onJoin implements Listener {
         if(!UserStatement.exists(player.getUniqueId())) {
             UserStatement.insert(player.getName(), player.getUniqueId().toString());
         }
-        Teams.joinTeam(player, UserStatement.getRank(player.getUniqueId().toString()));
+        RankSystem.loadRank(player);
     }
 }
