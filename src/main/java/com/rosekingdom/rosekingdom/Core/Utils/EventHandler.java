@@ -4,9 +4,9 @@ import com.rosekingdom.rosekingdom.Core.Events.onChatEvent;
 import com.rosekingdom.rosekingdom.Core.Events.onJoin;
 import com.rosekingdom.rosekingdom.Core.Events.onLeave;
 import com.rosekingdom.rosekingdom.Graves.onDead;
-import com.rosekingdom.rosekingdom.Ranks.AFKstatus;
 import com.rosekingdom.rosekingdom.Profiles.Events.DailyStreakChecker;
 import com.rosekingdom.rosekingdom.Profiles.Events.GUIhandler;
+import com.rosekingdom.rosekingdom.Ranks.AFKstatus;
 import org.bukkit.plugin.Plugin;
 
 import static org.bukkit.Bukkit.getServer;
