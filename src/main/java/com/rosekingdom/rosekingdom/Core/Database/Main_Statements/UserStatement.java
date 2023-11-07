@@ -2,21 +2,20 @@ package com.rosekingdom.rosekingdom.Core.Database.Main_Statements;
 
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
+import org.bukkit.OfflinePlayer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.UUID;
 
 
 public class UserStatement extends Database {
     public static void insert(String name, String uuid){
         try (Connection connection = getConnection();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_user (name, uuid, rk_rank) VALUES (?, ?, ?)")){
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_user (name, uuid, rk_rank, join_date) VALUES (?, ?, ?, ?)")){
             ps.setString(1, name);
             ps.setString(2, uuid);
             ps.setString(3, "default");
+            ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             ps.executeUpdate();
         } catch (SQLException e) {
             Message.Exception("Unsuccessful Insertion!");
@@ -78,6 +77,22 @@ public class UserStatement extends Database {
         return id;
     }
 
+    public static int getId(OfflinePlayer player){
+        UUID uuid = player.getUniqueId();
+        int id = 0;
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_user WHERE uuid=?")) {
+            ps.setString(1, uuid.toString());
+            try(ResultSet result = ps.executeQuery()) {
+                result.next();
+                id = result.getInt("rowid");
+            }
+        }catch (SQLException e){
+            Message.Exception("Non-existing or broken connection");
+        }
+        return id;
+    }
+
     public static String getRank(String uuid){
         String rank = null;
         try(Connection connection = getConnection();
@@ -121,5 +136,35 @@ public class UserStatement extends Database {
             Message.Exception("Non-existing or broken connection");
         }
         return uuid;
+    }
+
+    public static String getUUID(String name) {
+        String uuid = null;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT uuid FROM rk_user WHERE name=?")) {
+            ps.setString(1, name);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                uuid = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            Message.Exception("Non-existing or broken connection");
+        }
+        return uuid;
+    }
+
+    public static String getJoinDate(int id){
+        String date = null;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT join_date FROM rk_user WHERE rowid=?")) {
+            ps.setInt(1, id);
+            try(ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                date = rs.getTimestamp(1).toString();
+            }
+        }catch (SQLException e){
+            Message.Exception("Non-existing or broken connection");
+        }
+        return date;
     }
 }

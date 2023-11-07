@@ -12,12 +12,27 @@ import java.security.NoSuchAlgorithmException;
 
 public class ResourcePackLoader {
     String resourcePackPath = "https://www.dropbox.com/scl/fi/nky6hoo7sldrwg0hy6tja/RoseKingdom-s-Pack.zip?rlkey=1mv7qh4vra9wawk58036ij9h8&dl=1";
+    String blank = "https://www.dropbox.com/scl/fi/il7zr4f7gll0110vz1t2p/Blank.zip?rlkey=zd5ot8ak3qhyb5mqytgfl5h0r&dl=1";
 
     public void setResourcePack(Player player){
         try {
             player.setResourcePack(
                     resourcePackPath,
-                    getHash(),
+                    getHash(resourcePackPath),
+                    Component.text("This is required for things to work!")
+                            .append(Component.text("\nFor help or more info contact the staff!")),
+                    true
+            );
+        } catch (IOException | NoSuchAlgorithmException e) {
+            Message.Exception("Failed to set ResourcePack\n" + e.getMessage());
+        }
+    }
+
+    public void removeResourcePack(Player player){
+        try {
+            player.setResourcePack(
+                    blank,
+                    getHash(blank),
                     Component.text("This is required for things to work!")
                             .append(Component.text("\nFor help or more info contact the staff!")),
                     true
@@ -29,9 +44,9 @@ public class ResourcePackLoader {
 
 
     //We hope this works
-    private byte[] getHash() throws IOException, NoSuchAlgorithmException {
+    private byte[] getHash(String resourcePack) throws IOException, NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-1");
-        final URLConnection urlConnection = new URL(resourcePackPath).openConnection();
+        final URLConnection urlConnection = new URL(resourcePack).openConnection();
 
         final InputStream fis = urlConnection.getInputStream();
         int n = 0;

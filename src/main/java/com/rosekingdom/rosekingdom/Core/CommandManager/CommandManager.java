@@ -1,10 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.CommandManager;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.ExampleCommands.test;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.CheckPermissions;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.Demoscreen;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.Profiles;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.ProtocolTest;
+import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.*;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Graves.GraveCommand;
 import com.rosekingdom.rosekingdom.Locations.CoordinatesBC;
@@ -12,6 +9,7 @@ import com.rosekingdom.rosekingdom.Locations.Locations;
 import com.rosekingdom.rosekingdom.Moderation.Bugs;
 import com.rosekingdom.rosekingdom.Moderation.Feedback;
 import com.rosekingdom.rosekingdom.Moderation.Rank;
+import com.rosekingdom.rosekingdom.Profiles.Profile;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -45,7 +43,9 @@ public class CommandManager implements TabExecutor {
         addCommand(new ProtocolTest());
         addCommand(new Locations());
         addCommand(new GraveCommand());
-        addCommand(new Profiles());
+        addCommand(new Profile());
+        addCommand(new ResourcePackTesting());
+        addCommand(new PlayTime());
     }
 
     public List<CommandRK> getCommands() {

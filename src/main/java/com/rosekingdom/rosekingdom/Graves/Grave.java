@@ -49,7 +49,7 @@ public class Grave {
         ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(loc.toCenterLocation(), EntityType.ITEM_DISPLAY);
         ItemStack item = new ItemStack(Material.PAPER);
         ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(5);
+        meta.setCustomModelData(4000);
         item.setItemMeta(meta);
         display.setItemStack(item);
         display.setRotation(player.getBodyYaw(), 0);
