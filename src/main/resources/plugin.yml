@@ -57,6 +57,11 @@ commands:
 
   feedback:
     description: Link for suggesting your ideas
+  texturetesting:
+    description: Removes and Sets the server resource pack
+    permission: rk.mod
+  playtime:
+    description: Returns play time on the server
 
   texturetesting:
     description: Removes and Sets the server resource pack

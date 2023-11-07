@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Core.Database.Main_Statements;
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Ranks.Rank;
+import org.bukkit.OfflinePlayer;
 
 import java.sql.*;
 import java.util.UUID;
@@ -77,7 +78,23 @@ public class UserStatement extends Database {
         return id;
     }
 
-    public static String getRank(UUID uuid){
+    public static int getId(OfflinePlayer player){
+        UUID uuid = player.getUniqueId();
+        int id = 0;
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_user WHERE uuid=?")) {
+            ps.setString(1, uuid.toString());
+            try(ResultSet result = ps.executeQuery()) {
+                result.next();
+                id = result.getInt("rowid");
+            }
+        }catch (SQLException e){
+            Message.Exception("Non-existing or broken connection");
+        }
+        return id;
+    }
+
+    public static String getRank(String uuid){
         String rank = Rank.DEFAULT.name();
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT rk_rank FROM rk_user WHERE uuid=?")){
