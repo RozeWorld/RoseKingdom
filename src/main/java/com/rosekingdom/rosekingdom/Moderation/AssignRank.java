@@ -2,7 +2,8 @@ package com.rosekingdom.rosekingdom.Moderation;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
-import com.rosekingdom.rosekingdom.Core.Premissions.Teams;
+import com.rosekingdom.rosekingdom.Ranks.Rank;
+import com.rosekingdom.rosekingdom.Ranks.RankSystem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -12,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Rank extends CommandRK {
+public class AssignRank extends CommandRK {
 
-    public Rank(){
+    public AssignRank(){
         setName("rank");
         setArgumentRequirement(true);
     }
@@ -28,8 +29,9 @@ public class Rank extends CommandRK {
             return;
         }
         UUID uuid = player.getUniqueId();
-        UserStatement.setRank(uuid.toString(), args[1]);
-        Teams.joinTeam(player, args[1]);
+        Rank rank = Rank.valueOf(args[1].toUpperCase());
+        UserStatement.setRank(uuid.toString(), rank.name());
+        RankSystem.loadRank(player);
     }
 
     @Override
@@ -46,6 +48,7 @@ public class Rank extends CommandRK {
             ranks.add("owner");
             ranks.add("admin");
             ranks.add("mod");
+            ranks.add("artist");
             ranks.add("default");
             return ranks;
         }
