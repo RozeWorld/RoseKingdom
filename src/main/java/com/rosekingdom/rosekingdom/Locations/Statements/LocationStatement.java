@@ -81,17 +81,17 @@ public class LocationStatement extends Database {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public static boolean exists(int id, String name) {
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT name FROM rk_location WHERE id=? AND name=?")){
+            ps.setInt(1, id);
+            ps.setString(2, name);
+            try(ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            Message.Exception("Unsuccessful deletion!");
+        }
+        return false;
+    }
 }

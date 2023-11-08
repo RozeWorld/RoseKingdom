@@ -6,6 +6,7 @@ import com.rosekingdom.rosekingdom.Locations.Statements.LocationStatement;
 import com.rosekingdom.rosekingdom.Locations.subCommands.create;
 import com.rosekingdom.rosekingdom.Locations.subCommands.delete;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,7 +19,6 @@ public class Locations extends CommandRK {
         setName("locations");
         addAlias("loc");
         addAlias("l");
-        setArgumentRequirement(true);
         addSubCommand(new create(0));
         addSubCommand(new delete(0));
     }
@@ -27,13 +27,28 @@ public class Locations extends CommandRK {
     public void execute(CommandSender sender, String[] args) {
         Player player = (Player) sender;
 
+        if (args.length == 0) {
+            player.sendMessage(Component.text("Locations commands:", TextColor.fromHexString("#fff522")));
+            player.sendMessage(Component.text("/locations create", TextColor.fromHexString("#FFF522")));
+            player.sendMessage(Component.text("/locations delete", TextColor.fromHexString("#FFF522")));
+        }
+
         int id = UserStatement.getId(player.getUniqueId());
-        if(args.length==1 && LocationStatement.getLocations(id).contains(args[0])){
+        if (args.length == 1 && LocationStatement.getLocations(id).contains(args[0])) {
             Location loc = LocationStatement.getLocation(id, args[0]);
-            player.sendMessage(Component.text()
-                    .append(Component.text(loc.getBlockX()))
-                    .append(Component.text(" " + loc.getBlockY() + " "))
-                    .append(Component.text(loc.getBlockZ())));
+            String world = null;
+            switch (loc.getWorld().getEnvironment()) {
+                case NORMAL -> world = "Overworld";
+                case NETHER -> world = "Nether";
+                case THE_END -> world = "The End";
+            }
+            String text = String.format("%s's coordinates: %d %d %d in %s", args[0], loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), world);
+
+            player.sendMessage(Component.text(text, TextColor.fromHexString("#6be649")));
+        } else if (args.length == 1 && LocationStatement.getLocations(id).isEmpty()) {
+            player.sendMessage(Component.text("There aren't any locations saved!", TextColor.fromHexString("#e30000")));
+        }else if(args.length == 1){
+            player.sendMessage(Component.text("No such location!", TextColor.fromHexString("#e30000")));
         }
     }
 
@@ -43,7 +58,7 @@ public class Locations extends CommandRK {
             return null;
         }
         int id = UserStatement.getId(player.getUniqueId());
-        if(args[0].equals("delete") || args.length == 1){
+        if((args[0].equals("delete") || args[0].equals("remove"))|| args.length == 1){
             return LocationStatement.getLocations(id);
         }
 

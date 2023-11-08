@@ -21,9 +21,11 @@ public class create extends subCommandRK {
             return;
         }
         int id = UserStatement.getId(player.getUniqueId());
-        if(args.length==2){
+        if(args.length==2 && !LocationStatement.exists(id, args[1])){
             LocationStatement.insertLocation(id, args[1], player.getLocation(),false);
             player.sendMessage(Component.text("Created " + args[1] + " location!", TextColor.fromHexString("#6be649")));
+        }else {
+            player.sendMessage(Component.text("There is already a location with this name!", TextColor.fromHexString("#e30000")));
         }
     }
 }
