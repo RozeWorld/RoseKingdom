@@ -6,6 +6,7 @@ import com.rosekingdom.rosekingdom.Locations.Statements.LocationStatement;
 import com.rosekingdom.rosekingdom.Locations.subCommands.create;
 import com.rosekingdom.rosekingdom.Locations.subCommands.delete;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,7 +19,6 @@ public class Locations extends CommandRK {
         setName("locations");
         addAlias("loc");
         addAlias("l");
-        setArgumentRequirement(true);
         addSubCommand(new create(0));
         addSubCommand(new delete(0));
     }
@@ -26,6 +26,12 @@ public class Locations extends CommandRK {
     @Override
     public void execute(CommandSender sender, String[] args) {
         Player player = (Player) sender;
+
+        if(args.length==0){
+            player.sendMessage(Component.text("Locations commands:", TextColor.fromHexString("#e7ff4a")));
+            player.sendMessage(Component.text("/locations create", TextColor.fromHexString("#e7ff4a")));
+            player.sendMessage(Component.text("/locations delete", TextColor.fromHexString("#e7ff4a")));
+        }
 
         int id = UserStatement.getId(player.getUniqueId());
         if(args.length==1 && LocationStatement.getLocations(id).contains(args[0])){
