@@ -27,5 +27,6 @@ public class create extends subCommandRK {
         }else {
             player.sendMessage(Component.text("There is already a location with this name!", TextColor.fromHexString("#e30000")));
         }
+        //TODO: Add option to insert locations from coordinates
     }
 }
