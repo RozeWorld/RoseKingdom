@@ -33,9 +33,9 @@ public class CoordinatesBC extends CommandRK {
         String xyz = "x: " + loc.getBlockX() + " y: " + loc.getBlockY() + " z: " + loc.getBlockZ();
         switch (args.length) {
             case 0 -> {
-                player.sendMessage(Component.text(
-                        "Your coordinates are: "
-                ).append(Component.text(xyz)));
+                player.sendMessage(Component.text("Your coordinates are: ")
+                        .append(Component.text(xyz))
+                        .color(TextColor.fromHexString("#6be649")));
             }
             case 1 -> {
                 List<String> onlinePlayers = new ArrayList<>();
@@ -79,7 +79,9 @@ public class CoordinatesBC extends CommandRK {
             for(Player player : Bukkit.getOnlinePlayers()){
                 sgt.add(player.getName());
             }
-            sgt.add("all");
+            if(Bukkit.getOnlinePlayers().size()>2){
+                sgt.add("all");
+            }
             return sgt;
         }
         Player player = (Player) sender;

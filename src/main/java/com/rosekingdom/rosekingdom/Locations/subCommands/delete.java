@@ -12,6 +12,7 @@ public class delete extends subCommandRK {
         public delete(int arg){
             super(arg);
             setName("delete");
+            addAlias("remove");
         }
 
         @Override
@@ -20,11 +21,11 @@ public class delete extends subCommandRK {
                 return;
             }
             int id = UserStatement.getId(player.getUniqueId());
-            if(args.length==2){
+            if(args.length==2 && LocationStatement.exists(id, args[1])){
                 LocationStatement.deleteLocation(id, args[1]);
                 player.sendMessage(Component.text("Location " + args[1] + " was deleted!", TextColor.fromHexString("#6be649")));
+            }else{
+                player.sendMessage(Component.text("Missing arguments!", TextColor.fromHexString("#e30000")));
             }
-
         }
-
     }
