@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Locations extends CommandRK {
@@ -61,7 +62,25 @@ public class Locations extends CommandRK {
         if((args[0].equals("delete") || args[0].equals("remove"))|| args.length == 1){
             return LocationStatement.getLocations(id);
         }
-
+        List<String> tab = new ArrayList<>();
+        if(args.length==3){
+            tab.add(String.valueOf(player.getLocation().getBlockX()));
+            return tab;
+        }
+        if(args.length==4){
+            tab.add(String.valueOf(player.getLocation().getBlockY()));
+            return tab;
+        }
+        if(args.length==5){
+            tab.add(String.valueOf(player.getLocation().getBlockZ()));
+            return tab;
+        }
+        if(args.length==6){
+            tab.add("Overworld");
+            tab.add("Nether");
+            tab.add("End");
+            return tab;
+        }
         return null;
     }
 }
