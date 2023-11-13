@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Core.Events;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.Utils.ResourcePackLoader;
+import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
 import com.rosekingdom.rosekingdom.Ranks.RankSystem;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import net.kyori.adventure.text.Component;
@@ -42,6 +43,7 @@ public class onJoin implements Listener {
 
         if(!UserStatement.exists(player.getUniqueId())) {
             UserStatement.insert(player.getName(), player.getUniqueId().toString());
+            EconomyStatement.insert(player);
         }
         RankSystem.loadRank(player);
     }

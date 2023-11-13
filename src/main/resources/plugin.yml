@@ -7,6 +7,9 @@ prefix: RoseKingdom
 database: true
 
 commands:
+  coins:
+    description: neshto tam da ima
+
   pt:
     description: protocol test
     permission: rk.OWNER
