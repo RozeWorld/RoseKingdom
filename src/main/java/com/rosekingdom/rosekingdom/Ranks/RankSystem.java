@@ -36,7 +36,9 @@ public class RankSystem {
     }
 
     public static void setStatusAFK(Player player) {
-        teamRank.get(player).suffix(Component.text("\uDB00\uDC03\uEa06"));
+        Team team = board.registerNewTeam(teamRank.get(player).getName()+player.getName());
+        team.prefix(teamRank.get(player).prefix());
+        team.suffix(Component.text("\uDB00\uDC03\uEa06"));
         refreshScoreboard();
     }
     public static void removeStatusAFK(Player player) {
