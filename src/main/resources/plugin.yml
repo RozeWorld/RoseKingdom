@@ -57,15 +57,10 @@ commands:
 
   feedback:
     description: Link for suggesting your ideas
-  texturetesting:
-    description: Removes and Sets the server resource pack
-    permission: rk.mod
-  playtime:
-    description: Returns play time on the server
 
   texturetesting:
     description: Removes and Sets the server resource pack
-    permission: rk.MOD
+    permission: rk.ARTIST
 
   playtime:
     description: Returns play time on the server
@@ -74,6 +69,7 @@ permissions:
   rk.OWNER:
     default: false
     children:
+      - rk.ARTIST
       - rk.ADMIN
       - rk.MOD
       - rk.DEFAULT
@@ -81,12 +77,14 @@ permissions:
   rk.ADMIN:
     default: false
     children:
+      - rk.ARTIST
       - rk.MOD
       - rk.DEFAULT
     description: Admins permissions
   rk.MOD:
     default: false
     children:
+      - rk.ARTIST
       - rk.DEFAULT
     description: Mods permissions
   rk.artist:
