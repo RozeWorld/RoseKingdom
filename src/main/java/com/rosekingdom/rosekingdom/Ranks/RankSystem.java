@@ -13,10 +13,12 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 public class RankSystem {
     private static final Map<Player, Team> teamRank = new HashMap<>();
+    private static final Map<Player, Team> isAFK = new HashMap<>();
     static ScoreboardManager manager = Bukkit.getScoreboardManager();
     static Scoreboard board = manager.getNewScoreboard();
     public static void loadRank(Player player){
@@ -36,13 +38,18 @@ public class RankSystem {
     }
 
     public static void setStatusAFK(Player player) {
-        Team team = board.registerNewTeam(teamRank.get(player).getName()+player.getName());
+        Team team = board.registerNewTeam(String.valueOf(UUID.randomUUID()));
         team.prefix(teamRank.get(player).prefix());
         team.suffix(Component.text("\uDB00\uDC03\uEa06"));
         team.addPlayer(player);
+        isAFK.put(player, team);
         refreshScoreboard();
     }
     public static void removeStatusAFK(Player player) {
+        if(isAFK.containsKey(player)){
+            isAFK.get(player).unregister();
+            isAFK.remove(player);
+        }
         teamRank.get(player).addPlayer(player);
         refreshScoreboard();
     }
