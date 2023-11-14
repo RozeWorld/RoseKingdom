@@ -25,7 +25,7 @@ public class AFKstatus implements Listener {
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.runTaskTimerAsynchronously(plugin, () -> {
             for(Map.Entry<Player, Long> moved : lastMoved.entrySet()){
-                if((System.currentTimeMillis()-moved.getValue()) >= 30 * 1000){
+                if((System.currentTimeMillis()-moved.getValue()) >= 3 * 60 * 1000){
                     Player player = moved.getKey();
                     RankSystem.setStatusAFK(player);
                     player.sendMessage(Component.text("You are now AFK!"));
@@ -36,7 +36,7 @@ public class AFKstatus implements Listener {
                 lastMoved.remove(player);
             }
             forRemoval.clear();
-        }, 0, 5 * 20);
+        }, 0, 30 * 20);
     }
     @EventHandler(priority = EventPriority.LOWEST)
     public void playerMoved(PlayerMoveEvent e){
