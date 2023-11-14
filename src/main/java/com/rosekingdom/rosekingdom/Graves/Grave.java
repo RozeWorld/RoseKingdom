@@ -24,6 +24,8 @@ public class Grave {
     int id;
     int time;
     int task;
+    ItemDisplay display;
+    Interaction interaction;
     String graveId;
     public static List<Grave> graveList = new ArrayList<>();
     public Grave(Player player){
@@ -33,6 +35,7 @@ public class Grave {
     public Grave(int id, String graveId) {
         this.id = id;
         this.graveId = graveId;
+        createGrave(DeathStatement.getLocation(id, graveId));
     }
 
     public static void addGrave(Grave grave){
@@ -42,24 +45,52 @@ public class Grave {
         return graveList;
     }
 
-    public void CreateGrave(){
-        Location loc = player.getLocation();
-        loc = new Location(player.getWorld(), loc.getBlockX()+0.5, loc.getBlockY(), loc.getBlockZ()+0.5);
+    public static List<Grave> getGraves(int id) {
+        List<Grave> graves = new ArrayList<>();
+        for(Grave grave : graveList){
+            if(grave.id == id){
+                graves.add(grave);
+            }
+        }
+        return graves;
+    }
 
-        ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(loc.toCenterLocation(), EntityType.ITEM_DISPLAY);
+
+    public void setupGrave(){
+        Location loc = player.getLocation();
+        loc = new Location(player.getWorld(), loc.getBlockX()+0.5, loc.getBlockY(), loc.getBlockZ()+0.5, player.getBodyYaw(), 0);
+        createGrave(loc);
+        showPlayerGrave(player);
+        graveId = DeathStatement.insert(player, loc, display.getUniqueId(), interaction.getUniqueId());
+        GraveStatement.insertInventory(id, graveId, player);
+        timer(3600);
+
+    }
+    @SuppressWarnings("Experimental")
+    private void createGrave(Location loc){
+        //Grave
+        display = (ItemDisplay) loc.getWorld().spawnEntity(loc.toCenterLocation(), EntityType.ITEM_DISPLAY);
         ItemStack item = new ItemStack(Material.PAPER);
         ItemMeta meta = item.getItemMeta();
         meta.setCustomModelData(4000);
         item.setItemMeta(meta);
         display.setItemStack(item);
-        display.setRotation(player.getBodyYaw(), 0);
+        display.setRotation(loc.getYaw(), 0);
 
-        Interaction interaction = (Interaction) player.getWorld().spawnEntity(loc, EntityType.INTERACTION);
+        //Interaction
+        interaction = (Interaction) loc.getWorld().spawnEntity(loc, EntityType.INTERACTION);
         interaction.setInteractionWidth(0.3f);
 
-        graveId = DeathStatement.insert(player, loc, display.getUniqueId(), interaction.getUniqueId());
-        GraveStatement.insertInventory(id, graveId, player);
-        timer(3600);
+        //Change visibility
+        display.setVisibleByDefault(false);
+        interaction.setVisibleByDefault(false);
+    }
+
+    @SuppressWarnings("Experimental")
+    public void showPlayerGrave(Player player){
+        JavaPlugin plugin = JavaPlugin.getPlugin(RoseKingdom.class);
+        player.showEntity(plugin, display);
+        player.showEntity(plugin, interaction);
     }
 
     public void timer(int duration){

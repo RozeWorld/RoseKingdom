@@ -16,8 +16,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
-public class onDead implements Listener {
+public class GraveEvents implements Listener {
 
     @EventHandler
     public void onDeadEvent(PlayerDeathEvent e) {
@@ -45,7 +46,7 @@ public class onDead implements Listener {
             e.getDrops().clear();
 
             Grave grave = new Grave(player);
-            grave.CreateGrave();
+            grave.setupGrave();
             Grave.addGrave(grave);
         }
     }
@@ -55,7 +56,8 @@ public class onDead implements Listener {
         Player player = e.getPlayer();
         Entity clicked = e.getRightClicked();
         if(clicked.getType() == EntityType.INTERACTION && DeathStatement.isGrave(clicked.getLocation())){
-            GraveGUI gui = new GraveGUI(player, DeathStatement.getGrave(clicked));
+            //TODO:fix this
+            GraveGUI gui = new GraveGUI(player, DeathStatement.getGraveId(clicked));
             player.openInventory(gui.getInventory());
             e.setCancelled(true);
         }
@@ -70,6 +72,15 @@ public class onDead implements Listener {
             if(e.getInventory().isEmpty()){
                 DeathStatement.purge(id, grave.getGraveId());
             }
+        }
+    }
+
+    @SuppressWarnings("Experimental")
+    @EventHandler
+    public void showGrave(PlayerJoinEvent e){
+        Player player = e.getPlayer();
+        for(Grave grave : Grave.getGraves(UserStatement.getId(player))){
+            grave.showPlayerGrave(player);
         }
     }
 }
