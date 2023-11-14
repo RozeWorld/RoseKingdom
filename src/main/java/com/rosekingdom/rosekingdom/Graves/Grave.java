@@ -76,10 +76,11 @@ public class Grave {
 
     private void removeGrave(int id, String graveId) {
         Location loc = DeathStatement.getLocation(id, graveId);
+        if(!loc.isChunkLoaded()){
+            loc.getChunk().load();
+        }
         for(ItemStack items : GraveStatement.getItems(id, graveId)){
-            if (loc != null) {
-                loc.getWorld().dropItemNaturally(loc, items);
-            }
+            loc.getWorld().dropItemNaturally(loc, items);
         }
         GraveStatement.deleteGrave(id, graveId);
         DeathStatement.purge(id, graveId);
