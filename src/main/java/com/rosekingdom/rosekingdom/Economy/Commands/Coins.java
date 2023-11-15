@@ -20,7 +20,9 @@ public class Coins extends CommandRK {
         if(!(sender instanceof Player player)){
             return;
         }
-        player.sendMessage(Component.text(EconomyStatement.getCoins(player)));
+        if(args.length ==0) {
+            player.sendMessage(Component.text(EconomyStatement.getCoins(player)));
+        }
     }
 
     @Override

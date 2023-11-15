@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Economy.Commands;
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
 import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -19,5 +20,6 @@ public class addCoins extends subCommandRK {
             return;
         }
         EconomyStatement.addCoins(player, Integer.parseInt(args[1]));
+        player.sendMessage(Component.text("gn"));
     }
 }

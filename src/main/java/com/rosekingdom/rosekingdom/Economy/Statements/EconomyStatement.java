@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Economy.Statements;
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,8 +60,8 @@ public class EconomyStatement extends Database {
         }
         try(Connection connection = Database.getConnection();
             PreparedStatement ps = connection.prepareStatement("UPDATE rk_economy SET coins=? WHERE id=?")) {
-            ps.setInt(1, UserStatement.getId(id));
-            ps.setInt(2, coins);
+            ps.setInt(1, coins);
+            ps.setInt(2, UserStatement.getId(id));
             ps.executeUpdate();
         } catch (SQLException e) {
             Message.Exception("Unable to set the money");
@@ -79,14 +80,13 @@ public class EconomyStatement extends Database {
         }catch (SQLException e){
             Message.Exception("Non-existing or broken connection");
         }
-
         try(Connection connection = Database.getConnection();
             PreparedStatement ps = connection.prepareStatement("UPDATE rk_economy SET coins=? WHERE id=?")) {
-            ps.setInt(1, UserStatement.getId(id));
-            ps.setInt(2, coins);
+            ps.setInt(1, coins);
+            ps.setInt(2, UserStatement.getId(id));
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unable to set the AssignRank");
+            Message.Exception("Unable to remove coins");
         }
     }
     public static void resCoins(Player id){
