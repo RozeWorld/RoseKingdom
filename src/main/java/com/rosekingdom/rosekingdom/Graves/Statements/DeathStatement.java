@@ -45,9 +45,9 @@ public class DeathStatement extends Database {
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT graveId FROM rk_death WHERE x=? AND y=? AND z=? AND dim=?")){
             Location loc = interaction.getLocation();
-            ps.setInt(1, loc.getBlockX());
-            ps.setInt(2, loc.getBlockY());
-            ps.setInt(3, loc.getBlockZ());
+            ps.setDouble(1, loc.getX());
+            ps.setDouble(2, loc.getY());
+            ps.setDouble(3, loc.getZ());
             ps.setString(4, loc.getWorld().getName());
             try(ResultSet rs = ps.executeQuery()){
                 rs.next();
