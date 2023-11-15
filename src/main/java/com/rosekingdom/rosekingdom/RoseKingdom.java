@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 
 public final class RoseKingdom extends JavaPlugin {
-    public static int players=0;
+
     @Override
     public void onEnable() {
         getLogger().info("RoseKingdom Started Loading!");
