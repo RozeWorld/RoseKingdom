@@ -27,8 +27,8 @@ public class Coins extends CommandRK {
             player.sendMessage(Component.text(EconomyStatement.getCoins(player)));
         }
         if(args.length == 1) {
-            if(getSubCommands().contains(args[1])){
-
+            if(!getSubCommands().contains(args[0])){
+                player.sendMessage(Component.text("No such subcommand"));
             }
         }
     }
