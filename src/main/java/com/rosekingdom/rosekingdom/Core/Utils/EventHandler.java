@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Core.Utils;
 import com.rosekingdom.rosekingdom.Core.Events.onChatEvent;
 import com.rosekingdom.rosekingdom.Core.Events.onJoin;
 import com.rosekingdom.rosekingdom.Core.Events.onLeave;
+import com.rosekingdom.rosekingdom.Economy.Events.TestHandler;
 import com.rosekingdom.rosekingdom.Graves.onDead;
 import com.rosekingdom.rosekingdom.Profiles.Events.DailyStreakChecker;
 import com.rosekingdom.rosekingdom.Profiles.Events.GUIhandler;
@@ -18,6 +19,7 @@ public class EventHandler {
         getServer().getPluginManager().registerEvents(new onLeave(), plugin);
         getServer().getPluginManager().registerEvents(new onChatEvent(), plugin);
         getServer().getPluginManager().registerEvents(new GUIhandler(), plugin);
+        getServer().getPluginManager().registerEvents(new TestHandler(), plugin);
         getServer().getPluginManager().registerEvents(new AFKstatus(), plugin);
         getServer().getPluginManager().registerEvents(new DailyStreakChecker(), plugin);
     }
