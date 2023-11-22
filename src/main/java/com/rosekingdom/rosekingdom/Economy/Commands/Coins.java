@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Economy.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
+import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
 import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -14,8 +15,8 @@ public class Coins extends CommandRK {
     public Coins(){
         setName("Coins");
         addSubCommand(new addCoins(0));
-        addSubCommand(new remCoins(0));
-        addSubCommand(new transCoins(0));
+        addSubCommand(new removeCoins(0));
+        addSubCommand(new transferCoins(0));
     }
 
     @Override
@@ -26,10 +27,8 @@ public class Coins extends CommandRK {
         if (args.length == 0) {
             player.sendMessage(Component.text(EconomyStatement.getCoins(player)));
         }
-        if(args.length == 1) {
-            if(getSubCommands().contains(args[1])){
-
-            }
+        if(args.length >= 1 && !getSubAliases(0).contains(args[0])){
+            player.sendMessage(Component.text("Unknown subcommand"));
         }
     }
 

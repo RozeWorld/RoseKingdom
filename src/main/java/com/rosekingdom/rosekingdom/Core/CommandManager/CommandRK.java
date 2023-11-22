@@ -10,6 +10,7 @@ public abstract class CommandRK {
     private final List<String> aliases = new ArrayList<>();
     private final List<subCommandRK> subCommands = new ArrayList<>();
     private boolean requiredArguments = false;
+
     public void setName(String name) {
         aliases.add(name);
     }
@@ -42,6 +43,16 @@ public abstract class CommandRK {
 
     public void addSubCommand(subCommandRK subCommand) {
         subCommands.add(subCommand);
+    }
+
+    public List<String> getSubAliases(int arg){
+        List<String> aliases = new ArrayList<>();
+        for(subCommandRK sub : getSubCommands()){
+            if(sub.subCommandArg == arg){
+                aliases.addAll(sub.getAliases());
+            }
+        }
+        return aliases;
     }
 
     public void setArgumentRequirement(boolean requirement){

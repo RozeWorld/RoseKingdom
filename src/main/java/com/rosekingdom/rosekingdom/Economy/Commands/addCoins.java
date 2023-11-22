@@ -18,16 +18,20 @@ public class addCoins extends subCommandRK {
     }
     @Override
     public void executeSub(CommandSender sender, String[] args) {
-        if(args.length == 2 && !UserStatement.exists(args[1])){
-            sender.sendMessage(Component.text("No such player"));
-            return;
+        if(args.length == 2){
+            if(!UserStatement.exists(args[1])){
+                sender.sendMessage(Component.text("No such player"));
+                return;
+            }else{
+                sender.sendMessage(Component.text("Missing amount of coins!"));
+            }
         }
-        if(args.length == 3 ){
+        if(args.length == 3){
             try{
                 Integer.parseInt(args[2]);
                 EconomyStatement.addCoins(Bukkit.getOfflinePlayer(args[1]), Integer.parseInt(args[2]));
             }catch (Exception e){
-                sender.sendMessage(Component.text("Tupanar napishi chislo"));
+                sender.sendMessage(Component.text("Invalid variable!"));
             }
         }
     }

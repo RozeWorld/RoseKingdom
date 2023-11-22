@@ -8,8 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class transCoins extends subCommandRK{
-        public transCoins(int arg){
+public class transferCoins extends subCommandRK{
+        public transferCoins(int arg){
             super(arg);
             setName("transfer");
         }

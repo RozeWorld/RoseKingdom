@@ -6,10 +6,9 @@ import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-public class remCoins extends subCommandRK {
-    public remCoins(int arg) {
+public class removeCoins extends subCommandRK {
+    public removeCoins(int arg) {
         super(arg);
         setName("remove");
     }
