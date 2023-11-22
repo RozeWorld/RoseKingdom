@@ -3,6 +3,7 @@ import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import net.kyori.adventure.text.Component;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,7 +46,7 @@ public class EconomyStatement extends Database {
         }
         return coins;
     }
-    public static void addCoins(Player id, int add){
+    public static void addCoins(OfflinePlayer id, int add){
         int coins=0;
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT coins FROM rk_economy WHERE id=?")) {
@@ -67,7 +68,7 @@ public class EconomyStatement extends Database {
             Message.Exception("Unable to set the money");
         }
     }
-    public static void remCoins(Player id, int rem){
+    public static void remCoins(OfflinePlayer id, int rem){
         int coins=0;
         try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT coins FROM rk_economy WHERE id=?")) {

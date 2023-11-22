@@ -168,4 +168,17 @@ public class UserStatement extends Database {
         }
         return date;
     }
+
+    public static boolean exists(String name) {
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT name FROM rk_user WHERE name=?")){
+            ps.setString(1, name);
+            try(ResultSet rs = ps.executeQuery()){
+                return rs.next();
+            }
+        }catch (Exception e){
+            Message.Exception("Non-existing");
+        }
+        return false;
+    }
 }
