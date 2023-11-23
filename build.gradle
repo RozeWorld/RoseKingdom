@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'com.rosekingdom'
-version = '1.0.4 BETA'
+version = '1.0.4-BETA'
 
 repositories {
     mavenCentral()
