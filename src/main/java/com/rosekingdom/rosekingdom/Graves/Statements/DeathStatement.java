@@ -5,6 +5,7 @@ import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -22,15 +23,16 @@ public class DeathStatement extends Database {
     public static String insert(Player player, Location loc, UUID BD, UUID IA) {
         String id = String.valueOf(UUID.randomUUID());
         try(Connection connection = getConnection();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_death(id,graveId,x,y,z,dim,IA_uuid,BD_uuid) VALUES(?,?,?,?,?,?,?,?)")) {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_death(id,graveId,x,y,z,dim,yaw,IA_uuid,BD_uuid) VALUES(?,?,?,?,?,?,?,?,?)")) {
             ps.setInt(1, UserStatement.getId(player.getUniqueId()));
             ps.setString(2, id);
-            ps.setInt(3, loc.getBlockX());
-            ps.setInt(4, loc.getBlockY());
-            ps.setInt(5, loc.getBlockZ());
+            ps.setDouble(3, loc.getX());
+            ps.setDouble(4, loc.getY());
+            ps.setDouble(5, loc.getZ());
             ps.setString(6, loc.getWorld().getName());
-            ps.setString(7, IA.toString());
-            ps.setString(8, BD.toString());
+            ps.setFloat(7, loc.getYaw());
+            ps.setString(8, IA.toString());
+            ps.setString(9, BD.toString());
             ps.executeUpdate();
         } catch (SQLException e) {
             Message.Exception("Unsuccessful Insertion!\n" + e.getMessage());
@@ -38,14 +40,14 @@ public class DeathStatement extends Database {
         return id;
     }
 
-    public static String getGrave(Entity interaction) {
+    public static String getGraveId(Entity interaction) {
         String grave = null;
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT graveId FROM rk_death WHERE x=? AND y=? AND z=? AND dim=?")){
             Location loc = interaction.getLocation();
-            ps.setInt(1, loc.getBlockX());
-            ps.setInt(2, loc.getBlockY());
-            ps.setInt(3, loc.getBlockZ());
+            ps.setDouble(1, loc.getX());
+            ps.setDouble(2, loc.getY());
+            ps.setDouble(3, loc.getZ());
             ps.setString(4, loc.getWorld().getName());
             try(ResultSet rs = ps.executeQuery()){
                 rs.next();
@@ -55,6 +57,22 @@ public class DeathStatement extends Database {
             Message.Exception("Bad Connection to the DB");
         }
         return grave;
+    }
+
+    public static List<UUID> getGraves(OfflinePlayer player){
+        List<UUID> graves = new ArrayList<>();
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT IA_uuid, BD_uuid FROM rk_death WHERE id=?")){
+            ps.setInt(1, UserStatement.getId(player));
+            try(ResultSet rs = ps.executeQuery()){
+                while (rs.next()){
+                    graves.add(UUID.fromString(rs.getString(1)));
+                }
+            }
+        } catch (SQLException e) {
+            Message.Exception("Bad Connection to the DB");
+        }
+        return graves;
     }
 
     public static int total_graves(Player player) {
@@ -105,12 +123,12 @@ public class DeathStatement extends Database {
     public static Location getLocation(int id, String graveId) {
         Location loc = null;
         try(Connection connection = getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT x,y,z,dim FROM rk_death WHERE id=? AND graveId=?")){
+            PreparedStatement ps = connection.prepareStatement("SELECT x,y,z,dim,yaw FROM rk_death WHERE id=? AND graveId=?")){
             ps.setInt(1, id);
             ps.setString(2, graveId);
             try(ResultSet rs = ps.executeQuery()){
                 if(rs.next()) {
-                    loc = new Location(Bukkit.getWorld(rs.getString(4)), rs.getInt(1), rs.getInt(2), rs.getInt(3));
+                    loc = new Location(Bukkit.getWorld(rs.getString(4)), rs.getDouble(1), rs.getDouble(2), rs.getDouble(3), rs.getFloat(5),0);
                 }
             }
         } catch (SQLException e) {
@@ -122,9 +140,9 @@ public class DeathStatement extends Database {
         boolean isGraveOnLocation = false;
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_death WHERE x=? AND y=? AND z=?")) {
-            ps.setDouble(1, loc.getBlockX());
-            ps.setDouble(2, loc.getBlockY());
-            ps.setDouble(3, loc.getBlockZ());
+            ps.setDouble(1, loc.getX());
+            ps.setDouble(2, loc.getY());
+            ps.setDouble(3, loc.getZ());
             try(ResultSet rs = ps.executeQuery()) {
                 isGraveOnLocation = rs.next();
             }

@@ -8,11 +8,13 @@ import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Ranks.AFKstatus;
 import com.rosekingdom.rosekingdom.Ranks.RankSystem;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
 public final class RoseKingdom extends JavaPlugin {
-    public static int players=0;
+
     @Override
     public void onEnable() {
         getLogger().info("RoseKingdom Started Loading!");
@@ -31,6 +33,11 @@ public final class RoseKingdom extends JavaPlugin {
         AFKstatus.check(this);
 
         getLogger().info("RoseKingdom Loaded!");
+        if(!Bukkit.getOnlinePlayers().isEmpty()){
+            for(Player player : Bukkit.getOnlinePlayers()){
+                RankSystem.loadRank(player);
+            }
+        }
     }
 
     @Override
@@ -38,8 +45,10 @@ public final class RoseKingdom extends JavaPlugin {
         getLogger().info("Started Shutting Down!");
 
         getLogger().info("Saving Graves...");
-        for(Grave grave : Grave.getGraveList()){
-            grave.save();
+        if(!Grave.getGraveList().isEmpty()){
+            for(Grave grave : Grave.getGraveList()){
+                grave.save();
+            }
         }
 
         getLogger().info("Successful shutdown!");
