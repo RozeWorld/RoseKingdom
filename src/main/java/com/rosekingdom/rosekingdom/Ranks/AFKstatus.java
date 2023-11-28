@@ -11,7 +11,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AFKstatus implements Listener {
@@ -19,6 +21,7 @@ public class AFKstatus implements Listener {
     static HashMap<Player, Long> lastMoved = new HashMap<>();
 
     public static void check(JavaPlugin plugin){
+        List<Player> forRemoval = new ArrayList<>();
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.runTaskTimerAsynchronously(plugin, () -> {
             for(Map.Entry<Player, Long> moved : lastMoved.entrySet()){
@@ -26,17 +29,21 @@ public class AFKstatus implements Listener {
                     Player player = moved.getKey();
                     RankSystem.setStatusAFK(player);
                     player.sendMessage(Component.text("You are now AFK!"));
-                    lastMoved.remove(player);
+                    forRemoval.add(player);
                 }
             }
-        }, 0, 60 * 20);
+            for(Player player : forRemoval){
+                lastMoved.remove(player);
+            }
+            forRemoval.clear();
+        }, 0, 30 * 20);
     }
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void playerMoved(PlayerMoveEvent e){
         lastMoved.put(e.getPlayer(), System.currentTimeMillis());
         RankSystem.removeStatusAFK(e.getPlayer());
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerQuit(PlayerQuitEvent e) {
         lastMoved.remove(e.getPlayer());
     }
