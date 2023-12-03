@@ -13,6 +13,8 @@ import java.util.List;
 public class Coins extends CommandRK {
     public Coins(){
         setName("Coins");
+        addAlias("Wallet");
+        addAlias("Money");
         addSubCommand(new addCoins(0));
         addSubCommand(new removeCoins(0));
         addSubCommand(new transferCoins(0));
@@ -35,8 +37,10 @@ public class Coins extends CommandRK {
     public List<String> tabComplete(CommandSender sender, String[] args) {
         List<String> sgt = new ArrayList<>();
         if(args.length == 1){
-            sgt.add("add");
-            sgt.add("remove");
+            if(sender.hasPermission("rk.MOD")){
+                sgt.add("add");
+                sgt.add("remove");
+            }
             sgt.add("transfer");
             return sgt;
         }

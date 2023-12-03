@@ -12,6 +12,9 @@ commands:
 
   coins:
     description: neshto tam da ima
+    aliases:
+      - wallet
+      - money
 
   pt:
     description: protocol test
