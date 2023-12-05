@@ -22,7 +22,7 @@ public class transferCoins extends subCommandRK{
             player.sendMessage(Component.text("No such player"));
             return;
         }
-        EconomyStatement.remCoins(player, Integer.parseInt(args[2]));
+        EconomyStatement.removeCoins(player, Integer.parseInt(args[2]));
         EconomyStatement.addCoins(Bukkit.getOfflinePlayer(args[1]), Integer.parseInt(args[2]));
         player.sendMessage(Component.text("BOMBA"));
     }

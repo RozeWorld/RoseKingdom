@@ -1,7 +1,7 @@
 package com.rosekingdom.rosekingdom.Economy.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
-import com.rosekingdom.rosekingdom.Economy.Statements.EconomyGUI;
+import com.rosekingdom.rosekingdom.Economy.GUIs.MerchantGUI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -17,7 +17,7 @@ public class test2 extends CommandRK {
         if (!(sender instanceof Player player)) {
             return;
         }
-        EconomyGUI gui = new EconomyGUI();
+        MerchantGUI gui = new MerchantGUI();
         player.openInventory(gui.getInventory());
     }
 

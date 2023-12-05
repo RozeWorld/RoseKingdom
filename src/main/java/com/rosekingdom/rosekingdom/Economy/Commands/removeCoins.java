@@ -31,7 +31,7 @@ public class removeCoins extends subCommandRK {
         if (args.length == 3) {
             try {
                 Integer.parseInt(args[2]);
-                EconomyStatement.remCoins(Bukkit.getOfflinePlayer(args[1]), Integer.parseInt(args[2]));
+                EconomyStatement.removeCoins(Bukkit.getOfflinePlayer(args[1]), Integer.parseInt(args[2]));
             } catch (Exception e) {
                 sender.sendMessage(Component.text("Invalid variable!"));
             }
