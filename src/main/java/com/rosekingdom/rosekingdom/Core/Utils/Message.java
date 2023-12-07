@@ -10,7 +10,7 @@ public class Message {
     }
 
     public static void Exception(String error){
-        Bukkit.getLogger().info(error);
+        Bukkit.getLogger().warning(error);
     }
 
     public static void Global(String text){
