@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class MerchantGUI implements InventoryHolder {
     @Override
     public @NotNull Inventory getInventory() {
-        Inventory shop = Bukkit.createInventory(this ,54, Component.text("Merchant Menu"));
+        Inventory shop = Bukkit.createInventory(this ,45, Component.text("Merchant Menu"));
         return shop;
     }
 }

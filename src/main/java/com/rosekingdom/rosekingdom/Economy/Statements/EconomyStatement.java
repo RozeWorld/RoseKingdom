@@ -14,8 +14,8 @@ import java.sql.SQLException;
 
 public class EconomyStatement extends Database {
     public static void insert(Player id){
-        try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_economy (id, coins) VALUES (?, ?)")){
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_economy (id, coins) VALUES (?, ?)")){
             ps.setInt(1, UserStatement.getId(id));
             ps.setInt(2, 0);
             ps.executeUpdate();
