@@ -1,4 +1,4 @@
-package com.rosekingdom.rosekingdom.Profiles.Events;
+package com.rosekingdom.rosekingdom.Profiles.Events.GUI;
 
 import com.rosekingdom.rosekingdom.Profiles.UserGUI;
 import org.bukkit.entity.Player;
@@ -10,7 +10,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 
-public class GUIhandler implements Listener {
+public class eProfile implements Listener {
     @EventHandler
     public void movingItems(InventoryClickEvent e){
         if(e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY) && e.getView().getTopInventory().getHolder() instanceof UserGUI){
@@ -37,7 +37,7 @@ public class GUIhandler implements Listener {
 
     @EventHandler
     public void openProfile(PlayerInteractEntityEvent e){
-        if(e.getRightClicked() instanceof Player player){
+        if(e.getRightClicked() instanceof Player player && player.isSneaking()){
             Inventory inventory = new UserGUI(player).getInventory();
             e.getPlayer().openInventory(inventory);
         }

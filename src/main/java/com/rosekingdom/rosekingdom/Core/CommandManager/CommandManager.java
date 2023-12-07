@@ -4,7 +4,7 @@ import com.rosekingdom.rosekingdom.Core.CommandManager.ExampleCommands.test;
 import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.*;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Economy.Commands.Coins;
-import com.rosekingdom.rosekingdom.Economy.Commands.test2;
+import com.rosekingdom.rosekingdom.Economy.Commands.createStore;
 import com.rosekingdom.rosekingdom.Graves.GraveCommand;
 import com.rosekingdom.rosekingdom.Locations.CoordinatesBC;
 import com.rosekingdom.rosekingdom.Locations.Locations;
@@ -49,7 +49,7 @@ public class CommandManager implements TabExecutor {
         addCommand(new ResourcePackTesting());
         addCommand(new PlayTime());
         addCommand(new Coins());
-        addCommand(new test2());
+        addCommand(new createStore());
     }
 
     public List<CommandRK> getCommands() {

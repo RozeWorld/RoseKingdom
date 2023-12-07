@@ -6,10 +6,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
-public class MerchantGUI implements InventoryHolder {
+public class Merchant implements InventoryHolder {
     @Override
     public @NotNull Inventory getInventory() {
-        Inventory shop = Bukkit.createInventory(this ,45, Component.text("Merchant Menu"));
-        return shop;
+        return Bukkit.createInventory(this,45, Component.text("Merchant Menu"));
     }
 }

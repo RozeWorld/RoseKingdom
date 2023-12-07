@@ -1,15 +1,17 @@
 package com.rosekingdom.rosekingdom.Economy.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
-import com.rosekingdom.rosekingdom.Economy.GUIs.MerchantGUI;
+import com.rosekingdom.rosekingdom.Economy.Statements.StoreStatement;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 
 import java.util.List;
 
-public class test2 extends CommandRK {
-    public test2(){
-        setName("neshto");
+public class createStore extends CommandRK {
+    public createStore(){
+        setName("store");
     }
 
     @Override
@@ -17,8 +19,10 @@ public class test2 extends CommandRK {
         if (!(sender instanceof Player player)) {
             return;
         }
-        MerchantGUI gui = new MerchantGUI();
-        player.openInventory(gui.getInventory());
+        Zombie zombie = (Zombie) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+        zombie.setAI(false);
+        zombie.setShouldBurnInDay(false);
+        StoreStatement.createStore(player, zombie.getUniqueId());
     }
 
     @Override

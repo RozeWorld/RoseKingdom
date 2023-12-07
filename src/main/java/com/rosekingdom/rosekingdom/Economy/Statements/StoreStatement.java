@@ -11,11 +11,11 @@ import java.util.UUID;
 
 public class StoreStatement extends Database {
 
-    public void createStore(Player player){
+    public static void createStore(Player player, UUID uuid){
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_store(owner, store_id, x, y, z, dim, yaw) VALUES (?,?,?,?,?,?,?)")) {
             ps.setString(1, player.getUniqueId().toString());
-            ps.setString(2, UUID.randomUUID().toString());
+            ps.setString(2, uuid.toString());
             ps.setDouble(3, player.getX());
             ps.setDouble(4, player.getY());
             ps.setDouble(5, player.getZ());
@@ -27,7 +27,7 @@ public class StoreStatement extends Database {
             Message.Console(e.getMessage());
         }
     }
-    public void deleteStore(Player player){
+    public static void deleteStore(Player player){
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("DELETE FROM rk_store WHERE owner=?")) {
             ps.setString(1, player.getUniqueId().toString());
@@ -36,6 +36,18 @@ public class StoreStatement extends Database {
             Message.Exception("Unable to delete store");
             Message.Console(e.getMessage());
         }
+    }
+
+
+    //TODO: Finish Statements
+    public static boolean isStore(UUID uniqueId) {
+        boolean isStore = false;
+        return isStore;
+    }
+
+    public static boolean owner(Player player) {
+        boolean isOwner = false;
+        return isOwner;
     }
     //TODO: Add remove and update statements
 }

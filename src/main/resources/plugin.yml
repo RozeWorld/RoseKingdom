@@ -7,11 +7,11 @@ prefix: RoseKingdom
 database: true
 
 commands:
-  neshto:
-    description: testove
+  store:
+    description: Opens store settings menu
 
   coins:
-    description: neshto tam da ima
+    description: Utility command
     aliases:
       - wallet
       - money
