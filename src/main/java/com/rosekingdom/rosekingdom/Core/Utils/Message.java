@@ -9,8 +9,9 @@ public class Message {
         Bukkit.getLogger().info(text);
     }
 
-    public static void Exception(String error){
+    public static void Exception(String error, Exception e){
         Bukkit.getLogger().warning(error);
+        Bukkit.getLogger().warning(e.getMessage());
     }
 
     public static void Global(String text){

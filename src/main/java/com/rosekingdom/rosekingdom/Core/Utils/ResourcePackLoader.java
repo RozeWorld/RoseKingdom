@@ -26,7 +26,7 @@ public class ResourcePackLoader {
                     true
             );
         } catch (IOException | NoSuchAlgorithmException e) {
-            Message.Exception("Failed to set ResourcePack\n" + e.getMessage());
+            Message.Exception("Failed to set ResourcePack", e);
         }
     }
 
@@ -40,7 +40,7 @@ public class ResourcePackLoader {
                     true
             );
         } catch (IOException | NoSuchAlgorithmException e) {
-            Message.Exception("Failed to set ResourcePack\n" + e.getMessage());
+            Message.Exception("Failed to set ResourcePack", e);
         }
     }
 
