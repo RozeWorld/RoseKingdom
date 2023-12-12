@@ -16,7 +16,7 @@ public class StockStatement extends Database {
             ps.setString(2, store);
             ps.executeUpdate();
         }catch (SQLException e){
-            Message.Exception("Unable to add item to store");
+            Message.Exception("Unable to add item to store", e);
         }
     }
 
@@ -28,7 +28,7 @@ public class StockStatement extends Database {
             ps.setString(2, store);
             ps.executeUpdate();
         }catch (SQLException e){
-            Message.Exception("Unable to remove from the store");
+            Message.Exception("Unable to remove from the store", e);
         }
     }
 
@@ -44,7 +44,7 @@ public class StockStatement extends Database {
                 stock = rs.getInt(1);
             }
         }catch (SQLException e){
-            Message.Exception("Can't get the stock value");
+            Message.Exception("Can't get the stock value", e);
         }
         return stock;
     }
@@ -58,7 +58,7 @@ public class StockStatement extends Database {
             ps.setBlob(3, blob);
             ps.executeUpdate();
         }catch (SQLException e){
-            Message.Exception("Couldn't add stock in the store");
+            Message.Exception("Couldn't add stock in the store", e);
         }
     }
 }

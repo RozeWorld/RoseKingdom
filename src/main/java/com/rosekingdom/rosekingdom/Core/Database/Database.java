@@ -44,7 +44,7 @@ public class Database {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_stocks(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), item longblob, stock int, cost int, store_id varchar(64))");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_store(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), owner varchar(64), store_id varchar(64), x double, y double, z double, dim varchar(100), yaw float)");
         }catch (SQLException e){
-            Message.Exception("Unable to initialize tables!" + e.getMessage());
+            Message.Exception("Unable to initialize tables!", e);
         }
     }
 }
