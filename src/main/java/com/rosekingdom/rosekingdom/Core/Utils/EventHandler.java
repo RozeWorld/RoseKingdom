@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Core.Utils;
 import com.rosekingdom.rosekingdom.Core.Events.onChatEvent;
 import com.rosekingdom.rosekingdom.Core.Events.onJoin;
 import com.rosekingdom.rosekingdom.Core.Events.onLeave;
+import com.rosekingdom.rosekingdom.Economy.Events.GUI.eAddItem;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.eOpenAsPlayer;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sOpenAsOwner;
 import com.rosekingdom.rosekingdom.Graves.GraveEvents;
@@ -24,5 +25,6 @@ public class EventHandler {
         //Store events
         getServer().getPluginManager().registerEvents(new eOpenAsPlayer(), plugin);
         getServer().getPluginManager().registerEvents(new sOpenAsOwner(), plugin);
+        getServer().getPluginManager().registerEvents(new eAddItem(), plugin);
     }
 }
