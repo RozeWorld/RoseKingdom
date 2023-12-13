@@ -1,7 +1,6 @@
 package com.rosekingdom.rosekingdom.Economy.Events.GUI;
 
 import com.rosekingdom.rosekingdom.Economy.GUIs.Merchant;
-import com.rosekingdom.rosekingdom.Economy.GUIs.Store;
 import com.rosekingdom.rosekingdom.Economy.GUIs.sAddItem;
 import com.rosekingdom.rosekingdom.Economy.Statements.StoreStatement;
 import org.bukkit.entity.Entity;
@@ -17,19 +16,19 @@ public class sOpenAsOwner implements Listener {
     @EventHandler
     public void movingItems(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
-        if (e.getInventory().getHolder() instanceof Merchant) {
+        if (e.getRawSlot() < 45 && e.getView().getTopInventory().getHolder() instanceof Merchant) {
             e.setCancelled(true);
         }
-        if(e.getSlot() == 15){
+        if(e.getRawSlot() == 15 && e.getView().getTopInventory().getHolder() instanceof Merchant){
             player.openInventory(new sAddItem().getInventory());
         }
     }
 
     @EventHandler
     public void draggingItems(InventoryDragEvent e) {
-        if (e.getInventory().getHolder() instanceof Store) {
+        if (e.getInventory().getHolder() instanceof Merchant) {
             for (int slot : e.getRawSlots()) {
-                if (slot <= 26) {
+                if (slot < 45) {
                     e.setCancelled(true);
                 }
             }
