@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 
-public class eOpenAsPlayer implements Listener {
+public class sPlayerPanel implements Listener {
     @EventHandler
     public void movingItems(InventoryClickEvent e) {
         if (e.getRawSlot() < 45 && e.getView().getTopInventory().getHolder() instanceof Store) {

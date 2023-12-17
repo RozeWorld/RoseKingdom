@@ -6,9 +6,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
-public class sRemoveItem implements InventoryHolder {
+public class sStocking implements InventoryHolder {
     @Override
     public @NotNull Inventory getInventory() {
-        return Bukkit.createInventory(this, 27, Component.text(""));
+        return Bukkit.createInventory(this, 9, Component.text("Stock"));
     }
 }

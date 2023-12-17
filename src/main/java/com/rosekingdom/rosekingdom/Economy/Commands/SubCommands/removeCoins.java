@@ -1,4 +1,4 @@
-package com.rosekingdom.rosekingdom.Economy.Commands;
+package com.rosekingdom.rosekingdom.Economy.Commands.SubCommands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;

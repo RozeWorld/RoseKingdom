@@ -1,11 +1,7 @@
-package com.rosekingdom.rosekingdom.Core.Utils;
+package com.rosekingdom.rosekingdom.Core.Events;
 
-import com.rosekingdom.rosekingdom.Core.Events.onChatEvent;
-import com.rosekingdom.rosekingdom.Core.Events.onJoin;
-import com.rosekingdom.rosekingdom.Core.Events.onLeave;
-import com.rosekingdom.rosekingdom.Economy.Events.GUI.eAddItem;
-import com.rosekingdom.rosekingdom.Economy.Events.GUI.eOpenAsPlayer;
-import com.rosekingdom.rosekingdom.Economy.Events.GUI.sOpenAsOwner;
+import com.rosekingdom.rosekingdom.Economy.Events.GUI.sOwnerPanel;
+import com.rosekingdom.rosekingdom.Economy.Events.GUI.sPlayerPanel;
 import com.rosekingdom.rosekingdom.Graves.GraveEvents;
 import com.rosekingdom.rosekingdom.Profiles.Events.GUI.eProfile;
 import com.rosekingdom.rosekingdom.Ranks.AFKstatus;
@@ -23,8 +19,7 @@ public class EventHandler {
         getServer().getPluginManager().registerEvents(new AFKstatus(), plugin);
 
         //Store events
-        getServer().getPluginManager().registerEvents(new eOpenAsPlayer(), plugin);
-        getServer().getPluginManager().registerEvents(new sOpenAsOwner(), plugin);
-        getServer().getPluginManager().registerEvents(new eAddItem(), plugin);
+        getServer().getPluginManager().registerEvents(new sPlayerPanel(), plugin);
+        getServer().getPluginManager().registerEvents(new sOwnerPanel(), plugin);
     }
 }

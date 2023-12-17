@@ -7,13 +7,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class sAdd extends ItemStack {
-    public sAdd(){
-        setAmount(1);
-        setType(Material.PAPER);
+public class Coin extends ItemStack {
+    public Coin(int amount){
+        setAmount(amount);
+        setType(Material.DIAMOND);
         ItemMeta meta = getItemMeta();
-        meta.setCustomModelData(2351);
-        meta.displayName(Component.text("Add Item", TextColor.fromHexString("#0ac200")).decoration(TextDecoration.ITALIC, false));
+        meta.setCustomModelData(10);
+        meta.displayName(Component.text("Rose Coin").decoration(TextDecoration.ITALIC, false).color(TextColor.fromHexString("#c91444")));
         setItemMeta(meta);
     }
 }

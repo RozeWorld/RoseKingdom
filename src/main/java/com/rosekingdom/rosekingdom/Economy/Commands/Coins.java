@@ -1,6 +1,9 @@
 package com.rosekingdom.rosekingdom.Economy.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
+import com.rosekingdom.rosekingdom.Economy.Commands.SubCommands.addCoins;
+import com.rosekingdom.rosekingdom.Economy.Commands.SubCommands.removeCoins;
+import com.rosekingdom.rosekingdom.Economy.Commands.SubCommands.transferCoins;
 import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;

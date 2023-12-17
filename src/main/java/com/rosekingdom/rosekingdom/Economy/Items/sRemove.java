@@ -7,13 +7,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class sAdd extends ItemStack {
-    public sAdd(){
+public class sRemove extends ItemStack {
+    public sRemove(){
         setAmount(1);
-        setType(Material.PAPER);
+        setType(Material.STICK);
         ItemMeta meta = getItemMeta();
-        meta.setCustomModelData(2351);
-        meta.displayName(Component.text("Add Item", TextColor.fromHexString("#0ac200")).decoration(TextDecoration.ITALIC, false));
+        meta.setCustomModelData(2352);
+        meta.displayName(Component.text("Remove Item", TextColor.fromHexString("#f70000")).decoration(TextDecoration.ITALIC, false));
         setItemMeta(meta);
     }
 }
