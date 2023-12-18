@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class sOwnerPanel implements Listener {
@@ -64,17 +65,19 @@ public class sOwnerPanel implements Listener {
         }
 
         //Item removal
-        //TODO: Fix the item detection
         if(holder instanceof sRemoveSelector) {
             if (e.getRawSlot() < 9){
                 if(e.getCurrentItem() != null){
                     ItemStack item = e.getCurrentItem();
                     item.setAmount(StockStatement.getStock(item, store));
-                    player.getInventory().addItem(item);
+                    final HashMap<Integer, ItemStack> dropItems = player.getInventory().addItem(item);
+                    for(ItemStack drop : dropItems.values()){
+                        player.getWorld().dropItemNaturally(player.getLocation(), drop);
+                    }
+                    player.sendMessage(item.displayName()
+                            .append(Component.text(" was removed from the store!")));
                     item.setAmount(1);
                     StockStatement.removeItemFromStore(e.getCurrentItem(), store);
-                    player.sendMessage(e.getCurrentItem().displayName()
-                            .append(Component.text(" was removed from the store!")));
                     player.closeInventory();
                 }
                 e.setCancelled(true);
@@ -89,7 +92,7 @@ public class sOwnerPanel implements Listener {
             ItemStack price = e.getInventory().getItem(13);
             if(e.getRawSlot() < 27) e.setCancelled(true);
             if(e.getClick().equals(ClickType.SHIFT_RIGHT) || e.getClick().equals(ClickType.SHIFT_LEFT)) e.setCancelled(true);
-            int value = price.getAmount();
+            int value = price.getAmount() == 1 ? 0 : price.getAmount();
             switch (e.getRawSlot()){
                 case 10 -> value -= 32;
                 case 11 -> value -= 16;
@@ -120,9 +123,9 @@ public class sOwnerPanel implements Listener {
             if(e.getRawSlot() == 4){
                 for(ItemStack i : items){
                     if(i.isSimilar(item)){
-                        StockStatement.addStock(item, store);
                         player.sendMessage(Component.text("Added " + item.getAmount() + " stock to ")
-                                .append(item.displayName()));
+                            .append(item.displayName()));
+                        StockStatement.addStock(item, store);
                         item.setAmount(0);
                     }
                 }
