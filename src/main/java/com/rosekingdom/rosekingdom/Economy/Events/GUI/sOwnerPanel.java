@@ -67,9 +67,13 @@ public class sOwnerPanel implements Listener {
         //TODO: Fix the item detection
         if(holder instanceof sRemoveSelector) {
             if (e.getRawSlot() < 9){
-                if(!e.getCurrentItem().isEmpty()){
+                if(e.getCurrentItem() != null){
+                    ItemStack item = e.getCurrentItem();
+                    item.setAmount(StockStatement.getStock(item, store));
+                    player.getInventory().addItem(item);
+                    item.setAmount(1);
                     StockStatement.removeItemFromStore(e.getCurrentItem(), store);
-                    player.sendMessage(e.getCursor().displayName()
+                    player.sendMessage(e.getCurrentItem().displayName()
                             .append(Component.text(" was removed from the store!")));
                     player.closeInventory();
                 }
