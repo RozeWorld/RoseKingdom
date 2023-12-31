@@ -133,6 +133,7 @@ public class sOwnerPanel implements Listener {
             if(value > size.getType().getMaxStackSize()) value = size.getType().getMaxStackSize();
             size.setAmount(value);
             if(e.getRawSlot() == 12) {
+
                 player.sendMessage("Cancelled adding item to store");
                 player.closeInventory();
             }

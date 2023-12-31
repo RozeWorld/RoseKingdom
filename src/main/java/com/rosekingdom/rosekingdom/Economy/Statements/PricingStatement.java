@@ -77,6 +77,16 @@ public class PricingStatement extends Database {
         }
     }
 
+    public static void clearAll(String store) {
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM rk_price WHERE store=?")) {
+            ps.setString(1, store);
+            ps.executeUpdate();
+        }catch (SQLException e){
+            Message.Exception("Couldn't delete items!", e);
+        }
+    }
+
     public static boolean hasOptions(ItemStack item, String store) {
         boolean options = false;
         try(Connection connection = getConnection();

@@ -19,7 +19,7 @@ public class createStore extends subCommandRK {
     public void executeSub(CommandSender sender, String[] args) {
         Player player = (Player) sender;
         if(args.length == 2){
-            if(!StoreStatement.existsName(args[1]) && StoreStatement.numberOfStores(player) <= 3){
+            if(!StoreStatement.existsName(args[1]) && StoreStatement.numberOfStores(player) < 3){
                 Zombie zombie = (Zombie) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
                 zombie.setAI(false);
                 zombie.setShouldBurnInDay(false);

@@ -2,6 +2,8 @@ package com.rosekingdom.rosekingdom.Economy.Statements;
 
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -165,5 +167,20 @@ public class StoreStatement extends Database {
             Message.Exception("Couldn't fetch the stores!", e);
         }
         return totalStores;
+    }
+
+    public static Location getLocation(String store) {
+        Location location = null;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT x,y,z,dim FROM rk_store WHERE name=?")){
+            ps.setString(1, store);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                location = new Location(Bukkit.getWorld(rs.getString(4)), rs.getDouble(1), rs.getDouble(2), rs.getDouble(3));
+            }
+        }catch (SQLException e){
+            Message.Exception("Couldn't fetch the location!", e);
+        }
+        return location;
     }
 }
