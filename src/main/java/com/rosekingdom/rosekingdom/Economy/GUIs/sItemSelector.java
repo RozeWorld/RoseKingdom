@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class sItemSelector implements InventoryHolder {
     @Override
     public @NotNull Inventory getInventory() {
-        return Bukkit.createInventory(this, 9, Component.text("ui image"));
+        return Bukkit.createInventory(this, 9, Component.text("\u00A7f\uDAFF\uDFF8\uEE05"));
     }
 
 }

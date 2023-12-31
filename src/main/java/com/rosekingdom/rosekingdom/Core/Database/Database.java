@@ -41,7 +41,8 @@ public class Database {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_death(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),id int,graveId varchar(64),x double,y double,z double,dim varchar(100),yaw float,IA_uuid varchar(64),BD_uuid varchar(64),TBR int, INDEX(id,graveId,IA_uuid))");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_location(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), id int, name varchar(32), x int, y int, z int, dim varchar(100), public boolean, INDEX(id,public,name,x,y,z))");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_economy(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),  id int, coins int, INDEX(id))");
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_stock(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), store varchar(255), item longblob, stock int, cost int)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_stock(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), store varchar(255), item longblob, stock int)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_price(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), store varchar(255), pricedItem longblob, price int, rawItem blob, options boolean)");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_store(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), name varchar(255), owner varchar(64), store_id varchar(64), x double, y double, z double, dim varchar(100), yaw float)");
         }catch (SQLException e){
             Message.Exception("Unable to initialize tables!", e);

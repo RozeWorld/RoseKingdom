@@ -7,18 +7,18 @@ import org.bukkit.inventory.ItemStack;
 import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StockStatement extends Database {
-    public static void addItemToStore(ItemStack item, int price, String store){
+    public static void addItemToStore(ItemStack item, String store){
         try(Connection connection = getConnection();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_stock(store, item, stock, cost) VALUES (?, ?, ?, ?)")) {
-            item.setAmount(1);
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_stock(store, item, stock) VALUES (?, ?, ?)")) {
             Blob blob = new SerialBlob(item.serializeAsBytes());
             ps.setString(1, store);
             ps.setBlob(2, blob);
             ps.setInt(3, 0);
-            ps.setInt(4, price);
             ps.executeUpdate();
         }catch (SQLException e){
             Message.Exception("Unable to add item to store", e);
@@ -68,6 +68,20 @@ public class StockStatement extends Database {
         }
     }
 
+    public static void removeStock(ItemStack item, String store){
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("UPDATE rk_stock SET stock = stock - ? WHERE store=? AND item=?")){
+            ps.setInt(1, item.getAmount());
+            ps.setString(2, store);
+            item.setAmount(1);
+            Blob blob = new SerialBlob(item.serializeAsBytes());
+            ps.setBlob(3, blob);
+            ps.executeUpdate();
+        }catch (SQLException e){
+            Message.Exception("Couldn't add stock in the store", e);
+        }
+    }
+
     public static List<ItemStack> getItems(String store){
         List<ItemStack> items = new ArrayList<>();
         try(Connection connection = getConnection();
@@ -88,20 +102,39 @@ public class StockStatement extends Database {
         return items;
     }
 
-    public static int getPrice(ItemStack item, String store) {
-        int stock = 0;
+    public static Map<ItemStack, Integer> getItemsStock(String store){
+        Map<ItemStack, Integer> items = new HashMap<>();
         try(Connection connection = getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT cost FROM rk_stock WHERE store=? AND item=?")) {
+            PreparedStatement ps = connection.prepareStatement("SELECT item,stock FROM rk_stock WHERE store=?")) {
             ps.setString(1, store);
-            Blob blob = new SerialBlob(item.serializeAsBytes());
-            ps.setBlob(2, blob);
             try(ResultSet rs = ps.executeQuery()) {
-                rs.next();
-                stock = rs.getInt(1);
+                while (rs.next()){
+                    Blob blob = rs.getBlob("item");
+                    int blobLength = (int) blob.length();
+                    byte[] blobAsBytes = blob.getBytes(1, blobLength);
+                    blob.free();
+                    items.put(ItemStack.deserializeBytes(blobAsBytes), rs.getInt("stock"));
+                }
             }
         }catch (SQLException e){
-            Message.Exception("Can't get the stock value", e);
+            Message.Exception("Can't get the stock items", e);
         }
-        return stock;
+        return items;
+    }
+
+    public static boolean exists(ItemStack item, String store) {
+        boolean exists = false;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_stock WHERE item=? AND store=?")){
+            Blob blob = new SerialBlob(item.serializeAsBytes());
+            ps.setBlob(1, blob);
+            ps.setString(2, store);
+            try(ResultSet rs = ps.executeQuery()) {
+                exists = rs.next();
+            }
+        }catch (SQLException e){
+            Message.Exception("Couldn't add stock in the store", e);
+        }
+        return exists;
     }
 }
