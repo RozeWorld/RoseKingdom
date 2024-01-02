@@ -141,4 +141,42 @@ public class PricingStatement extends Database {
         }
         return prices;
     }
+
+    public static int getItemPrice(ItemStack item, String store) {
+        int price = 0;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT price FROM rk_price WHERE store=? AND pricedItem=?")) {
+            ps.setString(1, store);
+            Blob rawblob = new SerialBlob(item.serializeAsBytes());
+            ps.setBlob(2, rawblob);
+            try(ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                price = rs.getInt(1);
+            }
+        }catch (SQLException e){
+            Message.Exception("Couldn't fetch the price", e);
+        }
+        return price;
+    }
+
+    public static ItemStack getRawItem(ItemStack pricedItem, String store) {
+        ItemStack item = null;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT rawItem FROM rk_price WHERE store=? AND pricedItem=?")) {
+            ps.setString(1, store);
+            Blob rawblob = new SerialBlob(pricedItem.serializeAsBytes());
+            ps.setBlob(2, rawblob);
+            try(ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                Blob blob = rs.getBlob(1);
+                int blobLength = (int) blob.length();
+                byte[] blobAsBytes = blob.getBytes(1, blobLength);
+                blob.free();
+                item = ItemStack.deserializeBytes(blobAsBytes);
+            }
+        }catch (SQLException e){
+            Message.Exception("Couldn't fetch the prices", e);
+        }
+        return item;
+    }
 }

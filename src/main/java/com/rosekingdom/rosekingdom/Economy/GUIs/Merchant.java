@@ -42,9 +42,10 @@ public class Merchant implements InventoryHolder {
             }else{
                 inventory.setItem(optionSlots[i], new Xsymbol("Doesn't have options", null));
             }
-            Map<Integer, Integer> prices = PricingStatement.getItemPrices(item, store);
+
 
             //Item description (added in reverse)
+            Map<Integer, Integer> prices = PricingStatement.getItemPrices(item, store);
             lore.add(0, Component.empty());
             for(int amount : prices.keySet()){
                 lore.add(0, Component.text(amount + " for " + prices.get(amount) + " coins", TextColor.fromHexString("#A5A5A5"))
