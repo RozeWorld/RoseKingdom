@@ -16,6 +16,7 @@ public class sStock extends ItemStack {
         setAmount(1);
         setType(Material.CHEST);
         ItemMeta meta = getItemMeta();
+        meta.setCustomModelData(2353);
         meta.displayName(Component.text("Stock"));
         List<ItemStack> items = StockStatement.getItems(store);
         List<Component> lore = new ArrayList<>();

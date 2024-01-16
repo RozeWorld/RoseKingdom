@@ -79,6 +79,13 @@ public class sPlayerPanel implements Listener {
                 }
             }
         }
+        if (e.getInventory().getHolder() instanceof sBuySelector) {
+            for (int slot : e.getRawSlots()) {
+                if (slot < 9) {
+                    e.setCancelled(true);
+                }
+            }
+        }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)

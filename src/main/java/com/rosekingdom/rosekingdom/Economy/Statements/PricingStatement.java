@@ -179,4 +179,61 @@ public class PricingStatement extends Database {
         }
         return item;
     }
+
+    public static boolean itemSizeExists(ItemStack item, int size, String store) {
+        boolean exists = false;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT pricedItem FROM rk_price WHERE rawItem=? AND store=?")){
+            Blob blob = new SerialBlob(item.serializeAsBytes());
+            ps.setBlob(1, blob);
+            ps.setString(2, store);
+            try(ResultSet rs = ps.executeQuery()) {
+                while (rs.next()){
+                    blob = rs.getBlob(1);
+                    int blobLength = (int) blob.length();
+                    byte[] blobAsBytes = blob.getBytes(1, blobLength);
+                    blob.free();
+                    if(ItemStack.deserializeBytes(blobAsBytes).getAmount() == size){
+                        exists = true;
+                    }
+                }
+            }
+        }catch (SQLException e){
+            Message.Exception("Couldn't fetch the value", e);
+        }
+        return exists;
+    }
+
+    public static boolean hasOffers(ItemStack item, String store) {
+        boolean hasOffers = false;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT pricedItem FROM rk_price WHERE rawItem=? AND store=?")) {
+            Blob rawblob = new SerialBlob(item.serializeAsBytes());
+            ps.setBlob(1, rawblob);
+            ps.setString(2, store);
+            try(ResultSet rs = ps.executeQuery()) {
+                hasOffers = rs.next();
+            }
+        }catch (SQLException e){
+            Message.Exception("Couldn't fetch the price", e);
+        }
+        return hasOffers;
+    }
+
+    public static int getOffers(ItemStack item, String store) {
+        int offers = 0;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(pricedItem) FROM rk_price WHERE rawItem=? AND store=?")) {
+            Blob rawblob = new SerialBlob(item.serializeAsBytes());
+            ps.setBlob(1, rawblob);
+            ps.setString(2, store);
+            try(ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                offers = rs.getInt(1);
+            }
+        }catch (SQLException e){
+            Message.Exception("Can't get number of offers", e);
+        }
+        return offers;
+    }
 }

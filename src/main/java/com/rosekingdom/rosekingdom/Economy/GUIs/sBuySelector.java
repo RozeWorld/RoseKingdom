@@ -21,7 +21,7 @@ public class sBuySelector implements InventoryHolder {
     }
     @Override
     public @NotNull Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this, 18, Component.text("Buy Menu"));
+        Inventory inventory = Bukkit.createInventory(this, 9, Component.text("Buy Menu"));
         List<ItemStack> items = PricingStatement.getItems(item, store);
         switch (items.size()){
             case 1 -> inventory.setItem(4, items.get(0));
@@ -48,6 +48,7 @@ public class sBuySelector implements InventoryHolder {
                 inventory.setItem(6, items.get(4));
             }
         }
+        //Suggestion add sorting button
         return inventory;
     }
 }

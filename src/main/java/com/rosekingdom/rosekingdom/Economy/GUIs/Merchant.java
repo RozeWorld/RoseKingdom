@@ -27,7 +27,7 @@ public class Merchant implements InventoryHolder {
     }
     @Override
     public @NotNull Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this,36, Component.text("\u00A7f\uDAFF\uDFF8\uEE04"));
+        Inventory inventory = Bukkit.createInventory(this,36, Component.text("\u00A7f\uDAFF\uDFF8\uEE02"));
         inventory.setItem(15, new sRemove());
         inventory.setItem(16, new sAdd());
         inventory.setItem(25, new sStock(store));

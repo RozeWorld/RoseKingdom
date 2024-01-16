@@ -12,8 +12,7 @@ public class sOptions extends ItemStack {
         setAmount(1);
         setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
-        //TODO: Change to the proper value
-        meta.setCustomModelData(1000);
+        meta.setCustomModelData(2355);
         meta.displayName(itemName.append(Component.text("'s options")).decoration(TextDecoration.ITALIC, false));
         setItemMeta(meta);
     }

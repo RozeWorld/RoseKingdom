@@ -20,7 +20,7 @@ public class sAmountSelector implements InventoryHolder {
 
     @Override
     public @NotNull Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this, 18, Component.text("Select Amount"));
+        Inventory inventory = Bukkit.createInventory(this, 18, Component.text("\u00A7f\uDAFF\uDFF8\uEE04"));
         inventory.setItem(0, new sPriceItem(32, 2300, false));
         inventory.setItem(1, new sPriceItem(16, 2300, false));
         inventory.setItem(2, new sPriceItem(5, 2300, false));

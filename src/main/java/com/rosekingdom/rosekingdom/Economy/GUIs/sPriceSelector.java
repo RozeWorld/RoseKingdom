@@ -24,7 +24,7 @@ public class sPriceSelector implements InventoryHolder {
 
     @Override
     public @NotNull Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this, 18, Component.text("Select Price"));
+        Inventory inventory = Bukkit.createInventory(this, 18, Component.text("\u00A7f\uDAFF\uDFF8\uEE05"));
         List<Component> lore;
         if(item.lore() != null){
             lore = item.lore();

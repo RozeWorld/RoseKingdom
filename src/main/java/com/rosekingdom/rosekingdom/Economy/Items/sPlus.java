@@ -12,9 +12,8 @@ public class sPlus extends ItemStack {
         setAmount(1);
         setType(Material.STICK);
         ItemMeta meta = getItemMeta();
-        //todo: change later to match with the other stuff
-        meta.setCustomModelData(1000);
-        meta.displayName(Component.text("Set quantity and price", TextColor.fromHexString("#10FF33")).decoration(TextDecoration.ITALIC, false));
+        meta.setCustomModelData(2354);
+        meta.displayName(Component.text("Add offer for this item", TextColor.fromHexString("#10FF33")).decoration(TextDecoration.ITALIC, false));
         setItemMeta(meta);
     }
 }

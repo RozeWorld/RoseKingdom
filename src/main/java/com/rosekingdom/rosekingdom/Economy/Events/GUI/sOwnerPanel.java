@@ -57,6 +57,9 @@ public class sOwnerPanel implements Listener {
                     player.sendMessage(Message.Info("Can't add more items"));
                 }
             }
+            if(e.getRawSlot() == 24){
+                //Cashout
+            }
             if(e.getRawSlot() == 25){
                 player.openInventory(new sStocking().getInventory());
             }
@@ -88,11 +91,22 @@ public class sOwnerPanel implements Listener {
             if (e.getClick().equals(ClickType.SHIFT_RIGHT) || e.getClick().equals(ClickType.SHIFT_LEFT)) e.setCancelled(true);
             List<Integer> slots = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 6));
             if (slots.contains(e.getRawSlot())){
-                boolean exists = PricingStatement.exists(e.getCurrentItem(), store);
+                ItemStack item = e.getCurrentItem();
+                if(item.lore() != null){
+                    List<Component> lore = item.lore();
+                    lore.remove(4);
+                    item.lore(lore);
+                }
+                boolean exists = PricingStatement.exists(item, store);
                 if(exists && e.getClick().isRightClick()){
-                    PricingStatement.removeItem(e.getCurrentItem(), store);
-                    player.openInventory(new sItemStoreOptions(rawItem, store, e.getInventory().getItem(26) == null).getInventory());
-                }else if(!exists){
+                    if(e.getInventory().getItem(26) == null && PricingStatement.getOffers(rawItem, store) == 1){
+                        player.sendMessage(Message.Warning("You need to have at least one offer!"));
+                        player.openInventory(new sItemStoreOptions(rawItem, store, e.getInventory().getItem(26) == null).getInventory());
+                    }else {
+                        PricingStatement.removeItem(item, store);
+                        player.openInventory(new sItemStoreOptions(rawItem, store, e.getInventory().getItem(26) == null).getInventory());
+                    }
+                }else{
                     player.openInventory(new sAmountSelector(rawItem.asOne()).getInventory());
                 }
             }
@@ -100,13 +114,18 @@ public class sOwnerPanel implements Listener {
                 if(!StockStatement.exists(rawItem, store)){
                     PricingStatement.clearAll(rawItem, store);
                     player.openInventory(new Merchant(store).getInventory());
+                    player.sendMessage(Message.Info("Canceling adding item to the store!"));
                 }else{
                     player.openInventory(new Merchant(store).getInventory());
                 }
             }
-            if(e.getRawSlot() == 26 && !StockStatement.exists(rawItem, store)){
+            if(e.getRawSlot() == 26){
+                if(PricingStatement.hasOffers(rawItem, store)){
                 StockStatement.addItemToStore(rawItem, store);
                 player.openInventory(new Merchant(store).getInventory());
+                }else {
+                    player.sendMessage(Message.Warning("You don't have offers!"));
+                }
             }
             //TODO:Finish after the main system
 //            if (e.getRawSlot() == 22) {
@@ -133,13 +152,16 @@ public class sOwnerPanel implements Listener {
             if(value > size.getType().getMaxStackSize()) value = size.getType().getMaxStackSize();
             size.setAmount(value);
             if(e.getRawSlot() == 12) {
-
-                player.sendMessage("Cancelled adding item to store");
+                player.sendMessage(Message.Info("Canceled offer creation!"));
                 player.closeInventory();
             }
             if(e.getRawSlot() == 14){
-                price = 1;
-                player.openInventory(new sPriceSelector(size).getInventory());
+                if(PricingStatement.itemSizeExists(rawItem, value, store)){
+                    player.sendMessage(Message.Warning("You already have this amount!"));
+                }else{
+                    price = 1;
+                    player.openInventory(new sPriceSelector(size).getInventory());
+                }
             }
         }
 
@@ -169,11 +191,11 @@ public class sOwnerPanel implements Listener {
                 item.lore(lore);
             }
             if(e.getRawSlot() == 12) {
-                player.sendMessage("Cancelled adding item to store");
+                player.sendMessage(Message.Info("Canceled offer creation!"));
                 player.closeInventory();
             }
             if(e.getRawSlot() == 14){
-                player.sendMessage("Successfully added offer");
+                player.sendMessage(Message.Info("Successfully added offer"));
                 if (rawItem.getType().getMaxStackSize() > 1) {
                     PricingStatement.addItem(item, price, store, rawItem, true);
                     player.openInventory(new sItemStoreOptions(rawItem, store, StockStatement.exists(rawItem, store)).getInventory());
@@ -214,13 +236,13 @@ public class sOwnerPanel implements Listener {
             if(e.getRawSlot() < 9) e.setCancelled(true);
             if(e.getClick().equals(ClickType.SHIFT_RIGHT) || e.getClick().equals(ClickType.SHIFT_LEFT)) e.setCancelled(true);
             if(e.getRawSlot() == 4){
-                for(ItemStack i : items){
-                    if(i.isSimilar(item)){
-                        player.sendMessage(Component.text("Added " + item.getAmount() + " stock to ")
-                            .append(item.displayName()));
-                        StockStatement.addStock(item, store);
-                        item.setAmount(0);
-                    }
+                if(items.contains(item)){
+                    player.sendMessage(Component.text("Added " + item.getAmount() + " stock to ")
+                        .append(item.displayName()));
+                    StockStatement.addStock(item, store);
+                    item.setAmount(0);
+                }else {
+                    player.sendMessage(Message.Info("You're not selling this item!"));
                 }
             }
         }
@@ -260,8 +282,6 @@ public class sOwnerPanel implements Listener {
                 }
             }
         }
-
-
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)

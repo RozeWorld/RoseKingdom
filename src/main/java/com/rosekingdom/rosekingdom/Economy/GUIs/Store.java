@@ -21,8 +21,8 @@ public class Store implements InventoryHolder {
 
     @Override
     public @NotNull Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this, 27, Component.text("\u00A7f\uDAFF\uDFF8\uEE03"));
-        int[] slots = {1,2,3,18,19,20};
+        Inventory inventory = Bukkit.createInventory(this, 27, Component.text("\u00A7f\uDAFF\uDFF8\uEE01"));
+        int[] slots = {1,2,3,19,20,21};
         int i = 0;
         for(ItemStack item : items){
             inventory.setItem(slots[i], item);

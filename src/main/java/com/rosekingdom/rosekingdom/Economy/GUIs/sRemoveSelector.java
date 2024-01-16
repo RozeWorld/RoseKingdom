@@ -19,13 +19,40 @@ public class sRemoveSelector implements InventoryHolder {
 
     @Override
     public @NotNull Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this, 9, Component.text(""));
+        Inventory inventory = Bukkit.createInventory(this, 9, Component.text("\u00A7f\uDAFF\uDFF8\uEE06"));
         List<ItemStack> items = StockStatement.getItems(store);
-        int[] slots = {1,2,3,5,6,7};
-        int i = 0;
-        for(ItemStack item : items){
-            inventory.setItem(slots[i], item);
-            i++;
+        switch (items.size()) {
+            case 1 -> inventory.setItem(4, items.get(0));
+            case 2 -> {
+                inventory.setItem(3, items.get(0));
+                inventory.setItem(5, items.get(1));
+            }
+            case 3 -> {
+                inventory.setItem(3, items.get(0));
+                inventory.setItem(4, items.get(1));
+                inventory.setItem(5, items.get(2));
+            }
+            case 4 -> {
+                inventory.setItem(2, items.get(0));
+                inventory.setItem(3, items.get(1));
+                inventory.setItem(5, items.get(2));
+                inventory.setItem(6, items.get(3));
+            }
+            case 5 -> {
+                inventory.setItem(2, items.get(0));
+                inventory.setItem(3, items.get(1));
+                inventory.setItem(4, items.get(2));
+                inventory.setItem(5, items.get(3));
+                inventory.setItem(6, items.get(4));
+            }
+            case 6 -> {
+                inventory.setItem(1, items.get(0));
+                inventory.setItem(2, items.get(0));
+                inventory.setItem(3, items.get(1));
+                inventory.setItem(5, items.get(2));
+                inventory.setItem(6, items.get(3));
+                inventory.setItem(7, items.get(4));
+            }
         }
         return inventory;
     }

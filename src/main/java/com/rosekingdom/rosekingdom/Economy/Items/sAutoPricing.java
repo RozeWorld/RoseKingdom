@@ -12,8 +12,7 @@ public class sAutoPricing extends ItemStack {
         setAmount(1);
         setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
-        //TODO: Change to match with the rest
-        meta.setCustomModelData(1000);
+        meta.setCustomModelData(2356);
         meta.displayName(Component.text("Automatic allocation (Coming soon) ", TextColor.fromHexString("#F0BB22")).decoration(TextDecoration.ITALIC, false));
         setItemMeta(meta);
     }
