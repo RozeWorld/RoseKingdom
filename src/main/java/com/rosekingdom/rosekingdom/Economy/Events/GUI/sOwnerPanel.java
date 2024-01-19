@@ -58,9 +58,13 @@ public class sOwnerPanel implements Listener {
                 }
             }
             if(e.getRawSlot() == 24){
-                //Cashout
+                int transfer = StoreStatement.transferMoney(player, store);
+                if(transfer > 1){
+                    player.sendMessage(Component.text("Collected " + transfer + " coins from " + store + "!", TextColor.fromHexString("#6de02b")));
+                    player.openInventory(new Merchant(store).getInventory());
+                }
             }
-            if(e.getRawSlot() == 25){
+            if(e.getRawSlot() == 25 && !items.isEmpty()){
                 player.openInventory(new sStocking().getInventory());
             }
         }
@@ -212,16 +216,19 @@ public class sOwnerPanel implements Listener {
             if (e.getRawSlot() < 9){
                 if(e.getCurrentItem() != null){
                     ItemStack item = e.getCurrentItem();
-                    item.setAmount(StockStatement.getStock(item, store));
-                    final HashMap<Integer, ItemStack> dropItems = player.getInventory().addItem(item);
-                    for(ItemStack drop : dropItems.values()){
-                        player.getWorld().dropItemNaturally(player.getLocation(), drop);
+                    int stock = StockStatement.getStock(item, store);
+                    if(stock > 1){
+                        item.setAmount(stock);
+                        final HashMap<Integer, ItemStack> dropItems = player.getInventory().addItem(item);
+                        for(ItemStack drop : dropItems.values()){
+                            player.getWorld().dropItemNaturally(player.getLocation(), drop);
+                        }
+                        item.setAmount(1);
                     }
                     player.sendMessage(item.displayName()
                             .append(Component.text(" was removed from the store!")));
-                    item.setAmount(1);
-                    StockStatement.removeItemFromStore(e.getCurrentItem(), store);
-                    PricingStatement.clearAll(e.getCurrentItem(), store);
+                    StockStatement.removeItemFromStore(item, store);
+                    PricingStatement.clearAll(item, store);
                     player.closeInventory();
                 }
                 e.setCancelled(true);
@@ -236,7 +243,7 @@ public class sOwnerPanel implements Listener {
             if(e.getRawSlot() < 9) e.setCancelled(true);
             if(e.getClick().equals(ClickType.SHIFT_RIGHT) || e.getClick().equals(ClickType.SHIFT_LEFT)) e.setCancelled(true);
             if(e.getRawSlot() == 4){
-                if(items.contains(item)){
+                if(items.contains(item.asOne())){
                     player.sendMessage(Component.text("Added " + item.getAmount() + " stock to ")
                         .append(item.displayName()));
                     StockStatement.addStock(item, store);

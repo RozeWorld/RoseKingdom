@@ -68,12 +68,11 @@ public class StockStatement extends Database {
         }
     }
 
-    public static void removeStock(ItemStack item, String store){
+    public static void removeStock(ItemStack item, int amount, String store){
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("UPDATE rk_stock SET stock = stock - ? WHERE store=? AND item=?")){
-            ps.setInt(1, item.getAmount());
+            ps.setInt(1, amount);
             ps.setString(2, store);
-            item.setAmount(1);
             Blob blob = new SerialBlob(item.serializeAsBytes());
             ps.setBlob(3, blob);
             ps.executeUpdate();

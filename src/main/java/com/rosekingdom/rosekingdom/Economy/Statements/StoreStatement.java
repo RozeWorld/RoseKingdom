@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Economy.Statements;
 
 import com.rosekingdom.rosekingdom.Core.Database.Database;
+import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -19,7 +20,7 @@ public class StoreStatement extends Database {
 
     public static void createStore(Player player, UUID uuid, String name){
         try(Connection connection = getConnection();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_store(name, owner, store_id, x, y, z, dim, yaw) VALUES (?,?,?,?,?,?,?,?)")) {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_store(name, owner, store_id, x, y, z, dim, yaw, bank) VALUES (?,?,?,?,?,?,?,?,?)")) {
             ps.setString(1, name);
             ps.setString(2, player.getUniqueId().toString());
             ps.setString(3, uuid.toString());
@@ -28,6 +29,7 @@ public class StoreStatement extends Database {
             ps.setDouble(6, player.getZ());
             ps.setString(7, player.getWorld().getName());
             ps.setFloat(8, player.getYaw());
+            ps.setInt(9, 0);
             ps.executeUpdate();
         }catch (SQLException e){
             Message.Exception("Unable to create a store", e);
@@ -183,4 +185,61 @@ public class StoreStatement extends Database {
         }
         return location;
     }
+
+
+    public static int getMoney(String store){
+        int money = 0;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT bank FROM rk_store WHERE name=?")){
+            ps.setString(1, store);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                money = rs.getInt(1);
+            }
+        }catch (SQLException e){
+            Message.Exception("Couldn't fetch bank value!", e);
+        }
+        return money;
+    }
+
+    public static void addMoney(int amount, String store){
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("UPDATE rk_store SET bank = bank + ? WHERE name=?")){
+            ps.setInt(1, amount);
+            ps.setString(2, store);
+            ps.executeUpdate();
+        }catch (SQLException e){
+            Message.Exception("Couldn't update the store bank!", e);
+        }
+    }
+    public static int transferMoney(Player player, String store){
+        int money = 0;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT bank FROM rk_store WHERE name=?")){
+            ps.setString(1, store);
+            try(ResultSet rs = ps.executeQuery()){
+                rs.next();
+                money = rs.getInt(1);
+            }
+        }catch (SQLException e){
+            Message.Exception("Couldn't fetch bank value!", e);
+        }
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("UPDATE rk_store SET bank=0 WHERE name=?")){
+            ps.setString(1, store);
+            ps.executeUpdate();
+        }catch (SQLException e){
+            Message.Exception("Cannot reset the store bank!", e);
+        }
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("UPDATE rk_economy SET coins = coins + ? WHERE id=?")){
+            ps.setInt(1, money);
+            ps.setInt(2, UserStatement.getId(player.getUniqueId()));
+            ps.executeUpdate();
+        }catch (SQLException e){
+            Message.Exception("Can't update player's coins!", e);
+        }
+        return money;
+    }
+
 }

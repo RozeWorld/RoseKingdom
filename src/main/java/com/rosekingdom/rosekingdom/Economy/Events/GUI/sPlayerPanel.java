@@ -51,7 +51,8 @@ public class sPlayerPanel implements Listener {
             if(e.getClick().equals(ClickType.SHIFT_RIGHT) || e.getClick().equals(ClickType.SHIFT_LEFT)) e.setCancelled(true);
             if(e.getCurrentItem() != null && e.getRawSlot() < 27){
                 ItemStack item = new ItemStack(e.getCurrentItem());
-                int available = StockStatement.getStock(PricingStatement.getRawItem(item, store), store);
+                ItemStack rawItem = PricingStatement.getRawItem(item, store);
+                int available = StockStatement.getStock(rawItem, store);
                 int coins = EconomyStatement.getCoins(player);
                 int price = PricingStatement.getItemPrice(item, store);
                 if(available < item.getAmount()){
@@ -61,10 +62,11 @@ public class sPlayerPanel implements Listener {
                     player.sendMessage(Message.Warning("Not enough coins!"));
                     e.setCancelled(true);
                 }else{
-                    player.getInventory().addItem(PricingStatement.getRawItem(item, store).asQuantity(item.getAmount()));
-                    player.sendMessage(Component.text("Purchased " + item.getAmount() + " of ").append(item.displayName()));
-                    StockStatement.removeStock(item, store);
+                    player.getInventory().addItem(rawItem.asQuantity(item.getAmount()));
+                    player.sendMessage(Component.text("Purchased " + item.getAmount() + " of ").append(rawItem.displayName()));
+                    StockStatement.removeStock(rawItem, item.getAmount(), store);
                     EconomyStatement.removeCoins(player, price);
+                    StoreStatement.addMoney(price, store);
                 }
             }
         }
