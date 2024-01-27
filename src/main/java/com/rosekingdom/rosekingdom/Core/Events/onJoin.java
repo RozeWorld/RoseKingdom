@@ -35,7 +35,7 @@ public class onJoin implements Listener {
                         .append(Component.text("+", TextColor.fromHexString("#3fd951"))
                         .append(Component.text("] ", TextColor.fromHexString("#696969")))
                         .append(player.displayName().color(TextColor.fromHexString("#7d7d7d")))));
-        player.sendPlayerListHeader(Component.text("\n\nRoseKingdom :3\n\n"));
+        player.sendPlayerListHeader(Component.text("\uEF02\n\n\n\n"));
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
             for(Player on : Bukkit.getServer().getOnlinePlayers()){

@@ -44,7 +44,7 @@ public class sPriceSelector implements InventoryHolder {
         inventory.setItem(5, new sPriceItem(1, 2301, true));
         inventory.setItem(6, new sPriceItem(5, 2301, true));
         inventory.setItem(7, new sPriceItem(16, 2301, true));
-        inventory.setItem(8, new sPriceItem(32, 2300, false));
+        inventory.setItem(8, new sPriceItem(32, 2301, true));
         inventory.setItem(12, new Xsymbol("Cancel", null));
         inventory.setItem(14, new Checksymbol("Accept", null));
         return inventory;

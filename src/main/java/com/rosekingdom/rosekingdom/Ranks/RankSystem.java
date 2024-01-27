@@ -51,6 +51,7 @@ public class RankSystem {
             isAFK.remove(player);
         }
         teamRank.get(player).addPlayer(player);
+        //#48 issue suspect
         refreshScoreboard();
     }
 
