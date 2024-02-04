@@ -1,6 +1,10 @@
 package com.rosekingdom.rosekingdom.Economy.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
+import com.rosekingdom.rosekingdom.Economy.Commands.SubCommands.addCoins;
+import com.rosekingdom.rosekingdom.Economy.Commands.SubCommands.giveCoins;
+import com.rosekingdom.rosekingdom.Economy.Commands.SubCommands.removeCoins;
+import com.rosekingdom.rosekingdom.Economy.Commands.SubCommands.transferCoins;
 import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -18,6 +22,7 @@ public class Coins extends CommandRK {
         addSubCommand(new addCoins(0));
         addSubCommand(new removeCoins(0));
         addSubCommand(new transferCoins(0));
+        addSubCommand(new giveCoins(0));
     }
 
     @Override
@@ -40,6 +45,7 @@ public class Coins extends CommandRK {
             if(sender.hasPermission("rk.MOD")){
                 sgt.add("add");
                 sgt.add("remove");
+                sgt.add("give");
             }
             sgt.add("transfer");
             return sgt;

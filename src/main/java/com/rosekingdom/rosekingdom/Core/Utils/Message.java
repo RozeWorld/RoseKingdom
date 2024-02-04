@@ -9,8 +9,9 @@ public class Message {
         Bukkit.getLogger().info(text);
     }
 
-    public static void Exception(String error){
+    public static void Exception(String error, Exception e){
         Bukkit.getLogger().warning(error);
+        Bukkit.getLogger().warning(e.getMessage());
     }
 
     public static void Global(String text){
@@ -18,12 +19,12 @@ public class Message {
     }
 
     public static Component Warning(String text){
-        return Component.text("\uEe01 ")
+        return Component.text("\uEf10 ")
                 .append(Component.text(text))
                 .color(TextColor.fromHexString("#e30000"));
     }
     public static Component Info(String text){
-        return Component.text("\uEe02 ")
+        return Component.text("\uEf10 ")
                 .append(Component.text(text))
                 .color(TextColor.fromHexString("#ebb22f"));
     }

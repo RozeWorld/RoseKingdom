@@ -27,7 +27,7 @@ public class LocationStatement extends Database {
             ps.setBoolean(7, publicity);
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Trying to save data to the DB failed!" + e.getMessage());
+            Message.Exception("Trying to save data to the DB failed!", e);
         }
     }
 
@@ -48,7 +48,7 @@ public class LocationStatement extends Database {
                 location = new Location(world, x, y, z);
             }
         } catch (SQLException e) {
-            Message.Exception("Failed fetching the location!");
+            Message.Exception("Failed fetching the location!", e);
         }
         return location;
     }
@@ -64,7 +64,7 @@ public class LocationStatement extends Database {
                }
             }
         } catch (SQLException e) {
-            Message.Exception("Unable to get the locations");
+            Message.Exception("Unable to get the locations", e);
         }
         return locations;
     }
@@ -76,7 +76,7 @@ public class LocationStatement extends Database {
             ps.setString(2, name);
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unsuccessful deletion!");
+            Message.Exception("Unsuccessful deletion!", e);
         }
     }
 
@@ -90,7 +90,7 @@ public class LocationStatement extends Database {
                 return rs.next();
             }
         } catch (SQLException e) {
-            Message.Exception("Unsuccessful deletion!");
+            Message.Exception("Unsuccessful deletion!", e);
         }
         return false;
     }

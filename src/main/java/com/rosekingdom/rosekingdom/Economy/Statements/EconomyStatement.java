@@ -14,13 +14,13 @@ import java.sql.SQLException;
 
 public class EconomyStatement extends Database {
     public static void insert(Player id){
-        try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_economy (id, coins) VALUES (?, ?)")){
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_economy (id, coins) VALUES (?, ?)")){
             ps.setInt(1, UserStatement.getId(id));
             ps.setInt(2, 0);
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unsuccessful Insertion!");
+            Message.Exception("Unsuccessful Insertion!", e);
         }
     }
     public static void setCoins(Player id, int coins){
@@ -30,7 +30,7 @@ public class EconomyStatement extends Database {
             ps.setInt(2, coins);
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unable to set the coins");
+            Message.Exception("Unable to set the coins", e);
         }
     }
     public static int getCoins(Player id){
@@ -43,7 +43,7 @@ public class EconomyStatement extends Database {
                 coins = result.getInt(1);
             }
         }catch (SQLException e){
-            Message.Exception("Non-existing or broken connection");
+            Message.Exception("Non-existing or broken connection", e);
         }
         return coins;
     }
@@ -54,7 +54,7 @@ public class EconomyStatement extends Database {
             ps.setInt(2, UserStatement.getId(id));
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unable to set the money");
+            Message.Exception("Unable to set the money", e);
         }
     }
     public static void removeCoins(OfflinePlayer id, int amount){
@@ -64,7 +64,7 @@ public class EconomyStatement extends Database {
             ps.setInt(2, UserStatement.getId(id));
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unable to remove coins");
+            Message.Exception("Unable to remove coins", e);
         }
     }
     public static void reset(Player id){
@@ -73,7 +73,7 @@ public class EconomyStatement extends Database {
             ps.setInt(1, UserStatement.getId(id));
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unable to set the AssignRank");
+            Message.Exception("Unable to set the AssignRank", e);
         }
     }
 

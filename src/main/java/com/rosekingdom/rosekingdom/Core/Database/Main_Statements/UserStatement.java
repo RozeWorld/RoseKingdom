@@ -19,7 +19,7 @@ public class UserStatement extends Database {
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unsuccessful Insertion!");
+            Message.Exception("Unsuccessful Insertion!", e);
         }
     }
 
@@ -32,8 +32,7 @@ public class UserStatement extends Database {
                 exists = result.next();
             }
         } catch (SQLException e){
-            Message.Exception("Invalid request or insufficient connection");
-            Message.Console(e.getMessage());
+            Message.Exception("Invalid request or insufficient connection", e);
         }
         return exists;
     }
@@ -48,7 +47,7 @@ public class UserStatement extends Database {
                 hasRank = result.next();
             }
         }catch (SQLException e){
-            Message.Exception("Invalid request or insufficient connection");
+            Message.Exception("Invalid request or insufficient connection", e);
         }
         return hasRank;
     }
@@ -60,7 +59,7 @@ public class UserStatement extends Database {
             ps.setString(2, uuid);
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unable to set rank");
+            Message.Exception("Unable to set rank", e);
         }
     }
 
@@ -74,8 +73,7 @@ public class UserStatement extends Database {
                 id = result.getInt("rowid");
             }
         }catch (SQLException e){
-            Message.Exception("Non-existing or broken connection");
-            Message.Exception(e.getMessage());
+            Message.Exception("Non-existing or broken connection", e);
         }
         return id;
     }
@@ -91,8 +89,7 @@ public class UserStatement extends Database {
                 id = result.getInt("rowid");
             }
         }catch (SQLException e){
-            Message.Exception("Non-existing or broken connection");
-            Message.Exception(e.getMessage());
+            Message.Exception("Non-existing or broken connection", e);
         }
         return id;
     }
@@ -108,7 +105,7 @@ public class UserStatement extends Database {
                 }
             }
         } catch (SQLException e) {
-            Message.Exception("Unable to fetch player rank");
+            Message.Exception("Unable to fetch player rank", e);
         }
         return rank;
     }
@@ -123,8 +120,7 @@ public class UserStatement extends Database {
                 name = rs.getString(1);
             }
         } catch (SQLException e) {
-            Message.Exception("Non-existing or broken connection");
-            Message.Exception(e.getMessage());
+            Message.Exception("Non-existing or broken connection", e);
         }
         return name;
     }
@@ -139,7 +135,7 @@ public class UserStatement extends Database {
                 uuid = rs.getString(1);
             }
         } catch (SQLException e) {
-            Message.Exception("Non-existing or broken connection");
+            Message.Exception("Non-existing or broken connection", e);
         }
         return uuid;
     }
@@ -154,8 +150,7 @@ public class UserStatement extends Database {
                 uuid = rs.getString(1);
             }
         } catch (SQLException e) {
-            Message.Exception("Non-existing or broken connection");
-            Message.Exception(e.getMessage());
+            Message.Exception("Non-existing or broken connection", e);
         }
         return uuid;
     }
@@ -170,8 +165,7 @@ public class UserStatement extends Database {
                 date = rs.getTimestamp(1).toString();
             }
         }catch (SQLException e){
-            Message.Exception("Non-existing or broken connection");
-            Message.Exception(e.getMessage());
+            Message.Exception("Non-existing or broken connection", e);
         }
         return date;
     }
@@ -185,7 +179,7 @@ public class UserStatement extends Database {
                 exists = rs.next();
             }
         }catch (Exception e){
-            Message.Exception(e.getMessage());
+            Message.Exception("Unable to fetch data!", e);
         }
         return exists;
     }

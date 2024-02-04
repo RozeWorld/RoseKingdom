@@ -3,7 +3,7 @@ package com.rosekingdom.rosekingdom;
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandManager;
 import com.rosekingdom.rosekingdom.Core.Config.Config;
 import com.rosekingdom.rosekingdom.Core.Database.Database;
-import com.rosekingdom.rosekingdom.Core.Utils.EventHandler;
+import com.rosekingdom.rosekingdom.Core.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Ranks.AFKstatus;

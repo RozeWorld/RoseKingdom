@@ -21,7 +21,7 @@ public class ProfileStatement extends Database {
             ps.setInt(3, 1);
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception(e.getMessage());
+            Message.Exception("Unsuccessful Insertion!", e);
         }
     }
 
@@ -34,7 +34,7 @@ public class ProfileStatement extends Database {
                 exists = rs.next();
             }
         }catch (SQLException e){
-            Message.Exception(e.getMessage());
+            Message.Exception("Unable to fetch data", e);
         }
         return exists;
     }
@@ -46,7 +46,7 @@ public class ProfileStatement extends Database {
             ps.setInt(2, UserStatement.getId(player));
             ps.executeUpdate();
         }catch (SQLException e){
-            Message.Exception(e.getMessage());
+            Message.Exception("Failed to update streak", e);
         }
     }
 
@@ -60,7 +60,7 @@ public class ProfileStatement extends Database {
                 streak = rs.getInt(1);
             }
         }catch (SQLException e){
-            Message.Exception(e.getMessage());
+            Message.Exception("Unable to fetch data", e);
         }
         return streak;
     }
@@ -75,7 +75,7 @@ public class ProfileStatement extends Database {
                 highscore = rs.getInt(1);
             }
         }catch (SQLException e){
-            Message.Exception(e.getMessage());
+            Message.Exception("Unable to fetch data", e);
         }
         return highscore;
     }
@@ -87,7 +87,7 @@ public class ProfileStatement extends Database {
             ps.setInt(2, UserStatement.getId(player));
             ps.executeUpdate();
         }catch (SQLException e){
-            Message.Exception(e.getMessage());
+            Message.Exception("Failed to update highscore", e);
         }
     }
 }

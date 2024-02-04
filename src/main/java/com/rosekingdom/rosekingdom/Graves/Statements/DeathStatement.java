@@ -35,7 +35,7 @@ public class DeathStatement extends Database {
             ps.setString(9, BD.toString());
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Unsuccessful Insertion!\n" + e.getMessage());
+            Message.Exception("Unsuccessful Insertion!", e);
         }
         return id;
     }
@@ -54,7 +54,7 @@ public class DeathStatement extends Database {
                 grave = rs.getString(1);
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return grave;
     }
@@ -70,7 +70,7 @@ public class DeathStatement extends Database {
                 }
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return graves;
     }
@@ -85,7 +85,7 @@ public class DeathStatement extends Database {
                 graves = rs.getInt(1);
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return graves;
     }
@@ -101,7 +101,7 @@ public class DeathStatement extends Database {
                 }
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return graveId;
     }
@@ -115,7 +115,7 @@ public class DeathStatement extends Database {
                 ids.add(rs.getInt(1));
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return ids;
     }
@@ -132,7 +132,7 @@ public class DeathStatement extends Database {
                 }
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return loc;
     }
@@ -147,7 +147,7 @@ public class DeathStatement extends Database {
                 isGraveOnLocation = rs.next();
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return isGraveOnLocation;
     }
@@ -161,7 +161,7 @@ public class DeathStatement extends Database {
                 hasGrave = rs.next();
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return hasGrave;
     }
@@ -177,7 +177,7 @@ public class DeathStatement extends Database {
                 time = rs.getInt(1);
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return time;
     }
@@ -190,7 +190,7 @@ public class DeathStatement extends Database {
             ps.setString(3, graveId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
     }
 
@@ -206,7 +206,7 @@ public class DeathStatement extends Database {
                 }
             }
         }catch (SQLException e){
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("DELETE FROM rk_death WHERE id=? AND graveId=?")) {
@@ -214,7 +214,7 @@ public class DeathStatement extends Database {
             ps.setString(2, graveId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
     }
 }

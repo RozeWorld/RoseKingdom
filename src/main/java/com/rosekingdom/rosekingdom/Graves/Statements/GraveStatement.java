@@ -26,7 +26,7 @@ public class GraveStatement extends Database {
                 }
             }
         } catch (SQLException e) {
-            Message.Exception("Unsuccessful Insertion!");
+            Message.Exception("Unsuccessful Insertion!", e);
         }
     }
 
@@ -44,7 +44,7 @@ public class GraveStatement extends Database {
                 }
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
     }
 
@@ -65,7 +65,7 @@ public class GraveStatement extends Database {
                 }
             }
         }catch (SQLException e){
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return items;
     }
@@ -81,7 +81,7 @@ public class GraveStatement extends Database {
                 items = rs.getInt(1);
             }
         } catch (SQLException e) {
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
         return items;
     }
@@ -93,7 +93,7 @@ public class GraveStatement extends Database {
             ps.setString(2, graveId);
             ps.executeUpdate();
         }catch (SQLException e){
-            Message.Exception("Bad Connection to the DB");
+            Message.Exception("Bad Connection to the DB", e);
         }
     }
 }
