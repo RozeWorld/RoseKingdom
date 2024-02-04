@@ -9,6 +9,6 @@ import org.jetbrains.annotations.NotNull;
 public class sStocking implements InventoryHolder {
     @Override
     public @NotNull Inventory getInventory() {
-        return Bukkit.createInventory(this, 9, Component.text("Stock"));
+        return Bukkit.createInventory(this, 9, Component.text("\u00A7f\uDAFF\uDFF8\uEE07"));
     }
 }
