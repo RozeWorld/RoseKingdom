@@ -152,6 +152,20 @@ public class DeathStatement extends Database {
         return isGraveOnLocation;
     }
 
+    public static boolean hasGraves(int id){
+        boolean hasGrave = false;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_death WHERE id=?")) {
+            ps.setInt(1, id);
+            try(ResultSet rs = ps.executeQuery()) {
+                hasGrave = rs.next();
+            }
+        } catch (SQLException e) {
+            Message.Exception("Bad Connection to the DB");
+        }
+        return hasGrave;
+    }
+
     public static int getTime(int id, String graveId){
         int time = 0;
         try(Connection connection = getConnection();

@@ -19,7 +19,6 @@ public final class RoseKingdom extends JavaPlugin {
     public void onEnable() {
         getLogger().info("RoseKingdom Started Loading!");
         new CommandManager(this);
-
         new Config();
 
         Database.readData();

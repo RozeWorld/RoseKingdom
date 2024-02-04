@@ -1,7 +1,6 @@
 package com.rosekingdom.rosekingdom.Profiles.Items;
 
 import com.rosekingdom.rosekingdom.Core.Utils.MillisToTime;
-import com.rosekingdom.rosekingdom.Profiles.Statements.ProfileStatement;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -20,7 +19,7 @@ public class ActivityIndicator extends ItemStack {
             meta.displayName(Component.text("Currently Online", TextColor.fromHexString("#17fc32"))
                     .decoration(TextDecoration.ITALIC, false));
         }else{
-            long lastOnline = ProfileStatement.getLast_Online(player);
+            long lastOnline = player.getLastSeen();
             int rawTime = (int) (System.currentTimeMillis()-lastOnline)/1000;
             String text = String.format("Last seen %s ago.", MillisToTime.withWord(rawTime));
             meta.displayName(Component.text(text, TextColor.fromHexString("#e80e0e"))

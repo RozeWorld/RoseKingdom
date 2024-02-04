@@ -36,7 +36,7 @@ public class GUIhandler implements Listener {
 
     @EventHandler
     public void openProfile(PlayerInteractEntityEvent e){
-        if(e.getRightClicked() instanceof Player player){
+        if(e.getRightClicked() instanceof Player player && player.isSneaking()){
             Inventory inventory = new UserGUI(player).getInventory();
             e.getPlayer().openInventory(inventory);
         }

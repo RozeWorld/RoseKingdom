@@ -55,7 +55,6 @@ public class Grave {
         return graves;
     }
 
-
     public void setupGrave(){
         Location loc = player.getLocation();
         loc = new Location(player.getWorld(), loc.getBlockX()+0.5, loc.getBlockY(), loc.getBlockZ()+0.5, player.getBodyYaw(), 0);

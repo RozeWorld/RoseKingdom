@@ -7,6 +7,15 @@ prefix: RoseKingdom
 database: true
 
 commands:
+  neshto:
+    description: testove
+
+  coins:
+    description: neshto tam da ima
+    aliases:
+      - wallet
+      - money
+
   pt:
     description: protocol test
     permission: rk.OWNER
