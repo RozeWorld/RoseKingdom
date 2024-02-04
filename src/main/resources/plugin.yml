@@ -7,6 +7,9 @@ prefix: RoseKingdom
 database: true
 
 commands:
+  ban:
+    permission: rk.ADMIN
+    description: Used for banning people that break the rules
   store:
     description: Opens store settings menu
 
