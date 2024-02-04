@@ -14,7 +14,7 @@ public class ActivityIndicator extends ItemStack {
         setAmount(1);
         setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
-        meta.setCustomModelData(5002);
+        meta.setCustomModelData(2101);
         if(player.isOnline()){
             meta.displayName(Component.text("Currently Online", TextColor.fromHexString("#17fc32"))
                     .decoration(TextDecoration.ITALIC, false));

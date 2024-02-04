@@ -11,10 +11,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class PlayerHead extends ItemStack {
     public PlayerHead(OfflinePlayer player){
         setAmount(1);
-
         setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
-        //TODO: get the rank symbol
+        meta.setCustomModelData(1);
         meta.displayName(Component.text(player.getName(), TextColor.fromHexString("#9c9c9c")).decoration(TextDecoration.ITALIC, false));
         setItemMeta(meta);
     }
