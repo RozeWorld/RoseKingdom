@@ -22,7 +22,7 @@ public class UserGUI implements InventoryHolder{
 
     @Override
     public @NotNull Inventory getInventory() {
-        Inventory profile = Bukkit.createInventory(this, InventoryType.CHEST, Component.text(""));
+        Inventory profile = Bukkit.createInventory(this, InventoryType.CHEST, Component.text("\u00A7f\uDAFF\uDFF8\uEFB0"));
         int[] playerHead = {0,1,2,9,10,11,18,19,20};
         for(int i : playerHead){
             profile.setItem(i, new PlayerHead(player));

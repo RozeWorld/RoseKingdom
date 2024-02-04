@@ -24,7 +24,7 @@ public class ProfilePlayTime extends ItemStack {
         setType(Material.PLAYER_HEAD);
         SkullMeta skull = (SkullMeta) getItemMeta();
         skull.setOwningPlayer(player);
-        skull.setCustomModelData(5000);
+        skull.setCustomModelData(2000);
         skull.displayName(Component.text(time, TextColor.fromHexString("#17fc32"))
                 .decoration(TextDecoration.ITALIC, false));
         skull.lore(List.of(Component.text(joinDate, TextColor.fromHexString("#17fc32"))

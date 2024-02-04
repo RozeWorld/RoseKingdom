@@ -16,6 +16,7 @@ public class StreakScore extends ItemStack {
         setAmount(1);
         setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
+        meta.setCustomModelData(2102);
         meta.displayName(Component.text("Daily Streak: " + ProfileStatement.getStreak(player), TextColor.fromHexString("#fa9e14"))
                 .decoration(TextDecoration.ITALIC, false));
         meta.lore(List.of(Component.text("Daily Streak Highscore: " + ProfileStatement.getHighscore(player), TextColor.fromHexString("#fa9e14"))
