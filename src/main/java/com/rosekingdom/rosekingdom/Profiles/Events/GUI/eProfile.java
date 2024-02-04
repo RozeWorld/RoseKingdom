@@ -30,7 +30,7 @@ public class eProfile implements Listener {
 
     @EventHandler
     public void openProfile(PlayerInteractEntityEvent e){
-        if(e.getRightClicked() instanceof Player player && player.isSneaking()){
+        if(e.getRightClicked() instanceof Player player && e.getPlayer().isSneaking()){
             Inventory inventory = new UserGUI(player).getInventory();
             e.getPlayer().openInventory(inventory);
         }
