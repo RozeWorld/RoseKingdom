@@ -21,7 +21,7 @@ public class sBuySelector implements InventoryHolder {
     }
     @Override
     public @NotNull Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this, 9, Component.text("Buy Menu"));
+        Inventory inventory = Bukkit.createInventory(this, 9, Component.text("\u00A7f\uDAFF\uDFF8\uEE06"));
         List<ItemStack> items = PricingStatement.getItems(item, store);
         switch (items.size()){
             case 1 -> inventory.setItem(4, items.get(0));

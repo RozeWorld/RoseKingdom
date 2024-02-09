@@ -14,7 +14,7 @@ import java.util.List;
 public class sStock extends ItemStack {
     public sStock(String store){
         setAmount(1);
-        setType(Material.CHEST);
+        setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(2353);
         meta.displayName(Component.text("Stock"));

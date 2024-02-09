@@ -3,6 +3,7 @@ version: '${version}'
 main: com.rosekingdom.rosekingdom.RoseKingdom
 api-version: 1.20
 authors: [TMG8047KG]
+website: https://github.com/RozeWorld/RoseKingdom
 prefix: RoseKingdom
 database: true
 
@@ -12,17 +13,14 @@ commands:
     description: Used for banning people that break the rules
   store:
     description: Opens store settings menu
-
   coins:
     description: Utility command
     aliases:
       - wallet
       - money
-
   pt:
     description: protocol test
     permission: rk.OWNER
-
   test:
     permission: rk.ADMIN
     description: test command
@@ -30,50 +28,39 @@ commands:
     aliases:
       - t
       - try
-
   coordinates:
     permission: rk.DEFAULT
     description: Gives you the ability to share your coordinates easier
     aliases:
       - coords
       - xyz
-
   grave:
     description: Open the grave
     permission: rk.MOD
-
   locations:
     description: Saves location coordinates
     usage: /<command> <location or subcommand>
     aliases:
       - loc
       - l
-
   profile:
     description: Opens your game profile
-
   demo:
     permission: rk.ADMIN
     description: demoscreen testing
-
   rank:
     permission: rk.OWNER
     description: sets/removes ranks
     usage: /<command> <player> <rank>
-
   perms:
     description: check your permissions
-
   bugs:
     description: Link for reporting bugs
-
   feedback:
     description: Link for suggesting your ideas
-
   texturetesting:
     description: Removes and Sets the server resource pack
     permission: rk.ARTIST
-
   playtime:
     description: Returns play time on the server
 
