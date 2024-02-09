@@ -30,6 +30,10 @@ public class Ban extends CommandRK {
             }
             case 2 -> {
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+                if(getTime(args)==null){
+                    target.banPlayer(args[1], null, sender.getName(), true);
+                    return;
+                }
                 target.banPlayer("Not specified", getTime(args), sender.getName(), true);
             }
             default -> {

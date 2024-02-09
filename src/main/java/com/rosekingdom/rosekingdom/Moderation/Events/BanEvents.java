@@ -32,8 +32,12 @@ public class BanEvents implements Listener {
     }
     @EventHandler
     public void onKick(PlayerKickEvent e){
-        e.getPlayer().kick(Component.text("============================================\n\n", TextColor.fromHexString("#E36414"))
-                .append(Component.text("You were struck by the ban hammer!\n\n", TextColor.fromHexString("#FB8B24")))
-                .append(Component.text("============================================", TextColor.fromHexString("#E36414"))), PlayerKickEvent.Cause.BANNED);
+        if(e.getCause().equals(PlayerKickEvent.Cause.PLUGIN)){
+            e.setCancelled(true);
+            e.getPlayer().kick(Component.text("============================================\n\n", TextColor.fromHexString("#E36414"))
+                    .append(Component.text("You were struck by the ban hammer!\n", TextColor.fromHexString("#FB8B24")))
+                    .append(Component.text("Reason: ", TextColor.fromHexString("#FB8B24")).append(e.reason().color(TextColor.fromHexString("#9A031E"))))
+                    .append(Component.text("\n\n============================================", TextColor.fromHexString("#E36414"))), PlayerKickEvent.Cause.BANNED);
+        }
     }
 }
