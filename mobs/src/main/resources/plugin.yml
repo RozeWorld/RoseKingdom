@@ -1,6 +1,0 @@
-name: rkMobs
-version: '${version}'
-main: com.rosekingdom.rkmobs.RkMobs
-api-version: '1.20'
-depend:
-  - RoseKingdom
