@@ -19,22 +19,21 @@ public class Vanish extends CommandRK {
     public void execute(CommandSender sender, String[] args) {
         if(!(sender instanceof Player player)) return;
         if(UserStatement.isVanished(player)){
-            if(!player.getGameMode().equals(GameMode.CREATIVE)){
-                player.setAllowFlight(false);
-            }
-            player.setInvisible(false);
-            player.setInvulnerable(false);
-            player.setCanPickupItems(true);
-            player.setSleepingIgnored(false);
+            player.setAllowFlight(player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR));
+            vanish(player, false);
             UserStatement.vanish(player, false);
         }else {
             player.setAllowFlight(true);
-            player.setInvisible(true);
-            player.setInvulnerable(true);
-            player.setCanPickupItems(false);
-            player.setSleepingIgnored(true);
+            vanish(player, true);
             UserStatement.vanish(player, true);
         }
+    }
+
+    private void vanish(Player player, boolean state){
+        player.setInvisible(state);
+        player.setInvulnerable(state);
+        player.setCanPickupItems(!state);
+        player.setSleepingIgnored(state);
     }
 
     @Override
