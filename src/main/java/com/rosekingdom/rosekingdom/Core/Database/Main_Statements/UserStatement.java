@@ -4,6 +4,7 @@ import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Ranks.Rank;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.UUID;
@@ -182,5 +183,30 @@ public class UserStatement extends Database {
             Message.Exception("Unable to fetch data!", e);
         }
         return exists;
+    }
+
+    public static void vanish(Player player, boolean off){
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("UPDATE rk_user SET vanished=? WHERE uuid=?")){
+            ps.setBoolean(1, off);
+            ps.setString(2, player.getUniqueId().toString());
+            ps.executeUpdate();
+        }catch (SQLException e){
+            Message.Exception("Couldn't update user", e);
+        }
+    }
+    public static boolean isVanished(OfflinePlayer player){
+        boolean isVanished = false;
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT vanished FROM rk_user WHERE uuid=?")) {
+            ps.setString(1, player.getUniqueId().toString());
+            try(ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                isVanished = rs.getBoolean(1);
+            }
+        }catch (SQLException e){
+            Message.Exception("Cannot fetch data!", e);
+        }
+        return isVanished;
     }
 }
