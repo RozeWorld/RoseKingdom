@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Locations.subCommands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Locations.Statements.LocationStatement;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -24,6 +25,10 @@ public class create extends subCommandRK {
             return;
         }
         int id = UserStatement.getId(player.getUniqueId());
+        if(args.length <= 1){
+            player.sendMessage(Message.Warning("Missing arguments!"));
+            return;
+        }
         if(!LocationStatement.exists(id, args[1])){
             switch (args.length){
                 case 2 -> {
