@@ -8,9 +8,7 @@ import com.rosekingdom.rosekingdom.Economy.Commands.Store;
 import com.rosekingdom.rosekingdom.Graves.GraveCommand;
 import com.rosekingdom.rosekingdom.Locations.CoordinatesBC;
 import com.rosekingdom.rosekingdom.Locations.Locations;
-import com.rosekingdom.rosekingdom.Moderation.AssignRank;
-import com.rosekingdom.rosekingdom.Moderation.Bugs;
-import com.rosekingdom.rosekingdom.Moderation.Feedback;
+import com.rosekingdom.rosekingdom.Moderation.Commands.*;
 import com.rosekingdom.rosekingdom.Profiles.Profile;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
@@ -50,6 +48,8 @@ public class CommandManager implements TabExecutor {
         addCommand(new PlayTime());
         addCommand(new Coins());
         addCommand(new Store());
+        addCommand(new Ban());
+        addCommand(new Vanish());
     }
 
     public List<CommandRK> getCommands() {

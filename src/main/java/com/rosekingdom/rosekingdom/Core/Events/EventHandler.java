@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Core.Events;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sOwnerPanel;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sPlayerPanel;
 import com.rosekingdom.rosekingdom.Graves.GraveEvents;
+import com.rosekingdom.rosekingdom.Moderation.Events.BanEvents;
 import com.rosekingdom.rosekingdom.Profiles.Events.GUI.eProfile;
 import com.rosekingdom.rosekingdom.Ranks.AFKstatus;
 import org.bukkit.plugin.Plugin;
@@ -21,5 +22,8 @@ public class EventHandler {
         //Store events
         getServer().getPluginManager().registerEvents(new sPlayerPanel(), plugin);
         getServer().getPluginManager().registerEvents(new sOwnerPanel(), plugin);
+
+        //Moderation
+        getServer().getPluginManager().registerEvents(new BanEvents(), plugin);
     }
 }

@@ -8,6 +8,13 @@ prefix: RoseKingdom
 database: true
 
 commands:
+  vanish:
+    permission: rk.MOD
+    aliases:
+      - vh
+  ban:
+    permission: rk.ADMIN
+    description: Used for banning people that break the rules
   store:
     description: Opens store settings menu
   coins:

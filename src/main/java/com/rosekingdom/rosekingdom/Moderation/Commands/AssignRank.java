@@ -1,4 +1,4 @@
-package com.rosekingdom.rosekingdom.Moderation;
+package com.rosekingdom.rosekingdom.Moderation.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;

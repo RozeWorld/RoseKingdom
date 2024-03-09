@@ -21,7 +21,6 @@ public class onLeave implements Listener {
                         .append(Component.text("] ", TextColor.fromHexString("#696969")))
                         .append(Component.text(player.getName(), TextColor.fromHexString("#7d7d7d")))));
 
-
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
             for(Player p : Bukkit.getServer().getOnlinePlayers()){
@@ -29,7 +28,5 @@ public class onLeave implements Listener {
                         .append(Component.text(Bukkit.getOnlinePlayers().size(),TextColor.fromHexString("#2eff31"))));
             }
         }, 10);
-
     }
-
 }
