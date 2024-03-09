@@ -40,7 +40,7 @@ public class sOwnerPanel implements Listener {
             if (e.getRawSlot() < 45) e.setCancelled(true);
             if (e.getClick().equals(ClickType.SHIFT_RIGHT) || e.getClick().equals(ClickType.SHIFT_LEFT)) e.setCancelled(true);
             List<Integer> slots = new ArrayList<>(Arrays.asList(10,11,12,28,29,30));
-            if(slots.contains(e.getRawSlot())){
+            if(slots.contains(e.getRawSlot()) && e.getInventory().getItem(e.getRawSlot()) != null){
                 rawItem = new ItemStack(items.get(slots.indexOf(e.getRawSlot())));
                 if(PricingStatement.hasOptions(rawItem, store)){
                     player.openInventory(new sItemStoreOptions(rawItem, store, true).getInventory());
