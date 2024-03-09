@@ -48,7 +48,7 @@ public class Locations extends CommandRK {
             player.sendMessage(Component.text(text, TextColor.fromHexString("#6be649")));
         } else if (args.length == 1 && LocationStatement.getLocations(id).isEmpty()) {
             player.sendMessage(Component.text("There aren't any locations saved!", TextColor.fromHexString("#e30000")));
-        }else if(args.length == 1){
+        }else if(args.length == 1 && !args[0].equalsIgnoreCase("create")){
             player.sendMessage(Component.text("No such location!", TextColor.fromHexString("#e30000")));
         }
     }
