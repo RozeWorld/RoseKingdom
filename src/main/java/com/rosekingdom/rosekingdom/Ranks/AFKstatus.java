@@ -40,8 +40,10 @@ public class AFKstatus implements Listener {
     }
     @EventHandler(priority = EventPriority.LOWEST)
     public void playerMoved(PlayerMoveEvent e){
+        if(!lastMoved.containsKey(e.getPlayer())){
+            RankSystem.removeStatusAFK(e.getPlayer());
+        }
         lastMoved.put(e.getPlayer(), System.currentTimeMillis());
-        RankSystem.removeStatusAFK(e.getPlayer());
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerQuit(PlayerQuitEvent e) {
