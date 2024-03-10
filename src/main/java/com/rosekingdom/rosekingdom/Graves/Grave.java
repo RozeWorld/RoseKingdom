@@ -115,6 +115,12 @@ public class Grave {
         }
         GraveStatement.deleteGrave(id, graveId);
         DeathStatement.purge(id, graveId);
+        for(Grave grave : getGraveList()){
+            if(grave.graveId.equals(graveId)){
+                getGraveList().remove(grave);
+                break;
+            }
+        }
     }
 
     public void save() {
