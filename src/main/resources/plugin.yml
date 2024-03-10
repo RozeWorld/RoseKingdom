@@ -8,6 +8,9 @@ prefix: RoseKingdom
 database: true
 
 commands:
+  timers:
+    permission: rk.MOD
+    description: Get timers
   vanish:
     permission: rk.MOD
     aliases:

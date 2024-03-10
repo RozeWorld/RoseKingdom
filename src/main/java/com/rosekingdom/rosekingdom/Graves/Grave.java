@@ -23,7 +23,7 @@ public class Grave {
     Player player;
     int id;
     int time;
-    int task;
+    static int task;
     ItemDisplay display;
     Interaction interaction;
     String graveId;
@@ -71,7 +71,7 @@ public class Grave {
         display = (ItemDisplay) loc.getWorld().spawnEntity(loc.toCenterLocation(), EntityType.ITEM_DISPLAY);
         ItemStack item = new ItemStack(Material.PAPER);
         ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(4000);
+        meta.setCustomModelData(5);
         item.setItemMeta(meta);
         display.setItemStack(item);
         display.setRotation(loc.getYaw(), 0);
@@ -99,13 +99,14 @@ public class Grave {
             time--;
             if(time <= 0){
                 removeGrave(id, graveId);
-                scheduler.cancelTask(task);
             }
         }, 0, 20);
     }
 
-    private void removeGrave(int id, String graveId) {
+    public static void removeGrave(int id, String graveId) {
         Location loc = DeathStatement.getLocation(id, graveId);
+        BukkitScheduler scheduler = Bukkit.getScheduler();
+        scheduler.cancelTask(task);
         if(!loc.isChunkLoaded()){
             loc.getChunk().load();
         }
@@ -114,6 +115,12 @@ public class Grave {
         }
         GraveStatement.deleteGrave(id, graveId);
         DeathStatement.purge(id, graveId);
+        for(Grave grave : getGraveList()){
+            if(grave.graveId.equals(graveId)){
+                getGraveList().remove(grave);
+                break;
+            }
+        }
     }
 
     public void save() {

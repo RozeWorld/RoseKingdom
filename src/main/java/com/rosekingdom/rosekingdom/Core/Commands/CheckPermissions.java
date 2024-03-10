@@ -1,4 +1,4 @@
-package com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting;
+package com.rosekingdom.rosekingdom.Core.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import net.kyori.adventure.text.Component;
