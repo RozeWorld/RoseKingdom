@@ -4,7 +4,7 @@ import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Graves.Statements.GraveStatement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +14,7 @@ public class GraveGUI implements InventoryHolder {
     int id;
     String graveId;
 
-    public GraveGUI(Player player, String graveId){
+    public GraveGUI(OfflinePlayer player, String graveId){
         this.id = UserStatement.getId(player.getUniqueId());
         this.graveId = graveId;
     }
