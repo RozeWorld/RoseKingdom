@@ -105,8 +105,7 @@ public class Grave {
 
     public static void removeGrave(int id, String graveId) {
         Location loc = DeathStatement.getLocation(id, graveId);
-        BukkitScheduler scheduler = Bukkit.getScheduler();
-        scheduler.cancelTask(task);
+        stopTimer();
         if(!loc.isChunkLoaded()){
             loc.getChunk().load();
         }
@@ -123,7 +122,13 @@ public class Grave {
         }
     }
 
+    public static void stopTimer(){
+        BukkitScheduler scheduler = Bukkit.getScheduler();
+        scheduler.cancelTask(task);
+    }
+
     public void save() {
         DeathStatement.saveTime(id, graveId, time);
+        stopTimer();
     }
 }

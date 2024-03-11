@@ -32,7 +32,7 @@ public class GraveCommand extends CommandRK {
                 player.openInventory(gui.getInventory());
             }
         }
-
+        //TODO:Fix it when you close the other players inventory to not duplicate and give errors
     }
 
     @Override
