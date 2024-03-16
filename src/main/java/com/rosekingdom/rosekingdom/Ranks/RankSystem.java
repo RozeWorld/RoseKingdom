@@ -25,8 +25,15 @@ public class RankSystem {
         String userRank = UserStatement.getRank(player.getUniqueId());
         Rank rank = Rank.valueOf(userRank);
         player.displayName(Component.text(rank.prefix + player.getName()));
-
-        Team team = board.getTeam(rank.name());
+        String numberedRank = "";
+        switch (rank.name()){
+            case "OWNER" -> numberedRank = "01"+Rank.OWNER.name();
+            case "ADMIN" -> numberedRank = "02"+Rank.ADMIN.name();
+            case "MOD" -> numberedRank = "03"+Rank.MOD.name();
+            case "ARTIST" -> numberedRank = "04"+Rank.ARTIST.name();
+            case "DEFAULT" -> numberedRank = "05"+Rank.DEFAULT.name();
+        }
+        Team team = board.getTeam(numberedRank);
         team.addPlayer(player);
         team.prefix(Component.text(rank.prefix));
         refreshScoreboard();
@@ -62,10 +69,10 @@ public class RankSystem {
     }
 
     public static void registerAllRanks() {
-        board.registerNewTeam(Rank.OWNER.name());
-        board.registerNewTeam(Rank.ADMIN.name());
-        board.registerNewTeam(Rank.MOD.name());
-        board.registerNewTeam(Rank.ARTIST.name());
-        board.registerNewTeam(Rank.DEFAULT.name());
+        board.registerNewTeam("01"+Rank.OWNER.name());
+        board.registerNewTeam("02"+Rank.ADMIN.name());
+        board.registerNewTeam("03"+Rank.MOD.name());
+        board.registerNewTeam("04"+Rank.ARTIST.name());
+        board.registerNewTeam("05"+Rank.DEFAULT.name());
     }
 }

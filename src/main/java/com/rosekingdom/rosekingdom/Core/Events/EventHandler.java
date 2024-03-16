@@ -1,5 +1,6 @@
 package com.rosekingdom.rosekingdom.Core.Events;
 
+import com.rosekingdom.rosekingdom.Core.NPCs.clickNPC;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sOwnerPanel;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sPlayerPanel;
 import com.rosekingdom.rosekingdom.Graves.GraveEvents;
@@ -25,5 +26,8 @@ public class EventHandler {
 
         //Moderation
         getServer().getPluginManager().registerEvents(new BanEvents(), plugin);
+
+        //Testing
+        getServer().getPluginManager().registerEvents(new clickNPC(), plugin);
     }
 }
