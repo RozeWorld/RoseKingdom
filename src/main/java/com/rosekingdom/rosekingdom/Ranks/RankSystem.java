@@ -32,6 +32,7 @@ public class RankSystem {
         refreshScoreboard();
         teamRank.put(player, team);
 
+
         PermissionAttachment attachment = player.addAttachment(JavaPlugin.getPlugin(RoseKingdom.class));
         attachment.setPermission("rk."+rank, true);
         player.updateCommands();
