@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.Collections;
 import java.util.UUID;
 
 public class NPC {
@@ -36,7 +37,7 @@ public class NPC {
     private String name;
     private int task;
     private Location location;
-    private ServerPlayer npc;
+    private final ServerPlayer npc;
 
     public NPC(String name, Location location) {
         //Server and World
@@ -51,9 +52,6 @@ public class NPC {
         //The NPC itself and it's settings
         npc = new ServerPlayer(minecraftServer, serverLevel, profile, ClientInformation.createDefault());
         npc.setPos(location.getX(), location.getY(), location.getZ());
-
-        //No idea what this does
-
     }
 
     public void spawn() {
@@ -72,11 +70,6 @@ public class NPC {
             sendPacket(new ClientboundAddEntityPacket(npc), online);
             //Adds the second skin layer
             sendPacket(new ClientboundSetEntityDataPacket(npc.getId(), synchedEntityData.getNonDefaultValues()), online);
-
-            //Sends remove packet (visually removes player from tablist)
-//            Bukkit.getScheduler().runTaskLaterAsynchronously(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
-//                sendPacket(new ClientboundPlayerInfoRemovePacket(Collections.singletonList(npc.getUUID())), online);
-//            }, 40);
         }
     }
 
@@ -145,5 +138,19 @@ public class NPC {
             String signature = "BchUKARlsKuXPJA7qXd2QKgnj3jR+F2EYHG5gwl4QW/+nK8Mb7MLKJDcKbKdxGRgCFfi7perJrDXZ8TpNrGxLgI+ocmjonH+ebwqv5NuRbGD0+Pkc1HCp0mq1dXnRPVgxFrlB+1pTSOnsYRJSJbLdIDvxbwL3RgQIkpKOFT7+Tpdx0VXEoHp2HCWtteAtjh1kEReHTJmnKwAzWmOU5j3Ro8e7xcuOOEG5p9CTbZyk2xxBDNHOJMq7jhPCMModKz15JdGm02r7k1al8GzdO9g0yx6GD8RlpzH0j1Ol+BHCnQ80TcrBvEOc9xgNN9q68Z2kVU7elNbXPHZYFsxalbpvwaHelDgTmx71NYfDzIqqvOY0s37kJsndWuY2bRhqNhJBFZi/SOvXFZHHhQcARGxBsizc5LKfIG3UqYHhuAJ/beErRvZLUM8hCgd5w8ISZNzPdM5pMGfe7ckaEWRRjhb7CmFHVZ9RQ+cHXGnUdSsrsDCT/gwZLIt8gHSIncE3H5m9zauhRmY2KYUZVVMKkbPB1TRfUbZdVWbEjJA7w4SXdyCN0Byh37pQl0ONvXtc5/eNRyuGHlkQj5qh/26zm/x4sawA+/7F4xfWiCib55DMLHFyXP3ooQIPmbwz+u4zLPnXymwJZG894ObapMlc1hWPmb2SbN28ZOuU1R67JwUqaI=";
             return new String[] {texture, signature};
         }
+    }
+
+    public void despawnNPC(){
+        for(Player online : Bukkit.getOnlinePlayers()){
+            sendPacket(new ClientboundRemoveEntitiesPacket(npc.getId()), online);
+        }
+    }
+
+    public int getId(){
+        return npc.getId();
+    }
+
+    public String getUUID(){
+        return npc.getUUID().toString();
     }
 }
