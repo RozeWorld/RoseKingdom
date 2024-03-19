@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Ranks;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import net.kyori.adventure.text.Component;
+import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
@@ -73,5 +74,15 @@ public class RankSystem {
         board.registerNewTeam("03"+Rank.MOD.name());
         board.registerNewTeam("04"+Rank.ARTIST.name());
         board.registerNewTeam("05"+Rank.DEFAULT.name());
+        board.registerNewTeam("00DEFAULT");
     }
+
+    public static void addNPC(ServerPlayer player){
+        Team team = board.getTeam("00DEFAULT");
+        team.addEntity(player.getBukkitEntity());
+        Rank rank = Rank.DEFAULT;
+        team.prefix(Component.text(rank.prefix));
+        refreshScoreboard();
+    }
+
 }

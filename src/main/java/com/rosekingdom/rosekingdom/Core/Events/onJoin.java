@@ -1,6 +1,8 @@
 package com.rosekingdom.rosekingdom.Core.Events;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Core.NPCs.NPC;
+import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Core.Utils.ResourcePackLoader;
 import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
 import com.rosekingdom.rosekingdom.Graves.Grave;
@@ -62,6 +64,10 @@ public class onJoin implements Listener {
             isActive(player);
         }else{
             ProfileStatement.updateStreak(player, 1);
+        }
+
+        for(NPC npc : NPCHandler.getNPCs()){
+            npc.spawn();
         }
 
         //Load Graves (if any)

@@ -27,9 +27,9 @@ commands:
     aliases:
       - wallet
       - money
-  pt:
-    description: protocol test
-    permission: rk.OWNER
+  npc:
+    description: NPC Controller command
+    permission: rk.ADMIN
   test:
     permission: rk.ADMIN
     description: test command
