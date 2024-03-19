@@ -6,11 +6,13 @@ import java.util.Map;
 
 public class NPCHandler {
     private static Map<Integer, NPC> npcList = new HashMap<>();
+
     public static void addNPC(NPC npc){
         npcList.put(npc.getId(), npc);
     }
-    public static void removeNPC(int id){
 
+    public static void removeNPC(int id){
+        npcList.get(id).despawn();
         npcList.remove(id);
     }
 

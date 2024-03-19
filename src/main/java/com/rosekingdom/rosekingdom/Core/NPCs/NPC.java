@@ -39,6 +39,7 @@ public class NPC {
     private Location location;
     private final ServerPlayer npc;
 
+
     public NPC(String name, Location location) {
         //Server and World
         MinecraftServer minecraftServer = ((CraftServer) Bukkit.getServer()).getServer();
@@ -52,6 +53,7 @@ public class NPC {
         //The NPC itself and it's settings
         npc = new ServerPlayer(minecraftServer, serverLevel, profile, ClientInformation.createDefault());
         npc.setPos(location.getX(), location.getY(), location.getZ());
+        NPCHandler.addNPC(this);
     }
 
     public void spawn() {
@@ -140,9 +142,11 @@ public class NPC {
         }
     }
 
-    public void despawnNPC(){
+    public void despawn(){
         for(Player online : Bukkit.getOnlinePlayers()){
+            setRotation(false);
             sendPacket(new ClientboundRemoveEntitiesPacket(npc.getId()), online);
+            sendPacket(new ClientboundPlayerInfoRemovePacket(Collections.singletonList(npc.getUUID())), online);
         }
     }
 

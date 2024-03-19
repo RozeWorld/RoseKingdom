@@ -29,19 +29,19 @@ public class ProtocolTest extends CommandRK {
             npc.spawn();
             npc.setRotation(true);
         }
-        if(args.length == 2){
-
+        if(args.length == 2 && args[0].equalsIgnoreCase("remove")){
+            NPCHandler.removeNPC(Integer.parseInt(args[1]));
         }
     }
 
     @Override
     public List<String> tabComplete(CommandSender sender, String[] args) {
-        if(args.length == 2){
-            List<String> tabs = new ArrayList<>();
+        List<String> tabs = new ArrayList<>();
+        if(args.length == 2 && args[0].equalsIgnoreCase("remove")){
             for(int ids : NPCHandler.getIds()){
                 tabs.add(Integer.toString(ids));
             }
         }
-        return null;
+        return tabs;
     }
 }
