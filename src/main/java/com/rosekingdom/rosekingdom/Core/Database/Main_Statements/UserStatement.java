@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Core.Database.Main_Statements;
 
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
-import com.rosekingdom.rosekingdom.Ranks.Rank;
+import com.rosekingdom.rosekingdom.Tab.Rank;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 

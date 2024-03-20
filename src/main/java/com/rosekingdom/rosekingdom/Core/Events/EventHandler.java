@@ -6,7 +6,7 @@ import com.rosekingdom.rosekingdom.Economy.Events.GUI.sPlayerPanel;
 import com.rosekingdom.rosekingdom.Graves.GraveEvents;
 import com.rosekingdom.rosekingdom.Moderation.Events.BanEvents;
 import com.rosekingdom.rosekingdom.Profiles.Events.GUI.eProfile;
-import com.rosekingdom.rosekingdom.Ranks.AFKstatus;
+import com.rosekingdom.rosekingdom.Tab.AFKstatus;
 import org.bukkit.plugin.Plugin;
 
 import static org.bukkit.Bukkit.getServer;

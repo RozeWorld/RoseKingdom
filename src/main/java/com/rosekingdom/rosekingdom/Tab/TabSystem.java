@@ -1,7 +1,8 @@
-package com.rosekingdom.rosekingdom.Ranks;
+package com.rosekingdom.rosekingdom.Tab;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
+import com.rosekingdom.rosekingdom.Tab.Teams.Kingdom;
 import net.kyori.adventure.text.Component;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
@@ -12,16 +13,24 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
-public class RankSystem {
+public class TabSystem {
     private static final Map<Player, Team> teamRank = new HashMap<>();
     private static final Map<Player, Team> isAFK = new HashMap<>();
     static ScoreboardManager manager = Bukkit.getScoreboardManager();
     static Scoreboard board = manager.getNewScoreboard();
+    private List<Kingdom> kingdomList = new ArrayList<>();
+
+    public Scoreboard getBoard(){
+        return board;
+    }
+
+    public List<Kingdom> getKingdoms(){
+        return kingdomList;
+    }
+
     public static void loadRank(Player player){
         String userRank = UserStatement.getRank(player.getUniqueId());
         Rank rank = Rank.valueOf(userRank);

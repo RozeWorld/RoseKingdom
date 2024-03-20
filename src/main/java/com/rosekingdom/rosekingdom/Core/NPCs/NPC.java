@@ -5,7 +5,7 @@ import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
-import com.rosekingdom.rosekingdom.Ranks.RankSystem;
+import com.rosekingdom.rosekingdom.Tab.TabSystem;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.*;
@@ -81,10 +81,10 @@ public class NPC {
         NPCHandler.addNPC(this);
     }
 
-    public NPC(String name, Location location, String texture, String signature) {
+    public NPC(String name, String texture, String signature) {
         //Server and World
         MinecraftServer minecraftServer = ((CraftServer) Bukkit.getServer()).getServer();
-        ServerLevel serverLevel = ((CraftWorld) location.getWorld()).getHandle();
+        ServerLevel serverLevel = ((CraftWorld) Bukkit.getWorlds().get(0)).getHandle();
 
         //Setting the NPC's skin and name
         GameProfile profile = new GameProfile(UUID.randomUUID(), name);
@@ -93,9 +93,7 @@ public class NPC {
 
         //The NPC itself and it's settings
         npc = new ServerPlayer(minecraftServer, serverLevel, profile, ClientInformation.createDefault());
-        npc.setPos(location.getX(), location.getY(), location.getZ());
 
-        this.location = location;
         this.name = name;
         NPCHandler.addNPC(this);
     }
@@ -113,7 +111,7 @@ public class NPC {
             if(onTabList){
                 //Adds it to the tablist
                 sendPacket(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED, npc), online);
-                RankSystem.addNPC(npc);
+                TabSystem.addNPC(npc);
             }
             if(shown){
                 //Shows the NPC
@@ -141,7 +139,7 @@ public class NPC {
             sendPacket(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, npc), online);
             sendPacket(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED, npc), online);
             sendPacket(new ClientboundSetEntityDataPacket(npc.getId(), synchedEntityData.getNonDefaultValues()), online);
-            RankSystem.addNPC(npc);
+            TabSystem.addNPC(npc);
         }
         onTabList = true;
         shown = false;
