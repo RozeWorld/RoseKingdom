@@ -1,9 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.NPCs;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
-import com.rosekingdom.rosekingdom.Core.NPCs.Options.removeNPC;
-import com.rosekingdom.rosekingdom.Core.NPCs.Options.spawnNPC;
-import com.rosekingdom.rosekingdom.Core.NPCs.Options.tabNPC;
+import com.rosekingdom.rosekingdom.Core.NPCs.Options.*;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -17,6 +15,8 @@ public class NPCController extends CommandRK {
         addSubCommand(new removeNPC(0));
         addSubCommand(new spawnNPC(0));
         addSubCommand(new tabNPC(0));
+        addSubCommand(new tabTest(0));
+        addSubCommand(new clearNPCs(0));
     }
 
     @Override
@@ -30,6 +30,8 @@ public class NPCController extends CommandRK {
             tabs.add("remove");
             tabs.add("tab");
             tabs.add("spawn");
+            tabs.add("test");
+            tabs.add("clear");
         }
         if(args.length == 2 && (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("rm"))){
             for(int ids : NPCHandler.getIds()){

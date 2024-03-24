@@ -15,6 +15,7 @@ import com.rosekingdom.rosekingdom.Locations.CoordinatesBC;
 import com.rosekingdom.rosekingdom.Locations.Locations;
 import com.rosekingdom.rosekingdom.Moderation.Commands.*;
 import com.rosekingdom.rosekingdom.Profiles.Profile;
+import com.rosekingdom.rosekingdom.Tab.Teams.Commands.KingdomCommand;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -56,6 +57,7 @@ public class CommandManager implements TabExecutor {
         addCommand(new Ban());
         addCommand(new Vanish());
         addCommand(new TimersChecker());
+        addCommand(new KingdomCommand());
     }
 
     public List<CommandRK> getCommands() {

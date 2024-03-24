@@ -7,7 +7,7 @@ import com.rosekingdom.rosekingdom.Core.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
-import com.rosekingdom.rosekingdom.Tab.AFKstatus;
+import com.rosekingdom.rosekingdom.Tab.RankHandler;
 import com.rosekingdom.rosekingdom.Tab.TabSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -29,13 +29,14 @@ public final class RoseKingdom extends JavaPlugin {
 
         EventHandler.events(this);
 
-        TabSystem.registerAllRanks();
-        AFKstatus.check(this);
+//        AFKstatus.check(this);
+
+        RankHandler.registerBaseRanks();
 
         getLogger().info("RoseKingdom Loaded!");
         if(!Bukkit.getOnlinePlayers().isEmpty()){
             for(Player player : Bukkit.getOnlinePlayers()){
-                TabSystem.loadRank(player);
+                TabSystem.join(player);
             }
         }
     }

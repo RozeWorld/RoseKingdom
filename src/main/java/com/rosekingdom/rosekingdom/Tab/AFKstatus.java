@@ -27,7 +27,7 @@ public class AFKstatus implements Listener {
             for(Map.Entry<Player, Long> moved : lastMoved.entrySet()){
                 if((System.currentTimeMillis()-moved.getValue()) >= 3 * 60 * 1000){
                     Player player = moved.getKey();
-                    TabSystem.setStatusAFK(player);
+//                    TabSystem.setStatusAFK(player);
                     player.sendMessage(Component.text("You are now AFK!"));
                     forRemoval.add(player);
                 }
@@ -41,7 +41,7 @@ public class AFKstatus implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void playerMoved(PlayerMoveEvent e){
         if(!lastMoved.containsKey(e.getPlayer())){
-            TabSystem.removeStatusAFK(e.getPlayer());
+//            TabSystem.removeStatusAFK(e.getPlayer());
         }
         lastMoved.put(e.getPlayer(), System.currentTimeMillis());
     }

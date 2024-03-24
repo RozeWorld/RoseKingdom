@@ -30,6 +30,10 @@ commands:
   npc:
     description: NPC Controller command
     permission: rk.ADMIN
+  kingdom:
+    description: Creates a group
+    aliases:
+      - kd
   test:
     permission: rk.ADMIN
     description: test command
@@ -59,7 +63,7 @@ commands:
     permission: rk.ADMIN
     description: demoscreen testing
   rank:
-    permission: rk.OWNER
+    permission: rk.DEFAULT
     description: sets/removes ranks
     usage: /<command> <player> <rank>
   perms:

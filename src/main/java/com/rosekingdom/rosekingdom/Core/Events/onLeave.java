@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.Events;
 
 import com.rosekingdom.rosekingdom.RoseKingdom;
+import com.rosekingdom.rosekingdom.Tab.TabSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -28,5 +29,8 @@ public class onLeave implements Listener {
                         .append(Component.text(Bukkit.getOnlinePlayers().size(),TextColor.fromHexString("#2eff31"))));
             }
         }, 10);
+
+        TabSystem.lastOnline(player);
+
     }
 }

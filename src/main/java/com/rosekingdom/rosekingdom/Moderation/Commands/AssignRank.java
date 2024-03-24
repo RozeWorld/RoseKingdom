@@ -31,7 +31,7 @@ public class AssignRank extends CommandRK {
         UUID uuid = player.getUniqueId();
         Rank rank = Rank.valueOf(args[1].toUpperCase());
         UserStatement.setRank(uuid.toString(), rank.name());
-        TabSystem.loadRank(player);
+        TabSystem.join(player);
     }
 
     @Override
