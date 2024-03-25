@@ -22,7 +22,6 @@ public class Ban extends CommandRK {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(!(sender instanceof Player player)) return;
         switch (args.length){
             case 1 -> {
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
@@ -39,7 +38,7 @@ public class Ban extends CommandRK {
             default -> {
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
                 if(getTime(args)==null){
-                    player.sendMessage(Message.Warning("Incorrect time format"));
+                    sender.sendMessage(Message.Warning("Incorrect time format"));
                     return;
                 }
                 String reason = args[2];

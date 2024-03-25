@@ -39,8 +39,9 @@ public class RankHandler extends TabSystem {
     }
 
     public static void setStatusAFK(Player player) {
-        Team team = board.registerNewTeam(String.valueOf(UUID.randomUUID()));
-        team.prefix(playerRanks.get(player).prefix());
+        Team base = playerRanks.get(player);
+        Team team = board.registerNewTeam(base.getName().substring(1,4) + UUID.randomUUID());
+        team.prefix(base.prefix());
         team.suffix(Component.text("\uDB00\uDC03\uEa06"));
         team.addPlayer(player);
         isAFK.put(player, team);
@@ -52,7 +53,7 @@ public class RankHandler extends TabSystem {
             isAFK.get(player).unregister();
             isAFK.remove(player);
         }
-        playerRanks.get(player).addPlayer(player);
+        TabSystem.join(player);
         refreshScoreboard();
     }
 }

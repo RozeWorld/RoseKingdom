@@ -7,6 +7,7 @@ import com.rosekingdom.rosekingdom.Core.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
+import com.rosekingdom.rosekingdom.Tab.AFKstatus;
 import com.rosekingdom.rosekingdom.Tab.RankHandler;
 import com.rosekingdom.rosekingdom.Tab.TabSystem;
 import org.bukkit.Bukkit;
@@ -29,7 +30,7 @@ public final class RoseKingdom extends JavaPlugin {
 
         EventHandler.events(this);
 
-//        AFKstatus.check(this);
+        AFKstatus.check(this);
 
         RankHandler.registerBaseRanks();
 

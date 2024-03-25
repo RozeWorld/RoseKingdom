@@ -20,11 +20,14 @@ public class removeKingdom extends subCommandRK {
         if(!(sender instanceof Player player)) return;
         if(args.length == 2){
             for(Kingdom kingdom : TabSystem.getKingdoms()){
-                if(kingdom.getName().equalsIgnoreCase(args[1])){
+                if(kingdom.getName().equalsIgnoreCase(args[1]) && kingdom.getOwner().equals(player)){
                     kingdom.deleteKingdom();
                     TabSystem.join(player);
                     player.sendMessage(Message.Warning(kingdom.getName() + " has been deleted!"));
                     return;
+                }
+                else {
+                    player.sendMessage(Message.Warning("You don't have a permission to run this action!"));
                 }
             }
         }

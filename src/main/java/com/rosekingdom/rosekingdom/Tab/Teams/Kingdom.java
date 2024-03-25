@@ -22,8 +22,9 @@ public class Kingdom extends TabSystem {
     NPC separator;
     int teamRank;
     Map<Player, Team> members = new HashMap<>();
+    Player owner;
 
-    public Kingdom(String name){
+    public Kingdom(String name, Player player){
         teamRank = getKingdoms().size()+1;
         team = getBoard().registerNewTeam("1"+teamRank+"00"+name);
         team.prefix(Component.text("\uDB00\uDC02"));
@@ -34,6 +35,7 @@ public class Kingdom extends TabSystem {
         separator.addToTabOnly();
         team.addEntity(separator.getNPC().getBukkitEntity());
         this.name = name;
+        this.owner = player;
         addKingdom(this);
     }
 
@@ -60,6 +62,10 @@ public class Kingdom extends TabSystem {
         return members.get(player);
     }
 
+    public Player getOwner(){
+        return owner;
+    }
+
 
     public void joinKingdom(Player player){
         String playerRankName = UserStatement.getRank(player.getUniqueId());
@@ -80,6 +86,7 @@ public class Kingdom extends TabSystem {
         members.put(player, rank);
         player.sendMessage(Message.Info("You joined " + name + "!"));
     }
+
     public void leaveKingdom(Player player) {
         String rankName = UserStatement.getRank(player.getUniqueId());
         for(Team ranks : RankHandler.getBaseRanks()){
@@ -112,7 +119,4 @@ public class Kingdom extends TabSystem {
     public void showSeparator() {
         separator.addToTabOnly();
     }
-
-
-
 }

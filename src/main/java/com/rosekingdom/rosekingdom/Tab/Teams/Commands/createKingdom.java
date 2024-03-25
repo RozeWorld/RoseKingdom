@@ -22,7 +22,7 @@ public class createKingdom extends subCommandRK {
                 player.sendMessage(Message.Warning("Unable to create a kingdom cause the exceeding number of kingdoms!"));
             }
             if(!TabSystem.isInKingdom(player)){
-                Kingdom team = new Kingdom(args[1]);
+                Kingdom team = new Kingdom(args[1], player);
                 team.joinKingdom(player);
             }else{
                 player.sendMessage(Message.Info("You are already in a kingdom!"));
