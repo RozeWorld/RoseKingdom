@@ -18,6 +18,9 @@ commands:
   ban:
     permission: rk.ADMIN
     description: Used for banning people that break the rules
+  ban-ip:
+    permission: rk.ADMIN
+    description: Used for banning people that break the rules
   store:
     permission: rk.ADMIN
     description: Opens store settings menu

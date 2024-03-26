@@ -3,7 +3,6 @@ package com.rosekingdom.rosekingdom.Moderation.Commands;
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,30 +12,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Ban extends CommandRK {
+public class BanIp extends CommandRK {
 
-    public Ban(){
-        setName("ban");
-        setArgumentRequirement(true);
+    public BanIp(){
+        setName("ban-ip");
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         switch (args.length){
             case 1 -> {
-                OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                target.ban("Not specified", (Date) null, sender.getName());
+                Player target = Bukkit.getPlayer(args[0]);
+                target.banIp("Not specified", (Date) null, sender.getName(), true);
             }
             case 2 -> {
-                OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+                Player target = Bukkit.getPlayer(args[0]);
                 if(getTime(args)==null){
-                    target.ban(args[1], (Date) null, sender.getName());
+                    target.banIp(args[1], (Date) null, sender.getName(),true);
                     return;
                 }
-                target.ban("Not specified", getTime(args), sender.getName());
+                target.banIp("Not specified", getTime(args), sender.getName(),true);
             }
             default -> {
-                OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+                Player target = Bukkit.getPlayer(args[0]);
                 if(getTime(args)==null){
                     sender.sendMessage(Message.Warning("Incorrect time format"));
                     return;
@@ -45,7 +43,7 @@ public class Ban extends CommandRK {
                 for(int str = 3; str < args.length; str++){
                     reason.append(" ").append(args[str]);
                 }
-                target.ban(reason.toString(), getTime(args), sender.getName());
+                target.banIp(reason.toString(), getTime(args), sender.getName(), true);
             }
         }
     }
