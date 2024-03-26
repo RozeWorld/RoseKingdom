@@ -1,8 +1,8 @@
-package com.rosekingdom.rosekingdom.Tab.Teams.Commands;
+package com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.TabSystem;
-import com.rosekingdom.rosekingdom.Tab.Teams.Kingdom;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;

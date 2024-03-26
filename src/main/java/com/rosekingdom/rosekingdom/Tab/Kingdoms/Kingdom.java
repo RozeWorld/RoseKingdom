@@ -1,4 +1,4 @@
-package com.rosekingdom.rosekingdom.Tab.Teams;
+package com.rosekingdom.rosekingdom.Tab.Kingdoms;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPC;
@@ -9,20 +9,22 @@ import com.rosekingdom.rosekingdom.Tab.RankHandler;
 import com.rosekingdom.rosekingdom.Tab.TabSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 public class Kingdom extends TabSystem {
     String name;
     Team team;
     NPC separator;
     int teamRank;
-    Map<Player, Team> members = new HashMap<>();
-    Player owner;
+    Map<UUID, Team> members = new HashMap<>();
+    UUID owner;
 
     public Kingdom(String name, Player player){
         teamRank = getKingdoms().size()+1;
@@ -35,7 +37,7 @@ public class Kingdom extends TabSystem {
         separator.addToTabOnly();
         team.addEntity(separator.getNPC().getBukkitEntity());
         this.name = name;
-        this.owner = player;
+        this.owner = player.getUniqueId();
         addKingdom(this);
     }
 
@@ -45,29 +47,31 @@ public class Kingdom extends TabSystem {
     public void setName(String name) {
         this.name = name;
     }
-    public Set<Player> getMembers(){
+    public Set<UUID> getMembers(){
         return members.keySet();
     }
     public void removeMember(Player player){
+        UUID id = player.getUniqueId();
         int playersWithThatRank = 0;
         for(Team rank : members.values()){
-            if(rank.equals(members.get(player))) playersWithThatRank++;
+            if(rank.equals(members.get(id))) playersWithThatRank++;
         }
         if(playersWithThatRank <= 1){
-            members.get(player).unregister();
+            members.get(id).unregister();
         }
-        members.remove(player);
+        members.remove(id);
     }
     public Team getPlayerRank(Player player){
-        return members.get(player);
+        return members.get(player.getUniqueId());
     }
 
-    public Player getOwner(){
+    public UUID getOwner(){
         return owner;
     }
 
 
     public void joinKingdom(Player player){
+        UUID id = player.getUniqueId();
         String playerRankName = UserStatement.getRank(player.getUniqueId());
         Rank playerRank = Rank.valueOf(playerRankName);
         String rankName = "1"+teamRank+"0"+RankHandler.getRankNumber(playerRankName)+playerRankName;
@@ -75,7 +79,7 @@ public class Kingdom extends TabSystem {
             if(ranking.getName().equals(rankName)){
                 ranking.addPlayer(player);
                 RankHandler.setPlayerRank(player, ranking);
-                members.put(player, ranking);
+                members.put(id, ranking);
                 return;
             }
         }
@@ -83,7 +87,7 @@ public class Kingdom extends TabSystem {
         rank.prefix(Component.text(playerRank.prefix));
         rank.addPlayer(player);
         RankHandler.setPlayerRank(player, rank);
-        members.put(player, rank);
+        members.put(id, rank);
         player.sendMessage(Message.Info("You joined " + name + "!"));
     }
 
@@ -99,6 +103,18 @@ public class Kingdom extends TabSystem {
                 }
             }
         }
+    }
+
+    public int getOnlineMembers(){
+        int online = 0;
+        for(UUID id : getMembers()){
+            for(Player player : Bukkit.getOnlinePlayers()){
+                if(id.equals(player.getUniqueId())){
+                    online++;
+                }
+            }
+        }
+        return online;
     }
 
     public void deleteKingdom(){

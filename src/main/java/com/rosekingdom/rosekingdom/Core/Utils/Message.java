@@ -19,12 +19,12 @@ public class Message {
     }
 
     public static Component Warning(String text){
-        return Component.text("\uEf10 ")
+        return Component.text("\uEf10")
                 .append(Component.text(text))
                 .color(TextColor.fromHexString("#e30000"));
     }
     public static Component Info(String text){
-        return Component.text("\uEf10 ")
+        return Component.text("\uEf10")
                 .append(Component.text(text))
                 .color(TextColor.fromHexString("#ebb22f"));
     }

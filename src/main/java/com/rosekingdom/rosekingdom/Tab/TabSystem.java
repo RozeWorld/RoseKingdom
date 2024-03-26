@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Tab;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
-import com.rosekingdom.rosekingdom.Tab.Teams.Kingdom;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,12 +14,13 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class TabSystem {
     static ScoreboardManager manager = Bukkit.getScoreboardManager();
     static Scoreboard board = manager.getNewScoreboard();
-    private static List<Kingdom> kingdomList = new ArrayList<>();
+    private static final List<Kingdom> kingdomList = new ArrayList<>();
     public static Scoreboard getBoard(){
         return board;
     }
@@ -35,31 +36,26 @@ public class TabSystem {
 
     public static void join(Player player){
         Kingdom kingdom = getKingdom(player);
-        if(kingdom != null){
-            Team rank = kingdom.getPlayerRank(player);
-            rank.addPlayer(player);
-            player.displayName(rank.prefix().append(Component.text(player.getName())));
-            RankHandler.setPlayerRank(player, rank);
-
-            int onlineMembers = 0;
-            for(Player member : kingdom.getMembers()){
-                if(member.isOnline()){
-                    onlineMembers++;
-                }
-            }
-            if(onlineMembers >= 1){
-                kingdom.showSeparator();
-            }
-        }
         String rankName = UserStatement.getRank(player.getUniqueId());
         Rank rank = Rank.valueOf(rankName);
-        for(Team ranks : RankHandler.getBaseRanks()){
-            if(ranks.getName().contains(rankName)){
-                ranks.addPlayer(player);
-                ranks.prefix(Component.text(rank.prefix));
-                player.displayName(Component.text(rank.prefix + player.getName()));
-                RankHandler.setPlayerRank(player, ranks);
-                break;
+        if(kingdom != null){
+            Team playerRank = kingdom.getPlayerRank(player);
+            playerRank.addPlayer(player);
+            player.displayName(playerRank.prefix().append(Component.text(player.getName())));
+            RankHandler.setPlayerRank(player, playerRank);
+
+            if(kingdom.getOnlineMembers() >= 1){
+                kingdom.showSeparator();
+            }
+        }else{
+            for(Team ranks : RankHandler.getBaseRanks()){
+                if(ranks.getName().contains(rankName)){
+                    ranks.addPlayer(player);
+                    ranks.prefix(Component.text(rank.prefix));
+                    player.displayName(Component.text(rank.prefix + player.getName()));
+                    RankHandler.setPlayerRank(player, ranks);
+                    break;
+                }
             }
         }
 
@@ -73,7 +69,7 @@ public class TabSystem {
 
     public static boolean isInKingdom(Player player){
         for(Kingdom kingdom : kingdomList){
-            if(kingdom.getMembers().contains(player)){
+            if(kingdom.getMembers().contains(player.getUniqueId())){
                 return true;
             }
         }
@@ -82,7 +78,7 @@ public class TabSystem {
 
     public static Kingdom getKingdom(Player player){
         for(Kingdom kingdom : kingdomList){
-            if(kingdom.getMembers().contains(player)){
+            if(kingdom.getMembers().contains(player.getUniqueId())){
                 return kingdom;
             }
         }
@@ -94,8 +90,8 @@ public class TabSystem {
         if(kingdom == null) return;
         boolean lastOnline = true;
         for(Player online : Bukkit.getOnlinePlayers()){
-            for(Player member : kingdom.getMembers()){
-                if (member.equals(online)) {
+            for(UUID member : kingdom.getMembers()){
+                if (member.equals(online.getUniqueId())) {
                     lastOnline = false;
                     break;
                 }

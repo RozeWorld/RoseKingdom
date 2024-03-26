@@ -6,7 +6,7 @@ import com.rosekingdom.rosekingdom.Core.Commands.CheckPermissions;
 import com.rosekingdom.rosekingdom.Core.Commands.PlayTime;
 import com.rosekingdom.rosekingdom.Core.Commands.ResourcePackTesting;
 import com.rosekingdom.rosekingdom.Core.Commands.TimersChecker;
-import com.rosekingdom.rosekingdom.Core.NPCs.NPCController;
+import com.rosekingdom.rosekingdom.Core.NPCs.NPCOptions;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Economy.Commands.Coins;
 import com.rosekingdom.rosekingdom.Economy.Commands.Store;
@@ -15,7 +15,7 @@ import com.rosekingdom.rosekingdom.Locations.CoordinatesBC;
 import com.rosekingdom.rosekingdom.Locations.Locations;
 import com.rosekingdom.rosekingdom.Moderation.Commands.*;
 import com.rosekingdom.rosekingdom.Profiles.Profile;
-import com.rosekingdom.rosekingdom.Tab.Teams.Commands.KingdomCommand;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands.KingdomCommand;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -46,7 +46,6 @@ public class CommandManager implements TabExecutor {
         addCommand(new CheckPermissions());
         addCommand(new Bugs());
         addCommand(new Feedback());
-        addCommand(new NPCController());
         addCommand(new Locations());
         addCommand(new GraveCommand());
         addCommand(new Profile());
@@ -55,8 +54,10 @@ public class CommandManager implements TabExecutor {
         addCommand(new Coins());
         addCommand(new Store());
         addCommand(new Ban());
+        addCommand(new BanIp());
         addCommand(new Vanish());
         addCommand(new TimersChecker());
+        addCommand(new NPCOptions());
         addCommand(new KingdomCommand());
     }
 

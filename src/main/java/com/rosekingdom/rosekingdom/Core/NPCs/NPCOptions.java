@@ -7,9 +7,9 @@ import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NPCController extends CommandRK {
+public class NPCOptions extends CommandRK {
 
-    public NPCController(){
+    public NPCOptions(){
         setName("npc");
         setArgumentRequirement(true);
         addSubCommand(new removeNPC(0));

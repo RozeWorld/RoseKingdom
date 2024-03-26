@@ -4,7 +4,10 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RankHandler extends TabSystem {
     private static final List<Team> baseRanks = new ArrayList<>();
@@ -40,7 +43,7 @@ public class RankHandler extends TabSystem {
 
     public static void setStatusAFK(Player player) {
         Team base = playerRanks.get(player);
-        Team team = board.registerNewTeam(base.getName().substring(1,4) + UUID.randomUUID());
+        Team team = board.registerNewTeam(base.getName() + "_AFK");
         team.prefix(base.prefix());
         team.suffix(Component.text("\uDB00\uDC03\uEa06"));
         team.addPlayer(player);
