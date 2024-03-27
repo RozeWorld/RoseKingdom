@@ -22,7 +22,6 @@ public class removeKingdom extends subCommandRK {
             for(Kingdom kingdom : TabSystem.getKingdoms()){
                 if(kingdom.getName().equalsIgnoreCase(args[1]) && kingdom.getOwner().equals(player.getUniqueId())){
                     kingdom.deleteKingdom();
-                    TabSystem.join(player);
                     player.sendMessage(Message.Warning(kingdom.getName() + " has been deleted!"));
                     return;
                 }

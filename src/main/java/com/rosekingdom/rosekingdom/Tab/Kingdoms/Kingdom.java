@@ -13,10 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class Kingdom extends TabSystem {
     String name;
@@ -105,27 +102,34 @@ public class Kingdom extends TabSystem {
         }
     }
 
-    public int getOnlineMembers(){
-        int online = 0;
+    public List<Player> getOnlinePlayers(){
+        List<Player> players = new ArrayList<>();
         for(UUID id : getMembers()){
             for(Player player : Bukkit.getOnlinePlayers()){
                 if(id.equals(player.getUniqueId())){
-                    online++;
+                    players.add(player);
                 }
             }
         }
-        return online;
+        return players;
     }
 
     public void deleteKingdom(){
         NPCHandler.removeNPC(separator.getId());
         team.unregister();
-        for(Team team : members.values()){
-            team.unregister();
-        }
-        refreshScoreboard();
-        TabSystem.removeKingdom(this);
 
+        for(Player members : getOnlinePlayers()){
+            String rankName = UserStatement.getRank(members.getUniqueId());
+            for(Team ranks : RankHandler.getBaseRanks()){
+                if(ranks.getName().contains(rankName)) {
+                    removeMember(members);
+                    ranks.addPlayer(members);
+                    RankHandler.setPlayerRank(members, ranks);
+                }
+            }
+        }
+        TabSystem.removeKingdom(this);
+        refreshScoreboard();
     }
 
     public void hideSeparator() {

@@ -1,7 +1,6 @@
 package com.rosekingdom.rosekingdom.Tab;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
-import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import net.kyori.adventure.text.Component;
@@ -15,7 +14,6 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 public class TabSystem {
@@ -47,7 +45,7 @@ public class TabSystem {
             player.displayName(playerRank.prefix().append(Component.text(player.getName())));
             RankHandler.setPlayerRank(player, playerRank);
 
-            if(kingdom.getOnlineMembers() >= 1){
+            if(!kingdom.getOnlinePlayers().isEmpty()){
                 kingdom.showSeparator();
             }
         }else{
@@ -91,7 +89,7 @@ public class TabSystem {
     public static void lastOnline(Player player){
         Kingdom kingdom = getKingdom(player);
         if(kingdom == null) return;
-        if(kingdom.getOnlineMembers()<=1){
+        if(kingdom.getOnlinePlayers().size()<=1){
             kingdom.hideSeparator();
         }
     }
