@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Moderation.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
+import com.rosekingdom.rosekingdom.Tab.TabSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,13 +21,18 @@ public class BanIp extends CommandRK {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        Player target = null;
+        if(args.length >= 1) {
+            target = Bukkit.getPlayer(args[0]);
+            TabSystem.lastOnline(target);
+        }
         switch (args.length){
             case 1 -> {
-                Player target = Bukkit.getPlayer(args[0]);
+                Bukkit.getPlayer(args[0]);
                 target.banIp("Not specified", (Date) null, sender.getName(), true);
             }
             case 2 -> {
-                Player target = Bukkit.getPlayer(args[0]);
+                Bukkit.getPlayer(args[0]);
                 if(getTime(args)==null){
                     target.banIp(args[1], (Date) null, sender.getName(),true);
                     return;
@@ -34,7 +40,7 @@ public class BanIp extends CommandRK {
                 target.banIp("Not specified", getTime(args), sender.getName(),true);
             }
             default -> {
-                Player target = Bukkit.getPlayer(args[0]);
+                Bukkit.getPlayer(args[0]);
                 if(getTime(args)==null){
                     sender.sendMessage(Message.Warning("Incorrect time format"));
                     return;
