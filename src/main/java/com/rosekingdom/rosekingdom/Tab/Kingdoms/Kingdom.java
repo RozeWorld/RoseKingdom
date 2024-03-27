@@ -129,7 +129,7 @@ public class Kingdom extends TabSystem {
     }
 
     public void hideSeparator() {
-        separator.despawn();
+         separator.despawn();
     }
 
     public void showSeparator() {

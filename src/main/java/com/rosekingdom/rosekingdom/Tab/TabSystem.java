@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Tab;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import net.kyori.adventure.text.Component;
@@ -34,6 +35,8 @@ public class TabSystem {
         kingdomList.remove(team);
     }
 
+
+    //TODO:fix the issue when smone creates a team then another person creates and the first person deletes his and makes a new one
     public static void join(Player player){
         Kingdom kingdom = getKingdom(player);
         String rankName = UserStatement.getRank(player.getUniqueId());
@@ -88,17 +91,7 @@ public class TabSystem {
     public static void lastOnline(Player player){
         Kingdom kingdom = getKingdom(player);
         if(kingdom == null) return;
-        boolean lastOnline = true;
-        for(Player online : Bukkit.getOnlinePlayers()){
-            for(UUID member : kingdom.getMembers()){
-                if (member.equals(online.getUniqueId())) {
-                    lastOnline = false;
-                    break;
-                }
-            }
-            if(!lastOnline) break;
-        }
-        if(lastOnline){
+        if(kingdom.getOnlineMembers()<=1){
             kingdom.hideSeparator();
         }
     }
