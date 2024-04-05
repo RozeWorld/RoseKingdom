@@ -20,8 +20,6 @@ public class Tab {
         return board;
     }
 
-
-    //TODO:fix the issue when smone creates a team then another person creates and the first person deletes his and makes a new one
     public static void join(Player player){
         String rankName = UserStatement.getRank(player.getUniqueId());
         Rank rank = Rank.valueOf(rankName);
