@@ -1,7 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.Events;
 
 import com.rosekingdom.rosekingdom.RoseKingdom;
-import com.rosekingdom.rosekingdom.Tab.TabSystem;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -30,7 +30,6 @@ public class onLeave implements Listener {
             }
         }, 10);
 
-        TabSystem.lastOnline(player);
-
+        KingdomHandler.lastOnline(player);
     }
 }

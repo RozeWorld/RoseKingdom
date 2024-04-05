@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Moderation.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
-import com.rosekingdom.rosekingdom.Tab.TabSystem;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,7 +24,7 @@ public class BanIp extends CommandRK {
         Player target = null;
         if(args.length >= 1) {
             target = Bukkit.getPlayer(args[0]);
-            TabSystem.lastOnline(target);
+            KingdomHandler.lastOnline(target);
         }
         switch (args.length){
             case 1 -> {

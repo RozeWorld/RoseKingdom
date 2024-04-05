@@ -6,86 +6,131 @@ import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Tab.Rank;
 import com.rosekingdom.rosekingdom.Tab.RankHandler;
-import com.rosekingdom.rosekingdom.Tab.TabSystem;
+import com.rosekingdom.rosekingdom.Tab.Tab;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-public class Kingdom extends TabSystem {
+public class Kingdom extends Tab {
+    int kingdomNumber;
     String name;
-    Team team;
-    NPC separator;
-    int teamRank;
-    Map<UUID, Team> members = new HashMap<>();
     UUID owner;
+    Team separatorTeam;
+    NPC separator;
+    List<Player> members = new ArrayList<>();
+    List<Team> ranks = new ArrayList<>();
 
-    public Kingdom(String name, Player player){
-        teamRank = getKingdoms().size()+1;
-        team = getBoard().registerNewTeam("1"+teamRank+"00"+name);
-        team.prefix(Component.text("\uDB00\uDC02"));
-        team.color(NamedTextColor.GRAY);
-        separator = new NPC(name,
-                "ewogICJ0aW1lc3RhbXAiIDogMTcxMDg4NDQwNTE2MCwKICAicHJvZmlsZUlkIiA6ICI5ZDE1OGM1YjNiN2U0ZGNlOWU0OTA5MTdjNmJlYmM5MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJTbm9uX1NTIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzYyM2NmYWY0MjZiNTZhZmVjM2VmOWUxYjg4ZGVhZjU5YzlkYWMwMDU4ZDNiOTE4Nzk1MzgwNzFjNjRkODVkMWEiCiAgICB9CiAgfQp9",
-                "nKIof7pfbAUmqs+uRtNSvWa0M2/ZuPNqHWEzpk8JKe5vvrnyWtM+Udw2ehEM8Lvpzf/2x+AGc+DIJGXOiMJfIaGEiZUjONHXjhouA6mDcCx+kRNZZTmIT6pLF0s1Uni801v56yAPJSKgQ7vhZOmODRZgkHbLVoXG1oVWMan1vUiv573ISQ2/MF6huOgh/3hbUZU0JhOGv/NMjPaDDnYwLDkAMMqYWPeWX4xULZ+bs9KidMDgXI4WquD2uqaXgSbfkhWPySxSC2VYAxgHrGPiCwGPh5dp6YPnzD1/k1Om4XCNxhvUPPXr25yqKuN354/U4GlApBdMiEJK+9WsruK0agiahr1ARcEGlgiS7LwK39nr7Z7nKQz9NxHUhDEW9K719x5CAXqpt9R4ihmROq+rnU1xWBNViUjzszdNdyEaEyPtpVTAjghd0Erop7qK9mNkl1akiZtWReYPjMFZy9uPuKp2zLaJo9iYzNUKtZgz43VtxrPHjCmfPg4hy1PZ7I+OdcW6nTJMZidle9NA/xaExjl9/w0vTzU1LXJ5Jeo6B09Pq/ebOBK152t4VjSx8/28/l3G8l4NPZiqonk8BM4k2NHcI1Ma8OO9jVUoFhcNN0M2NfSUsg4HlCsglp6FqPqxWOLniEna5yCl4ker+ljEOMsDw+WvRGTJ9vKEQXTHD88=");
-        separator.addToTabOnly();
-        team.addEntity(separator.getNPC().getBukkitEntity());
-        this.name = name;
-        this.owner = player.getUniqueId();
-        addKingdom(this);
+    public int getKingdomNumber(){
+        return kingdomNumber;
     }
 
-    public String getName(){
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public Set<UUID> getMembers(){
-        return members.keySet();
-    }
-    public void removeMember(Player player){
-        UUID id = player.getUniqueId();
-        int playersWithThatRank = 0;
-        for(Team rank : members.values()){
-            if(rank.equals(members.get(id))) playersWithThatRank++;
-        }
-        if(playersWithThatRank <= 1){
-            members.get(id).unregister();
-        }
-        members.remove(id);
-    }
-    public Team getPlayerRank(Player player){
-        return members.get(player.getUniqueId());
+    public void setKingdomNumber(int number) {
+        kingdomNumber = number;
     }
 
     public UUID getOwner(){
         return owner;
     }
 
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void hideSeparator() {
+        separator.despawn();
+    }
+
+    public void showSeparator() {
+        separator.addToTabOnly();
+    }
+
+    public List<Player> getMembers(){
+        return members;
+    }
+
+    public void addMember(Player player){
+        members.add(player);
+    }
+
+    public void removeMember(Player player){
+        members.remove(player);
+    }
+
+    public List<Team> getRanks(){
+        return ranks;
+    }
+
+    public void addRank(Team rank){
+        ranks.add(rank);
+    }
+
+    public void removeRank(Team rank){
+        ranks.remove(rank);
+    }
+
+    public Kingdom(String name, Player player){
+        kingdomNumber = KingdomHandler.getKingdoms().size()+1;
+        this.name = name;
+        this.owner = player.getUniqueId();
+        createSeparator();
+        createRanks();
+        KingdomHandler.addKingdom(this);
+    }
+
+    public void createSeparator(){
+        separatorTeam = getBoard().registerNewTeam("1" + kingdomNumber + "00" + name);
+        separatorTeam.prefix(Component.text("\uDB00\uDC02"));
+        separatorTeam.color(NamedTextColor.GRAY);
+        separator = new NPC(name,
+                "ewogICJ0aW1lc3RhbXAiIDogMTcxMjM0MzcwNjEyMywKICAicHJvZmlsZUlkIiA6ICI1ZTdmY2RjYTU5YzI0NjkwODAwNjg4OTNkODU1ODM3NCIsCiAgInByb2ZpbGVOYW1lIiA6ICJKYWVsbGFyaSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS81ZWFkZjcxZDhkZDdjNGNiN2NlMzJhY2E1NGRiODE2YTkwNTA5YjQzMjIzMmNkODhkM2FlM2VlYWY4YzhmZTc2IgogICAgfQogIH0KfQ==",
+                "KMgAXxUwHyVt5VlXzLcjUSR14CcKXvMvSImOaGXjHvtuN7VaH62pr6YfBVPLQ/J120ULc4vUP5flVJQYiFtWBv0+QGdDCDZQjEPr/UPzG5W08GEWv3HMIaRgAH9bb90aDzyGaxcGtDpz/gb5ZpycKtXLUtLS4zHIiVq2VKW3eaJN87+HnecjP2DtY+PaicPOd5O9XObKB3mBCUXmxQcjyoLR7aMIZUc0NyJTNHwcKRJ8td+rdhC/xtvnzI9ZbbQuniDaTYw1HMVzc3SKvIhJeaz0FTJ99AGQoU2FE+/thq09bli4ha6ML+tNR/QQ5YLqxlOHYmfVz0LaXnlvbZGfoiExdQFPXH/e6vx3QkC3MNmMqYty8GwF3+1N3AJXREvNQ/WbPXs/Wo+cv/8Irbwh0hl+sj1sHEj3kNSNjSEBrXXfE1zWnQhMzUNan+QTZXDJOIrXAoukVq2oSXi2XRMli10fuwgCNRDZHB5d/dxNw/4XHn96wgH6TVmZpcoQbwj7vnNIqtdesC+HJALRrkoR4sZW376/NgGNhCiMN4KvIUurPv44FY2Vz+kVpeX6J6CraDz8+Zy5MXrXwi5Vcy9a1EHDCgxOtxGZu04aKDflZnUA871baHda34/TdrqJ/QevviWQI/fi+r4xA6D0bCS9RCahtzBAUwJUa5PKqETfLkw=");
+        separator.addToTabOnly();
+        separatorTeam.addEntity(separator.getNPC().getBukkitEntity());
+    }
+
+    public void deleteSeparator(){
+        separatorTeam.unregister();
+        hideSeparator();
+    }
+
+    public void createRanks(){
+        for(Rank ranks : Rank.values()){
+            Team rank = getBoard().registerNewTeam("1" + kingdomNumber + "0" + RankHandler.getRankNumber(ranks) + ranks.name());
+            rank.prefix(Component.text(ranks.prefix));
+            addRank(rank);
+        }
+    }
+
+    public void deleteRanks(){
+        for(Team ranks : ranks){
+            ranks.unregister();
+        }
+        ranks = new ArrayList<>();
+    }
+
 
     public void joinKingdom(Player player){
-        UUID id = player.getUniqueId();
         String playerRankName = UserStatement.getRank(player.getUniqueId());
-        Rank playerRank = Rank.valueOf(playerRankName);
-        String rankName = "1"+teamRank+"0"+RankHandler.getRankNumber(playerRankName)+playerRankName;
-        for(Team ranking : members.values()){
-            if(ranking.getName().equals(rankName)){
-                ranking.addPlayer(player);
-                RankHandler.setPlayerRank(player, ranking);
-                members.put(id, ranking);
-                return;
+        String rankName = "1" + kingdomNumber + "0" + RankHandler.getRankNumber(playerRankName) + playerRankName;
+        for(Team rank : getRanks()){
+            if(rank.getName().contains(rankName)){
+                rank.addPlayer(player);
+                RankHandler.setPlayerRank(player, rank);
             }
         }
-        Team rank = getBoard().registerNewTeam(rankName);
-        rank.prefix(Component.text(playerRank.prefix));
-        rank.addPlayer(player);
-        RankHandler.setPlayerRank(player, rank);
-        members.put(id, rank);
-        player.sendMessage(Message.Info("You joined " + name + "!"));
+        if (!members.contains(player)){
+            addMember(player);
+            player.sendMessage(Message.Info("You joined " + name + "!"));
+        }
     }
 
     public void leaveKingdom(Player player) {
@@ -103,20 +148,19 @@ public class Kingdom extends TabSystem {
     }
 
     public List<Player> getOnlinePlayers(){
-        List<Player> players = new ArrayList<>();
-        for(UUID id : getMembers()){
-            for(Player player : Bukkit.getOnlinePlayers()){
-                if(id.equals(player.getUniqueId())){
-                    players.add(player);
-                }
+        List<Player> online = new ArrayList<>();
+        for(Player player : getMembers()){
+            if(player.isOnline()){
+                online.add(player);
             }
         }
-        return players;
+        return online;
     }
 
     public void deleteKingdom(){
         NPCHandler.removeNPC(separator.getId());
-        team.unregister();
+        separatorTeam.unregister();
+        deleteRanks();
 
         for(Player members : getOnlinePlayers()){
             String rankName = UserStatement.getRank(members.getUniqueId());
@@ -128,15 +172,7 @@ public class Kingdom extends TabSystem {
                 }
             }
         }
-        TabSystem.removeKingdom(this);
+        KingdomHandler.removeKingdom(this);
         refreshScoreboard();
-    }
-
-    public void hideSeparator() {
-         separator.despawn();
-    }
-
-    public void showSeparator() {
-        separator.addToTabOnly();
     }
 }

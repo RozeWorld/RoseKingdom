@@ -9,7 +9,7 @@ import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Profiles.Statements.ProfileStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
-import com.rosekingdom.rosekingdom.Tab.TabSystem;
+import com.rosekingdom.rosekingdom.Tab.Tab;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -53,7 +53,7 @@ public class onJoin implements Listener {
             ProfileStatement.createProfile(player);
         }
         //Rank
-        TabSystem.join(player);
+        Tab.join(player);
 
         //Activity Streak Checker
         long lastOnline = player.getLastSeen();

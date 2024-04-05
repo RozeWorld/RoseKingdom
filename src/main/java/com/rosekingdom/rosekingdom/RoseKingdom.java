@@ -9,7 +9,7 @@ import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Tab.AFKstatus;
 import com.rosekingdom.rosekingdom.Tab.RankHandler;
-import com.rosekingdom.rosekingdom.Tab.TabSystem;
+import com.rosekingdom.rosekingdom.Tab.Tab;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,7 +37,7 @@ public final class RoseKingdom extends JavaPlugin {
         getLogger().info("RoseKingdom Loaded!");
         if(!Bukkit.getOnlinePlayers().isEmpty()){
             for(Player player : Bukkit.getOnlinePlayers()){
-                TabSystem.join(player);
+                Tab.join(player);
             }
         }
     }

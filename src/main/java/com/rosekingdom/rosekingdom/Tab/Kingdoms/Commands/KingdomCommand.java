@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
-import com.rosekingdom.rosekingdom.Tab.TabSystem;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class KingdomCommand extends CommandRK {
             tabs.add("leave");
         }
         if(args.length == 2 && args[0].equalsIgnoreCase("delete")){
-            for(Kingdom kingdom : TabSystem.getKingdoms()){
+            for(Kingdom kingdom : KingdomHandler.getKingdoms()){
                 tabs.add(kingdom.getName());
             }
         }

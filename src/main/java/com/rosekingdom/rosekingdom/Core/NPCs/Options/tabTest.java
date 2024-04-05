@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Core.NPCs.Options;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPC;
-import com.rosekingdom.rosekingdom.Tab.TabSystem;
+import com.rosekingdom.rosekingdom.Tab.Tab;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scoreboard.Team;
 
@@ -19,7 +19,7 @@ public class tabTest extends subCommandRK {
             int n = Integer.parseInt(args[1]);
             NPC npc = new NPC(n+"npc");
             npc.addToTabOnly();
-            Team team = TabSystem.getBoard().registerNewTeam(n+"npc");
+            Team team = Tab.getBoard().registerNewTeam(n+"npc");
             team.addEntity(npc.getNPC().getBukkitEntity());
         }
         if(args.length == 3){
@@ -28,7 +28,7 @@ public class tabTest extends subCommandRK {
             for(; n <= m; n++){
                 NPC npc = new NPC(n+"npc");
                 npc.addToTabOnly();
-                Team team = TabSystem.getBoard().registerNewTeam(n+"npc");
+                Team team = Tab.getBoard().registerNewTeam(n+"npc");
                 team.addEntity(npc.getNPC().getBukkitEntity());
             }
         }

@@ -9,13 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RankHandler extends TabSystem {
+public class RankHandler extends Tab {
     private static final List<Team> baseRanks = new ArrayList<>();
     private static final Map<Player, Team> playerRanks = new HashMap<>();
     private static final Map<Player, Team> isAFK = new HashMap<>();
     private static final Map<String, Integer> rankNumbers = new HashMap<>();
     public static int getRankNumber(String rank){
         return rankNumbers.get(rank);
+    }
+    public static int getRankNumber(Rank rank){
+        return rankNumbers.get(rank.name());
     }
     public static List<Team> getBaseRanks(){
         return baseRanks;
@@ -43,7 +46,10 @@ public class RankHandler extends TabSystem {
 
     public static void setStatusAFK(Player player) {
         Team base = playerRanks.get(player);
-        Team team = board.registerNewTeam(base.getName() + "_AFK");
+        Team team = getBoard().getTeam(base.getName() + "_AFK");
+        if(team == null){
+            team = board.registerNewTeam(base.getName() + "_AFK");
+        }
         team.prefix(base.prefix());
         team.suffix(Component.text("\uDB00\uDC03\uEa06"));
         team.addPlayer(player);
@@ -56,7 +62,7 @@ public class RankHandler extends TabSystem {
             isAFK.get(player).unregister();
             isAFK.remove(player);
         }
-        TabSystem.join(player);
+        Tab.join(player);
         refreshScoreboard();
     }
 }

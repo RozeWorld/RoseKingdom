@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Moderation.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
-import com.rosekingdom.rosekingdom.Tab.TabSystem;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -26,7 +26,7 @@ public class Ban extends CommandRK {
         OfflinePlayer target = null;
         if(args.length >= 1) {
             target = Bukkit.getOfflinePlayer(args[0]);
-            TabSystem.lastOnline((Player) target);
+            KingdomHandler.lastOnline((Player) target);
         }
         switch (args.length){
             case 1 -> {
