@@ -4,6 +4,7 @@ import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class KingdomCommand extends CommandRK {
 
     @Override
     public List<String> tabComplete(CommandSender sender, String[] args) {
+        if(!(sender instanceof Player player)) return null;
         List<String> tabs = new ArrayList<>();
         if(args.length == 1){
             tabs.add("join");
@@ -33,9 +35,22 @@ public class KingdomCommand extends CommandRK {
             tabs.add("delete");
             tabs.add("leave");
         }
-        if(args.length == 2 && args[0].equalsIgnoreCase("delete")){
-            for(Kingdom kingdom : KingdomHandler.getKingdoms()){
-                tabs.add(kingdom.getName());
+        if(args.length == 2) {
+            switch (args[0].toLowerCase()) {
+                case "delete" -> {
+                    for (Kingdom kingdom : KingdomHandler.getKingdoms()) {
+                        if(kingdom.getOwner().equals(player.getUniqueId())){
+                            tabs.add(kingdom.getName());
+                        }
+                    }
+                }
+                case "join" -> {
+                    for (Kingdom kingdom : KingdomHandler.getKingdoms()) {
+                        if(kingdom.isPublic()){
+                            tabs.add(kingdom.getName());
+                        }
+                    }
+                }
             }
         }
         return tabs;

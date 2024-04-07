@@ -5,6 +5,7 @@ import com.rosekingdom.rosekingdom.RoseKingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
@@ -35,7 +36,7 @@ public class Tab {
                 if(ranks.getName().contains(rankName)){
                     ranks.addPlayer(player);
                     ranks.prefix(Component.text(rank.prefix));
-                    player.displayName(Component.text(rank.prefix + player.getName()));
+                    player.displayName(Component.text(rank.prefix).append(Component.text(player.getName(), TextColor.fromHexString(""))));
                     RankHandler.setPlayerRank(player, ranks);
                     break;
                 }

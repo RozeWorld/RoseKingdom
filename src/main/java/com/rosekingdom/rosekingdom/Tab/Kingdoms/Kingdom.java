@@ -24,6 +24,7 @@ public class Kingdom extends Tab {
     NPC separator;
     List<Player> members = new ArrayList<>();
     List<Team> ranks = new ArrayList<>();
+    boolean open;
 
     public int getKingdomNumber(){
         return kingdomNumber;
@@ -81,6 +82,7 @@ public class Kingdom extends Tab {
         kingdomNumber = KingdomHandler.getKingdoms().size()+1;
         this.name = name;
         this.owner = player.getUniqueId();
+        this.open = true;
         createSeparator();
         createRanks();
         KingdomHandler.addKingdom(this);
@@ -174,5 +176,9 @@ public class Kingdom extends Tab {
         }
         KingdomHandler.removeKingdom(this);
         refreshScoreboard();
+    }
+
+    public boolean isPublic() {
+        return open;
     }
 }
