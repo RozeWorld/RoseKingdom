@@ -12,8 +12,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class Kingdom extends Tab {
@@ -25,6 +27,7 @@ public class Kingdom extends Tab {
     List<Player> members = new ArrayList<>();
     List<Team> ranks = new ArrayList<>();
     boolean open;
+    List<String> invites = new ArrayList<>();
 
     public int getKingdomNumber(){
         return kingdomNumber;
@@ -64,6 +67,18 @@ public class Kingdom extends Tab {
 
     public void removeMember(Player player){
         members.remove(player);
+    }
+
+    public String createInvite(){
+        byte[] array = new byte[7]; // length is bounded by 7
+        new Random().nextBytes(array);
+        String generatedString = new String(array, StandardCharsets.UTF_8);
+        invites.add(generatedString);
+        return generatedString;
+    }
+
+    public List<String> getInvites(){
+        return invites;
     }
 
     public List<Team> getRanks(){
