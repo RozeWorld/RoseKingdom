@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Moderation.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
-import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandle;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;

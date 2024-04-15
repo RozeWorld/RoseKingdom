@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -18,6 +19,8 @@ public class KingdomCommand extends CommandRK {
         addSubCommand(new joinKingdom(0));
         addSubCommand(new removeKingdom(0));
         addSubCommand(new leaveKingdom(0));
+        addSubCommand(new KingdomInvite(0));
+        addSubCommand(new KingdomChat(0));
     }
 
     @Override
@@ -37,6 +40,7 @@ public class KingdomCommand extends CommandRK {
             tabs.add("create");
             tabs.add("delete");
             tabs.add("leave");
+            tabs.add("invite");
         }
         if(args.length == 2) {
             switch (args[0].toLowerCase()) {

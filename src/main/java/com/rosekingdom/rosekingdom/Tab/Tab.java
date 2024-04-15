@@ -3,7 +3,7 @@ package com.rosekingdom.rosekingdom.Tab;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
-import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandle;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
