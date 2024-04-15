@@ -2,12 +2,11 @@ package com.rosekingdom.rosekingdom.Tab.Kingdoms;
 
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class KingdomHandler {
     private static final List<Kingdom> kingdomList = new ArrayList<>();
-
+    public static Map<Kingdom, String> invites = new HashMap<>();
     public static List<Kingdom> getKingdoms(){
         return kingdomList;
     }
@@ -30,6 +29,26 @@ public class KingdomHandler {
                 k.joinKingdom(member);
             }
             order++;
+        }
+    }
+
+    public static Collection<String> getInvites(){
+        return invites.values();
+    }
+
+    public static void addInvite(Kingdom kingdom, String invite){
+        invites.put(kingdom, invite);
+    }
+
+    public static void removeInvite(Kingdom kingdom, String invite){
+        invites.remove(kingdom, invite);
+    }
+
+    public static void acceptInvite(String invite, Player player){
+        for(Kingdom kingdom : invites.keySet()){
+            if(invites.get(kingdom).equals(invite)){
+                kingdom.joinKingdom(player);
+            }
         }
     }
 

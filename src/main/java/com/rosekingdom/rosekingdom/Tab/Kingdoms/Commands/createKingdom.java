@@ -3,7 +3,7 @@ package com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands;
 import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
-import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandle;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

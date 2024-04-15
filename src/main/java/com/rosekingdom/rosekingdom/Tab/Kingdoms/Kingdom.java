@@ -72,9 +72,10 @@ public class Kingdom extends Tab {
     public String createInvite(){
         byte[] array = new byte[7]; // length is bounded by 7
         new Random().nextBytes(array);
-        String generatedString = new String(array, StandardCharsets.UTF_8);
-        invites.add(generatedString);
-        return generatedString;
+        String invite = new String(array, StandardCharsets.UTF_8);
+        invites.add(invite);
+        KingdomHandler.addInvite(this, invite);
+        return invite;
     }
 
     public List<String> getInvites(){

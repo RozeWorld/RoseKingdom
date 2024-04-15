@@ -2,12 +2,12 @@ package com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
-import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class KingdomCommand extends CommandRK {
 
@@ -22,7 +22,10 @@ public class KingdomCommand extends CommandRK {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-
+        if(!(sender instanceof Player player)) return;
+        if(args.length == 1 && KingdomHandler.getInvites().contains(args[0])){
+            KingdomHandler.acceptInvite(args[0], player);
+        }
     }
 
     @Override

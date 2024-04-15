@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
-import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandle;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
