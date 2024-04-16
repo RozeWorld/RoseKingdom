@@ -12,7 +12,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -70,12 +69,15 @@ public class Kingdom extends Tab {
     }
 
     public String createInvite(){
-        byte[] array = new byte[7]; // length is bounded by 7
-        new Random().nextBytes(array);
-        String invite = new String(array, StandardCharsets.UTF_8);
-        invites.add(invite);
-        KingdomHandler.addInvite(this, invite);
-        return invite;
+        String abc123 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder invite = new StringBuilder();
+        Random rnd = new Random();
+        while (invite.length() < 10) { // length of the random string.
+            invite.append(abc123.charAt(rnd.nextInt(36)));
+        }
+        invites.add(invite.toString());
+        KingdomHandler.addInvite(this, invite.toString());
+        return invite.toString();
     }
 
     public List<String> getInvites(){

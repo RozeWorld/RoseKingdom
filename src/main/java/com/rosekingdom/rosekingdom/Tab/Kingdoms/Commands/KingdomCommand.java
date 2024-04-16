@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands;
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -41,6 +42,7 @@ public class KingdomCommand extends CommandRK {
             tabs.add("delete");
             tabs.add("leave");
             tabs.add("invite");
+            tabs.add("chat");
         }
         if(args.length == 2) {
             switch (args[0].toLowerCase()) {
@@ -56,6 +58,11 @@ public class KingdomCommand extends CommandRK {
                         if(kingdom.isPublic()){
                             tabs.add(kingdom.getName());
                         }
+                    }
+                }
+                case "invite" -> {
+                    for(Player online : Bukkit.getOnlinePlayers()){
+                        tabs.add(online.getName());
                     }
                 }
             }

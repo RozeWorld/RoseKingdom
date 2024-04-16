@@ -1,5 +1,6 @@
 package com.rosekingdom.rosekingdom.Tab.Kingdoms;
 
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -45,6 +46,10 @@ public class KingdomHandler {
     }
 
     public static void acceptInvite(String invite, Player player){
+        if(isInKingdom(player)){
+            player.sendMessage(Message.Warning("You cannot join this kingdom because you're already in a kingdom!"));
+            return;
+        }
         for(Kingdom kingdom : invites.keySet()){
             if(invites.get(kingdom).equals(invite)){
                 kingdom.joinKingdom(player);
