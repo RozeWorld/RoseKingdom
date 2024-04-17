@@ -147,7 +147,7 @@ public class Kingdom extends Tab {
                 RankHandler.setPlayerRank(player, rank);
             }
         }
-        if (!members.contains(player)){
+        if(!getMembers().contains(player)){
             addMember(player);
             player.sendMessage(Message.Info("You joined " + name + "!"));
         }
@@ -155,6 +155,10 @@ public class Kingdom extends Tab {
 
     public void leaveKingdom(Player player) {
         String rankName = UserStatement.getRank(player.getUniqueId());
+        //TODO: test
+        if(owner.equals(player.getUniqueId())){
+            owner = getMembers().get(1).getUniqueId();
+        }
         for(Team ranks : RankHandler.getBaseRanks()){
             if(ranks.getName().contains(rankName)) {
                 removeMember(player);

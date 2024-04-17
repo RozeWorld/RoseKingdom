@@ -26,7 +26,6 @@ public class KingdomHandler {
             k.createSeparator();
             k.createRanks();
             for(Player member : k.getMembers()){
-                k.removeMember(member);
                 k.joinKingdom(member);
             }
             order++;
