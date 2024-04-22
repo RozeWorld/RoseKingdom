@@ -154,19 +154,20 @@ public class Kingdom extends Tab {
     }
 
     public void leaveKingdom(Player player) {
+        removeMember(player);
+        if(getMembers().isEmpty()){
+            deleteKingdom();
+            return;
+        }
         String rankName = UserStatement.getRank(player.getUniqueId());
-        //TODO: test
         if(owner.equals(player.getUniqueId())){
-            owner = getMembers().get(1).getUniqueId();
+            owner = getMembers().get(0).getUniqueId();
         }
         for(Team ranks : RankHandler.getBaseRanks()){
             if(ranks.getName().contains(rankName)) {
-                removeMember(player);
                 ranks.addPlayer(player);
                 RankHandler.setPlayerRank(player, ranks);
-                if(getMembers().isEmpty()){
-                    deleteKingdom();
-                }
+
             }
         }
     }
