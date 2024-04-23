@@ -8,6 +8,8 @@ import java.util.*;
 public class KingdomHandler {
     private static final List<Kingdom> kingdomList = new ArrayList<>();
     public static Map<Kingdom, String> invites = new HashMap<>();
+    public static Map<Player, Kingdom> inChats = new HashMap<>();
+
     public static List<Kingdom> getKingdoms(){
         return kingdomList;
     }
@@ -30,6 +32,22 @@ public class KingdomHandler {
             }
             order++;
         }
+    }
+
+    public static void addKingdomChatter(Player player, Kingdom kingdom){
+        inChats.put(player, kingdom);
+    }
+
+    public static void removeKingdomChatter(Player player){
+        inChats.remove(player);
+    }
+
+    public static Set<Player> getKingdomChatters(){
+        return inChats.keySet();
+    }
+
+    public static Kingdom getChatterKingdom(Player player){
+        return inChats.get(player);
     }
 
     public static Collection<String> getInvites(){

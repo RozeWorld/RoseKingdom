@@ -25,8 +25,9 @@ public class Kingdom extends Tab {
     NPC separator;
     List<Player> members = new ArrayList<>();
     List<Team> ranks = new ArrayList<>();
-    boolean open;
+    List<Player> inChat = new ArrayList<>();
     List<String> invites = new ArrayList<>();
+    boolean open;
 
     public int getKingdomNumber(){
         return kingdomNumber;
@@ -96,6 +97,18 @@ public class Kingdom extends Tab {
         ranks.remove(rank);
     }
 
+    public void joinChat(Player player){
+        inChat.add(player);
+    }
+
+    public void leaveChat(Player player){
+        inChat.remove(player);
+    }
+
+    public List<Player> getInChat(){
+        return inChat;
+    }
+
     public Kingdom(String name, Player player){
         kingdomNumber = KingdomHandler.getKingdoms().size()+1;
         this.name = name;
@@ -155,20 +168,21 @@ public class Kingdom extends Tab {
 
     public void leaveKingdom(Player player) {
         removeMember(player);
-        if(getMembers().isEmpty()){
-            deleteKingdom();
-            return;
-        }
         String rankName = UserStatement.getRank(player.getUniqueId());
-        if(owner.equals(player.getUniqueId())){
-            owner = getMembers().get(0).getUniqueId();
-        }
         for(Team ranks : RankHandler.getBaseRanks()){
             if(ranks.getName().contains(rankName)) {
                 ranks.addPlayer(player);
                 RankHandler.setPlayerRank(player, ranks);
-
             }
+        }
+        player.sendMessage(Message.Info("You left " + name + "!"));
+        if(getMembers().isEmpty()){
+            deleteKingdom();
+            player.sendMessage(Message.Info(name + " was abandoned and destroyed!"));
+            return;
+        }
+        if(owner.equals(player.getUniqueId())){
+            owner = getMembers().get(0).getUniqueId();
         }
     }
 
