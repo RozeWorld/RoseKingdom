@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands;
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,6 +28,14 @@ public class KingdomCommand extends CommandRK {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if(!(sender instanceof Player player)) return;
+        if(args.length == 0){
+            player.sendMessage(Component.text("/kingdom create <name>"));
+            player.sendMessage(Component.text("/kingdom invite <player>"));
+            player.sendMessage(Component.text("/kingdom join"));
+            player.sendMessage(Component.text("/kingdom leave"));
+            player.sendMessage(Component.text("/kingdom chat"));
+            player.sendMessage(Component.text("/kingdom delete"));
+        }
         if(args.length == 1 && KingdomHandler.getInvites().contains(args[0])){
             KingdomHandler.acceptInvite(args[0], player);
         }

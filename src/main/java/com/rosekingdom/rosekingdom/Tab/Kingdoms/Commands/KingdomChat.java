@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import net.kyori.adventure.text.Component;
@@ -30,6 +31,8 @@ public class KingdomChat extends subCommandRK {
             kingdom.leaveChat(player);
             KingdomHandler.removeKingdomChatter(player);
             player.sendMessage(Component.text("Switched to the general chat!", TextColor.fromHexString("#5ae630")));
+        }else {
+            player.sendMessage(Message.Warning("You're not in a kingdom!"));
         }
     }
 }

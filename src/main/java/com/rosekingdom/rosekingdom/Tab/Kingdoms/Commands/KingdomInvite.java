@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import net.kyori.adventure.text.Component;
@@ -24,9 +25,17 @@ public class KingdomInvite extends subCommandRK {
     public void executeSub(CommandSender sender, String[] args) {
         if(!(sender instanceof Player player)) return;
         Kingdom kingdom = KingdomHandler.getKingdom(player);
+        if(kingdom == null){
+            player.sendMessage(Message.Warning("You're not in a kingdom!"));
+            return;
+        }
         String invite = kingdom.createInvite();
         if(args.length == 2){
             Player target = Bukkit.getPlayer(args[1]);
+            if(target == null){
+                player.sendMessage(Message.Warning("There is no such player!"));
+                return;
+            }
             target.sendMessage(Component.text("You are invited to join ", TextColor.fromHexString("#5ae630"))
                     .append(Component.text(kingdom.getName(), TextColor.fromHexString("#5ae630")))
                     .append(Component.text(" kingdom! ", TextColor.fromHexString("#5ae630")))
