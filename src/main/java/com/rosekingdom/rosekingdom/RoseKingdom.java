@@ -8,7 +8,9 @@ import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Tab.AFKstatus;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import com.rosekingdom.rosekingdom.Tab.RankHandler;
+import com.rosekingdom.rosekingdom.Tab.Statements.KingdomStatement;
 import com.rosekingdom.rosekingdom.Tab.Tab;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -34,12 +36,14 @@ public final class RoseKingdom extends JavaPlugin {
 
         RankHandler.registerBaseRanks();
 
-        getLogger().info("RoseKingdom Loaded!");
+        KingdomStatement.loadKingdoms();
+
         if(!Bukkit.getOnlinePlayers().isEmpty()){
             for(Player player : Bukkit.getOnlinePlayers()){
                 Tab.join(player);
             }
         }
+        getLogger().info("RoseKingdom Loaded!");
     }
 
     @Override
@@ -52,6 +56,8 @@ public final class RoseKingdom extends JavaPlugin {
                 grave.save();
             }
         }
+
+        KingdomHandler.saveKingdoms();
 
         for(int npc : NPCHandler.getIds()){
             NPCHandler.removeNPC(npc);

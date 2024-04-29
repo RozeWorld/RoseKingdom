@@ -88,12 +88,26 @@ public class KingdomHandler {
         }
         return null;
     }
+    public static Kingdom getKingdom(String name){
+        for(Kingdom kingdom : getKingdoms()){
+            if(kingdom.name.equals(name)){
+                return kingdom;
+            }
+        }
+        return null;
+    }
 
     public static void lastOnline(Player player){
         Kingdom kingdom = getKingdom(player);
         if(kingdom == null) return;
         if(kingdom.getOnlinePlayers().size()<=1){
             kingdom.hideSeparator();
+        }
+    }
+
+    public static void saveKingdoms(){
+        for(Kingdom kingdom : getKingdoms()){
+            kingdom.save();
         }
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class NPCHandler {
-    private static Map<Integer, NPC> npcList = new HashMap<>();
+    private static final Map<Integer, NPC> npcList = new HashMap<>();
 
     public static void addNPC(NPC npc){
         npcList.put(npc.getId(), npc);

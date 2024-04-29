@@ -6,9 +6,11 @@ import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Tab.Rank;
 import com.rosekingdom.rosekingdom.Tab.RankHandler;
+import com.rosekingdom.rosekingdom.Tab.Statements.KingdomStatement;
 import com.rosekingdom.rosekingdom.Tab.Tab;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
@@ -109,7 +111,7 @@ public class Kingdom extends Tab {
         return inChat;
     }
 
-    public Kingdom(String name, Player player){
+    public Kingdom(String name, OfflinePlayer player){
         kingdomNumber = KingdomHandler.getKingdoms().size()+1;
         this.name = name;
         this.owner = player.getUniqueId();
@@ -217,5 +219,10 @@ public class Kingdom extends Tab {
 
     public boolean isPublic() {
         return open;
+    }
+
+    public void save(){
+        KingdomStatement.insertKingdom(this);
+        KingdomStatement.insertMembers(this);
     }
 }
