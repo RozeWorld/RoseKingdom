@@ -54,15 +54,13 @@ public class RankHandler extends Tab {
         team.suffix(Component.text("\uDB00\uDC03\uEa06"));
         team.addPlayer(player);
         isAFK.put(player, team);
-        refreshScoreboard();
     }
 
     public static void removeStatusAFK(Player player) {
-        if(isAFK.containsKey(player)){
+        if(isAFK.containsKey(player)) {
+            Tab.join(player);
             isAFK.get(player).unregister();
             isAFK.remove(player);
         }
-        Tab.join(player);
-        refreshScoreboard();
     }
 }
