@@ -23,6 +23,7 @@ public class createKingdom extends subCommandRK {
             }
             if(!KingdomHandler.isInKingdom(player)){
                 Kingdom kingdom = new Kingdom(args[1], player);
+                kingdom.createSeparator();
                 kingdom.joinKingdom(player);
             }else{
                 player.sendMessage(Message.Info("You are already in a kingdom!"));

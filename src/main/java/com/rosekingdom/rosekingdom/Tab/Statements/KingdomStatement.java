@@ -5,6 +5,7 @@ import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -44,17 +45,42 @@ public class KingdomStatement extends Database {
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_kingdom");
             PreparedStatement psm = connection.prepareStatement("SELECT * FROM rk_kMember");
+            PreparedStatement ds = connection.prepareStatement("DELETE rk_kingdom WHERE name=?");
+            PreparedStatement dsm = connection.prepareStatement("DELETE rk_kMember WHERE kingdom=?, member=?");
             ResultSet rs = ps.executeQuery();
             ResultSet rsm = psm.executeQuery()){
             while (rs.next()){
-                KingdomHandler.addKingdom(new Kingdom(rs.getString("name"), Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("owner")))));
+                Kingdom kingdom = new Kingdom(rs.getString("name"), Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("owner"))));
+                KingdomHandler.addKingdom(kingdom);
+                ds.setString(1, kingdom.getName());
+                ds.executeUpdate();
             }
             while (rsm.next()){
+                OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(rsm.getString("member")));
                 Kingdom kingdom = KingdomHandler.getKingdom(rsm.getString("kingdom"));
-                kingdom.addMember((Player) Bukkit.getOfflinePlayer(UUID.fromString(rsm.getString("member"))));
+                if (kingdom != null) {
+                    kingdom.createSeparator();
+                    kingdom.addMember((Player) player);
+                    dsm.setString(1, kingdom.getName());
+                    dsm.setString(2, rsm.getString("member"));
+                    dsm.executeUpdate();
+                }
             }
         }catch (SQLException | NullPointerException e){
             Message.Exception("Couldn't load kingdom or member!", e);
+        }
+    }
+
+    public static void deleteKingdom(Kingdom kingdom){
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("DELETE rk_kingdom WHERE name=?");
+            PreparedStatement psm = connection.prepareStatement("DELETE rk_kMember WHERE kingdom=?");){
+            ps.setString(1, kingdom.getName());
+            psm.setString(1, kingdom.getName());
+            ps.executeUpdate();
+            psm.executeUpdate();
+        }catch (SQLException e){
+            Message.Exception("Couldn't delete kingdom!", e);
         }
     }
 }

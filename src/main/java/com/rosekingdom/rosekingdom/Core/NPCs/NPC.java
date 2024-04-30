@@ -250,4 +250,7 @@ public class NPC {
     public ServerPlayer getNPC(){
         return npc;
     }
+    public boolean isOnTabList(){
+        return onTabList;
+    }
 }
