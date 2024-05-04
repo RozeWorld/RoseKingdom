@@ -1,6 +1,8 @@
 package com.rosekingdom.rosekingdom.Core.Events;
 
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.RoseKingdom;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -30,6 +32,13 @@ public class onLeave implements Listener {
             }
         }, 10);
 
-        KingdomHandler.lastOnline(player);
+        if(KingdomHandler.isInKingdom(player)){
+            Kingdom kingdom = KingdomHandler.getKingdom(player);
+            if(kingdom == null) {
+                Message.Console("Couldn't fetch kingdom!");
+                return;
+            }
+            KingdomHandler.lastOnline(kingdom);
+        }
     }
 }

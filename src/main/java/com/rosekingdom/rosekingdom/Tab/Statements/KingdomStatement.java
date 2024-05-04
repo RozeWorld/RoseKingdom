@@ -45,13 +45,12 @@ public class KingdomStatement extends Database {
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_kingdom");
             PreparedStatement psm = connection.prepareStatement("SELECT * FROM rk_kMember");
-            PreparedStatement ds = connection.prepareStatement("DELETE rk_kingdom WHERE name=?");
-            PreparedStatement dsm = connection.prepareStatement("DELETE rk_kMember WHERE kingdom=?, member=?");
+            PreparedStatement ds = connection.prepareStatement("DELETE FROM rk_kingdom WHERE name=?");
+            PreparedStatement dsm = connection.prepareStatement("DELETE FROM rk_kMember WHERE kingdom=? AND member=?");
             ResultSet rs = ps.executeQuery();
             ResultSet rsm = psm.executeQuery()){
             while (rs.next()){
                 Kingdom kingdom = new Kingdom(rs.getString("name"), Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("owner"))));
-                KingdomHandler.addKingdom(kingdom);
                 ds.setString(1, kingdom.getName());
                 ds.executeUpdate();
             }
@@ -73,8 +72,8 @@ public class KingdomStatement extends Database {
 
     public static void deleteKingdom(Kingdom kingdom){
         try(Connection connection = getConnection();
-            PreparedStatement ps = connection.prepareStatement("DELETE rk_kingdom WHERE name=?");
-            PreparedStatement psm = connection.prepareStatement("DELETE rk_kMember WHERE kingdom=?");){
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM rk_kingdom WHERE name=?");
+            PreparedStatement psm = connection.prepareStatement("DELETE FROM rk_kMember WHERE kingdom=?")){
             ps.setString(1, kingdom.getName());
             psm.setString(1, kingdom.getName());
             ps.executeUpdate();

@@ -1,5 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.NPCs;
 
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ public class NPCHandler {
     }
 
     public static void removeNPC(int id){
+        Message.Console("NPC №" + id + " was removed!");
         npcList.get(id).despawn();
         npcList.remove(id);
     }

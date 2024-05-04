@@ -97,9 +97,7 @@ public class KingdomHandler {
         return null;
     }
 
-    public static void lastOnline(Player player){
-        Kingdom kingdom = getKingdom(player);
-        if(kingdom == null) return;
+    public static void lastOnline(Kingdom kingdom){
         if(kingdom.getOnlinePlayers().size()<=1){
             kingdom.hideSeparator();
         }

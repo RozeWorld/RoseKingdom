@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Moderation.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -26,7 +27,12 @@ public class Ban extends CommandRK {
         OfflinePlayer target = null;
         if(args.length >= 1) {
             target = Bukkit.getOfflinePlayer(args[0]);
-            KingdomHandler.lastOnline((Player) target);
+            Kingdom kingdom = KingdomHandler.getKingdom((Player) target);
+            if(kingdom == null) {
+                Message.Console("Couldn't fetch kingdom!");
+            }else{
+                KingdomHandler.lastOnline(kingdom);
+            }
         }
         switch (args.length){
             case 1 -> {
