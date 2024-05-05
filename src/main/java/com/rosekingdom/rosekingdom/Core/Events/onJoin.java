@@ -6,6 +6,7 @@ import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Core.Utils.ResourcePackLoader;
 import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
 import com.rosekingdom.rosekingdom.Graves.Grave;
+import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Profiles.Statements.ProfileStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
@@ -73,8 +74,8 @@ public class onJoin implements Listener {
         //Load Graves (if any)
         int id = UserStatement.getId(player);
         if(DeathStatement.hasGraves(id)){
-            for(Grave grave : Grave.getGraves(id)){
-                grave.showPlayerGrave(player);
+            for(Grave grave : GraveHandler.getGraves(id)){
+                grave.showPlayerGrave();
             }
         }
     }

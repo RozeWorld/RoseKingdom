@@ -6,6 +6,7 @@ import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Graves.Grave;
+import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Tab.AFKstatus;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
@@ -51,8 +52,8 @@ public final class RoseKingdom extends JavaPlugin {
         getLogger().info("Started Shutting Down!");
 
         getLogger().info("Saving Graves...");
-        if(!Grave.getGraveList().isEmpty()){
-            for(Grave grave : Grave.getGraveList()){
+        if(!GraveHandler.getGraveList().isEmpty()){
+            for(Grave grave : GraveHandler.getGraveList()){
                 grave.save();
             }
         }
@@ -74,7 +75,7 @@ public final class RoseKingdom extends JavaPlugin {
             for(String graveId : DeathStatement.getGraves(id)){
                 Grave grave = new Grave(id, graveId);
                 grave.timer(DeathStatement.getTime(id, graveId));
-                Grave.addGrave(grave);
+                GraveHandler.addGrave(grave);
                 total_graves_loaded++;
             }
         }
