@@ -45,6 +45,9 @@ public class Grave {
 
     public void setupGrave(){
         Location loc = player.getLocation();
+        if(loc.getBlock().getType() != Material.AIR){
+            loc.setY(loc.getBlockY()+1);
+        }
         location = new Location(player.getWorld(), loc.getBlockX()+0.5, loc.getBlockY(), loc.getBlockZ()+0.5, player.getBodyYaw(), 0);
         createGrave(location);
         showPlayerGrave();
