@@ -7,6 +7,7 @@ import com.rosekingdom.rosekingdom.RoseKingdom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
@@ -45,7 +46,8 @@ public class Grave {
 
     public void setupGrave(){
         Location loc = player.getLocation();
-        if(loc.getBlock().getType() != Material.AIR){
+        Material block = loc.getBlock().getType();
+        if(block != Material.AIR && !Tag.REPLACEABLE.isTagged(block) && !Tag.FLOWERS.isTagged(block)){
             loc.setY(loc.getBlockY()+1);
         }
         location = new Location(player.getWorld(), loc.getBlockX()+0.5, loc.getBlockY(), loc.getBlockZ()+0.5, player.getBodyYaw(), 0);
