@@ -156,14 +156,14 @@ public class UserStatement extends Database {
         return uuid;
     }
 
-    public static String getJoinDate(int id){
-        String date = null;
+    public static Timestamp getJoinDate(int id){
+        Timestamp date = null;
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT join_date FROM rk_user WHERE rowid=?")) {
             ps.setInt(1, id);
             try(ResultSet rs = ps.executeQuery()) {
                 rs.next();
-                date = rs.getTimestamp(1).toString();
+                date = rs.getTimestamp(1);
             }
         }catch (SQLException e){
             Message.Exception("Non-existing or broken connection", e);

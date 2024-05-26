@@ -15,7 +15,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -38,7 +37,7 @@ public class onJoin implements Listener {
                         .append(Component.text("+", TextColor.fromHexString("#3fd951"))
                         .append(Component.text("] ", TextColor.fromHexString("#696969")))
                         .append(player.displayName().color(TextColor.fromHexString("#7d7d7d")))));
-        player.sendPlayerListHeader(Component.text("\uEF02\n\n\n\n"));
+        player.sendPlayerListHeader(Component.text("\uEF02\n\n\n\n\n"));
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
             for(Player on : Bukkit.getServer().getOnlinePlayers()){

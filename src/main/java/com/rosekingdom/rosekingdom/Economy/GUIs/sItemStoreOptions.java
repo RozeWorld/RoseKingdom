@@ -2,8 +2,8 @@ package com.rosekingdom.rosekingdom.Economy.GUIs;
 
 import com.rosekingdom.rosekingdom.Core.Items.Checksymbol;
 import com.rosekingdom.rosekingdom.Core.Items.Xsymbol;
+import com.rosekingdom.rosekingdom.Economy.Items.sAddOffer;
 import com.rosekingdom.rosekingdom.Economy.Items.sAutoPricing;
-import com.rosekingdom.rosekingdom.Economy.Items.sPlus;
 import com.rosekingdom.rosekingdom.Economy.Statements.PricingStatement;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -38,7 +38,7 @@ public class sItemStoreOptions implements InventoryHolder {
         Inventory inventory = Bukkit.createInventory(this, 27, Component.text("store"));
         int[] slots = {2,3,4,5,6};
         for(int k : slots){
-            inventory.setItem(k, new sPlus());
+            inventory.setItem(k, new sAddOffer());
         }
         int i = 2;
         for(ItemStack item : PricingStatement.getItems(item, store)){
