@@ -5,6 +5,7 @@ import com.rosekingdom.rosekingdom.Core.Config.Config;
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
+import com.rosekingdom.rosekingdom.Core.NPCs.Statements.NPCStatement;
 import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
@@ -38,6 +39,7 @@ public final class RoseKingdom extends JavaPlugin {
         RankHandler.registerBaseRanks();
 
         KingdomStatement.loadKingdoms();
+        NPCStatement.loadNPCs();
 
         if(!Bukkit.getOnlinePlayers().isEmpty()){
             for(Player player : Bukkit.getOnlinePlayers()){

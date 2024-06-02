@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Core.NPCs.Options;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
+import com.rosekingdom.rosekingdom.Core.NPCs.Statements.NPCStatement;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,6 +21,7 @@ public class removeNPC extends subCommandRK {
         }
         if(args.length == 2){
             NPCHandler.removeNPC(Integer.parseInt(args[1]));
+            NPCStatement.removeNPC(Integer.parseInt(args[1]));
         }
     }
 }

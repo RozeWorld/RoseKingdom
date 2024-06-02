@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import com.rosekingdom.rosekingdom.Core.NPCs.Statements.NPCStatement;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import net.minecraft.network.protocol.Packet;
@@ -15,15 +16,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -56,9 +55,12 @@ public class NPC {
         npc = new ServerPlayer(minecraftServer, serverLevel, profile, ClientInformation.createDefault());
         npc.setPos(location.getX(), location.getY(), location.getZ());
 
+        setRotation(true);
+
         this.location = location;
         this.name = name;
         NPCHandler.addNPC(this);
+        NPCStatement.insertNPC(this);
     }
 
     public NPC(String name, Location location, String playerSkin) {
@@ -83,7 +85,7 @@ public class NPC {
     public NPC(String name, String texture, String signature) {
         //Server and World
         MinecraftServer minecraftServer = ((CraftServer) Bukkit.getServer()).getServer();
-        ServerLevel serverLevel = ((CraftWorld) Bukkit.getWorlds().get(0)).getHandle();
+        ServerLevel serverLevel = ((CraftWorld) Bukkit.getWorlds().getFirst()).getHandle();
 
         //Setting the NPC's skin and name
         GameProfile profile = new GameProfile(UUID.randomUUID(), name);
@@ -98,7 +100,7 @@ public class NPC {
 
     public NPC(String name) {
         MinecraftServer minecraftServer = ((CraftServer) Bukkit.getServer()).getServer();
-        ServerLevel serverLevel = ((CraftWorld) Bukkit.getWorlds().get(0)).getHandle();
+        ServerLevel serverLevel = ((CraftWorld) Bukkit.getWorlds().getFirst()).getHandle();
         GameProfile profile = new GameProfile(UUID.randomUUID(), name);
         profile.getProperties().put("textures", new Property("textures",
                 "ewogICJ0aW1lc3RhbXAiIDogMTcxMDg4NDQwNTE2MCwKICAicHJvZmlsZUlkIiA6ICI5ZDE1OGM1YjNiN2U0ZGNlOWU0OTA5MTdjNmJlYmM5MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJTbm9uX1NTIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzYyM2NmYWY0MjZiNTZhZmVjM2VmOWUxYjg4ZGVhZjU5YzlkYWMwMDU4ZDNiOTE4Nzk1MzgwNzFjNjRkODVkMWEiCiAgICB9CiAgfQp9",
@@ -172,21 +174,20 @@ public class NPC {
         if(enable){
             task = Bukkit.getScheduler().scheduleSyncRepeatingTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
                 for(Player p : Bukkit.getOnlinePlayers()) {
-                    if(calculateDistance(p, npc) > 5) continue;
+                    if(calculateDistance(p, npc) > 5) {
+                        sendPacket(new ClientboundRotateHeadPacket(npc, (byte) location.getYaw()), p);
+                        sendPacket(new ClientboundMoveEntityPacket.Rot(npc.getId(), (byte) location.getYaw(), (byte) location.getPitch(), true), p);
+                        continue;
+                    }
 
-                    // Calculate the Yaw for the NPC
-                    Vector difference = p.getLocation().subtract(npc.getBukkitEntity().getLocation()).toVector().normalize();
-                    byte yaw = (byte) Mth.wrapDegrees((Math.toDegrees(Math.atan2(difference.getZ(), difference.getX()) - Math.PI / 2) * 256.0F) / 360.0F);
+                    Location newLocation = location.setDirection(p.getLocation().subtract(location).toVector().normalize());
+                    byte yaw = (byte) ((newLocation.getYaw() % 360.) * 256 / 360);
+                    byte pitch = (byte) ((newLocation.getPitch() % 360.) * 256 / 360);
 
-                    // Calculate the Pitch for the NPC
-                    Vector height = npc.getBukkitEntity().getLocation().subtract(p.getLocation()).toVector().normalize();
-                    byte pitch = (byte) Mth.wrapDegrees((Math.toDegrees(Math.atan(height.getY())) * 256.0F) / 360.0F);
-
-                    // Send the Packets to update the NPC
                     sendPacket(new ClientboundRotateHeadPacket(npc, yaw), p);
                     sendPacket(new ClientboundMoveEntityPacket.Rot(npc.getId(), yaw, pitch, true), p);
                 }
-            }, 10, 20);
+            }, 10, 5);
         }else {
             Bukkit.getScheduler().cancelTask(task);
         }
@@ -236,8 +237,8 @@ public class NPC {
         return npc.getId();
     }
 
-    public String getUUID(){
-        return npc.getUUID().toString();
+    public UUID getUUID(){
+        return npc.getUUID();
     }
 
     public String getName(){
@@ -252,5 +253,8 @@ public class NPC {
     }
     public boolean isOnTabList(){
         return onTabList;
+    }
+    public boolean isShown() {
+        return shown;
     }
 }
