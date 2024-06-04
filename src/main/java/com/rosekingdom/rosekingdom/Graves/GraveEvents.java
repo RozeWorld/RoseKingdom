@@ -74,10 +74,9 @@ public class GraveEvents implements Listener {
 
     @EventHandler
     public void graveClose(InventoryCloseEvent e){
-        Player player = (Player) e.getPlayer();
-        int id = UserStatement.getId(player.getUniqueId());
         if(e.getInventory().getHolder() instanceof GraveGUI grave){
             String graveID = grave.getGraveId();
+            int id = grave.id;
             GraveStatement.UpdateInventory(id, e.getInventory(), graveID);
             if(e.getInventory().isEmpty()){
                 GraveHandler.removeGrave(id, graveID);

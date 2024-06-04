@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Database {
+public class    Database {
     private static boolean fullurl;
     private static String host;
     private static String database;
