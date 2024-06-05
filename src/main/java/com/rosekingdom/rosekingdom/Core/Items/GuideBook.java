@@ -13,7 +13,7 @@ public class GuideBook extends ItemStack {
         ItemMeta meta = this.getItemMeta();
         meta.displayName(Component.text("Server Guide"));
         WritableBookMeta pages = (WritableBookMeta) meta;
-        pages.addPage("Welcome the Server Guide", "Features\n- Graves\n- Profiles\n- Kingdoms(teams)\n- Coordinates share command\n- Location saver");
+
         this.setItemMeta(meta);
 
     }

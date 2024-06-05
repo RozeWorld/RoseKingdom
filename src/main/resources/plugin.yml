@@ -30,6 +30,9 @@ commands:
     aliases:
       - wallet
       - money
+  guidebook:
+    permission: rk.MOD
+    description: Gives the Server Guide
   npc:
     description: NPC Controller command
     permission: rk.ADMIN

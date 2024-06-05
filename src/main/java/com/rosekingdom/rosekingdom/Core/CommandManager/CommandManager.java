@@ -2,10 +2,7 @@ package com.rosekingdom.rosekingdom.Core.CommandManager;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.ExampleCommands.test;
 import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.Demoscreen;
-import com.rosekingdom.rosekingdom.Core.Commands.CheckPermissions;
-import com.rosekingdom.rosekingdom.Core.Commands.PlayTime;
-import com.rosekingdom.rosekingdom.Core.Commands.ResourcePackTesting;
-import com.rosekingdom.rosekingdom.Core.Commands.TimersChecker;
+import com.rosekingdom.rosekingdom.Core.Commands.*;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCOptions;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Economy.Commands.Coins;
@@ -59,6 +56,7 @@ public class CommandManager implements TabExecutor {
         addCommand(new TimersChecker());
         addCommand(new NPCOptions());
         addCommand(new KingdomCommand());
+        addCommand(new getGuideBook());
     }
 
     public List<CommandRK> getCommands() {
