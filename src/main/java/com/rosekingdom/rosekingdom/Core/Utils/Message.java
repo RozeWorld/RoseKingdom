@@ -19,13 +19,27 @@ public class Message {
     }
 
     public static Component Warning(String text){
-        return Component.text("\uEf10 ")
+        return Component.text("\uEf10")
                 .append(Component.text(text))
                 .color(TextColor.fromHexString("#e30000"));
     }
     public static Component Info(String text){
-        return Component.text("\uEf10 ")
+        return Component.text("\uEf10")
                 .append(Component.text(text))
                 .color(TextColor.fromHexString("#ebb22f"));
+    }
+
+    public static Component Text(String text, String color){
+        return Component.text(text)
+                .color(TextColor.fromHexString(color));
+    }
+
+    public static Component Gold(String text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#ebb22f"));
+    }
+    public static Component Red(String text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#e30000"));
     }
 }

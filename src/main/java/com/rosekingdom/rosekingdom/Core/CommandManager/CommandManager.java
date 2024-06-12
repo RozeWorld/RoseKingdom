@@ -2,11 +2,8 @@ package com.rosekingdom.rosekingdom.Core.CommandManager;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.ExampleCommands.test;
 import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.Demoscreen;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.ProtocolTest;
-import com.rosekingdom.rosekingdom.Core.Commands.CheckPermissions;
-import com.rosekingdom.rosekingdom.Core.Commands.PlayTime;
-import com.rosekingdom.rosekingdom.Core.Commands.ResourcePackTesting;
-import com.rosekingdom.rosekingdom.Core.Commands.TimersChecker;
+import com.rosekingdom.rosekingdom.Core.Commands.*;
+import com.rosekingdom.rosekingdom.Core.NPCs.NPCOptions;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Economy.Commands.Coins;
 import com.rosekingdom.rosekingdom.Economy.Commands.Store;
@@ -15,6 +12,7 @@ import com.rosekingdom.rosekingdom.Locations.CoordinatesBC;
 import com.rosekingdom.rosekingdom.Locations.Locations;
 import com.rosekingdom.rosekingdom.Moderation.Commands.*;
 import com.rosekingdom.rosekingdom.Profiles.Profile;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands.KingdomCommand;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -45,7 +43,6 @@ public class CommandManager implements TabExecutor {
         addCommand(new CheckPermissions());
         addCommand(new Bugs());
         addCommand(new Feedback());
-        addCommand(new ProtocolTest());
         addCommand(new Locations());
         addCommand(new GraveCommand());
         addCommand(new Profile());
@@ -54,8 +51,12 @@ public class CommandManager implements TabExecutor {
         addCommand(new Coins());
         addCommand(new Store());
         addCommand(new Ban());
+        addCommand(new BanIp());
         addCommand(new Vanish());
         addCommand(new TimersChecker());
+        addCommand(new NPCOptions());
+        addCommand(new KingdomCommand());
+        addCommand(new getGuideBook());
     }
 
     public List<CommandRK> getCommands() {

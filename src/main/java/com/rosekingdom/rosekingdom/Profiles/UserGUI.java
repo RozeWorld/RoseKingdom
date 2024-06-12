@@ -25,8 +25,9 @@ public class UserGUI implements InventoryHolder{
         Inventory profile = Bukkit.createInventory(this, InventoryType.CHEST, Component.text("\u00A7f\uDAFF\uDFF8\uEFB0"));
         int[] playerHead = {0,1,2,9,10,11,18,19,20};
         for(int i : playerHead){
-            profile.setItem(i, new PlayerHead(player));
+            profile.setItem(i, new PlayerHead(player, false));
         }
+        profile.setItem(10, new PlayerHead(player, true));
         profile.setItem(21, new ProfilePlayTime(player));
         profile.setItem(8, new ActivityIndicator(player));
         profile.setItem(22, new StreakScore(player));

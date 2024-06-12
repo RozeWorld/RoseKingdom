@@ -1,4 +1,4 @@
-package com.rosekingdom.rosekingdom.Ranks;
+package com.rosekingdom.rosekingdom.Tab;
 
 public enum Rank {
     DEFAULT("\uDB00\uDC02\uEa05\uDB00\uDC03"),

@@ -44,6 +44,9 @@ public class Database {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_stock(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), store varchar(255), item longblob, stock int)");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_price(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), store varchar(255), pricedItem longblob, price int, rawItem blob, options boolean)");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_store(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), name varchar(255), owner varchar(64), store_id varchar(64), x double, y double, z double, dim varchar(100), yaw float, bank int)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_kingdom(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), name varchar(255), owner varchar(64), members int, public boolean)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_kMember(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), kingdom varchar(255), member varchar(64))");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_npc(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), name varchar(255), id int, onTab boolean, shown boolean, x double, y double, z double, dim varchar(100), INDEX(id, onTab, shown))");
         }catch (SQLException e){
             Message.Exception("Unable to initialize tables!", e);
         }

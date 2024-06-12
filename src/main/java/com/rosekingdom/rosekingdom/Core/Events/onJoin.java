@@ -1,13 +1,17 @@
 package com.rosekingdom.rosekingdom.Core.Events;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Core.Items.GuideBook;
+import com.rosekingdom.rosekingdom.Core.NPCs.NPC;
+import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Core.Utils.ResourcePackLoader;
 import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
 import com.rosekingdom.rosekingdom.Graves.Grave;
+import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Profiles.Statements.ProfileStatement;
-import com.rosekingdom.rosekingdom.Ranks.RankSystem;
 import com.rosekingdom.rosekingdom.RoseKingdom;
+import com.rosekingdom.rosekingdom.Tab.Tab;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -24,6 +28,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 public class onJoin implements Listener {
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onJoinEvent(PlayerJoinEvent e){
         Player player = e.getPlayer();
@@ -35,7 +40,7 @@ public class onJoin implements Listener {
                         .append(Component.text("+", TextColor.fromHexString("#3fd951"))
                         .append(Component.text("] ", TextColor.fromHexString("#696969")))
                         .append(player.displayName().color(TextColor.fromHexString("#7d7d7d")))));
-        player.sendPlayerListHeader(Component.text("\uEF02\n\n\n\n"));
+        player.sendPlayerListHeader(Component.text("\uEF02\n\n\n\n\n"));
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
             for(Player on : Bukkit.getServer().getOnlinePlayers()){
@@ -49,9 +54,10 @@ public class onJoin implements Listener {
             UserStatement.insert(player.getName(), player.getUniqueId().toString());
             EconomyStatement.insert(player);
             ProfileStatement.createProfile(player);
+            player.getInventory().addItem(new GuideBook());
         }
         //Rank
-        RankSystem.loadRank(player);
+        Tab.join(player);
 
         //Activity Streak Checker
         long lastOnline = player.getLastSeen();
@@ -64,11 +70,15 @@ public class onJoin implements Listener {
             ProfileStatement.updateStreak(player, 1);
         }
 
+        for(NPC npc : NPCHandler.getNPCs()){
+            npc.spawn();
+        }
+
         //Load Graves (if any)
         int id = UserStatement.getId(player);
         if(DeathStatement.hasGraves(id)){
-            for(Grave grave : Grave.getGraves(id)){
-                grave.showPlayerGrave(player);
+            for(Grave grave : GraveHandler.getGraves(id)){
+                grave.showPlayerGrave();
             }
         }
     }

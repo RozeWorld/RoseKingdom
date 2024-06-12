@@ -2,6 +2,8 @@ package com.rosekingdom.rosekingdom.Moderation.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -22,33 +24,40 @@ public class Ban extends CommandRK {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(!(sender instanceof Player player)) return;
-        switch (args.length){
-            case 1 -> {
-                OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                target.banPlayer("Not specified", null, sender.getName(), true);
-            }
-            case 2 -> {
-                OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                if(getTime(args)==null){
-                    target.banPlayer(args[1], null, sender.getName(), true);
-                    return;
-                }
-                target.banPlayer("Not specified", getTime(args), sender.getName(), true);
-            }
-            default -> {
-                OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                if(getTime(args)==null){
-                    player.sendMessage(Message.Warning("Incorrect time format"));
-                    return;
-                }
-                String reason = args[2];
-                for(int str = 3; str < args.length; str++){
-                    reason = reason + " " + args[str];
-                }
-                target.banPlayer(reason, getTime(args), sender.getName(), true);
+        OfflinePlayer target = null;
+        if(args.length >= 1) {
+            target = Bukkit.getOfflinePlayer(args[0]);
+            Kingdom kingdom = KingdomHandler.getKingdom((Player) target);
+            if(kingdom == null) {
+                Message.Console("Couldn't fetch kingdom!");
+            }else{
+                KingdomHandler.lastOnline(kingdom);
             }
         }
+        switch (args.length){
+            case 1 -> {
+                target.ban("Not specified", (Date) null, sender.getName());
+            }
+            case 2 -> {
+                if(getTime(args)==null){
+                    target.ban(args[1], (Date) null, sender.getName());
+                    return;
+                }
+                target.ban("Not specified", getTime(args), sender.getName());
+            }
+            default -> {
+                if(getTime(args)==null){
+                    sender.sendMessage(Message.Warning("Incorrect time format"));
+                    return;
+                }
+                StringBuilder reason = new StringBuilder(args[2]);
+                for(int str = 3; str < args.length; str++){
+                    reason.append(" ").append(args[str]);
+                }
+                target.ban(reason.toString(), getTime(args), sender.getName());
+            }
+        }
+
     }
 
     private Date getTime(String[] args){

@@ -7,6 +7,7 @@ import com.rosekingdom.rosekingdom.RoseKingdom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
@@ -22,45 +23,37 @@ import java.util.List;
 public class Grave {
     Player player;
     int id;
-    int time;
-    static int task;
+    Location location;
     ItemDisplay display;
     Interaction interaction;
     String graveId;
-    public static List<Grave> graveList = new ArrayList<>();
+    int time;
+    static int task;
+
     public Grave(Player player){
         this.player = player;
         this.id = UserStatement.getId(player.getUniqueId());
+        GraveHandler.addGrave(this);
     }
     public Grave(int id, String graveId) {
         this.id = id;
         this.graveId = graveId;
         createGrave(DeathStatement.getLocation(id, graveId));
+        GraveHandler.addGrave(this);
     }
 
-    public static void addGrave(Grave grave){
-        graveList.add(grave);
-    }
-    public static List<Grave> getGraveList(){
-        return graveList;
-    }
 
-    public static List<Grave> getGraves(int id) {
-        List<Grave> graves = new ArrayList<>();
-        for(Grave grave : graveList){
-            if(grave.id == id){
-                graves.add(grave);
-            }
-        }
-        return graves;
-    }
 
     public void setupGrave(){
         Location loc = player.getLocation();
-        loc = new Location(player.getWorld(), loc.getBlockX()+0.5, loc.getBlockY(), loc.getBlockZ()+0.5, player.getBodyYaw(), 0);
-        createGrave(loc);
-        showPlayerGrave(player);
-        graveId = DeathStatement.insert(player, loc, display.getUniqueId(), interaction.getUniqueId());
+        Material block = loc.getBlock().getType();
+        if(block != Material.AIR && !Tag.REPLACEABLE.isTagged(block) && !Tag.FLOWERS.isTagged(block)){
+            loc.setY(loc.getBlockY()+1);
+        }
+        location = new Location(player.getWorld(), loc.getBlockX()+0.5, loc.getBlockY(), loc.getBlockZ()+0.5, player.getBodyYaw(), 0);
+        createGrave(location);
+        showPlayerGrave();
+        graveId = DeathStatement.insert(player, location, display.getUniqueId(), interaction.getUniqueId());
         GraveStatement.insertInventory(id, graveId, player);
         timer(3600);
 
@@ -86,7 +79,7 @@ public class Grave {
     }
 
     @SuppressWarnings("Experimental")
-    public void showPlayerGrave(Player player){
+    public void showPlayerGrave(){
         JavaPlugin plugin = JavaPlugin.getPlugin(RoseKingdom.class);
         player.showEntity(plugin, display);
         player.showEntity(plugin, interaction);
@@ -98,32 +91,20 @@ public class Grave {
         task = scheduler.scheduleSyncRepeatingTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
             time--;
             if(time <= 0){
-                removeGrave(id, graveId);
+                GraveHandler.removeGrave(id, graveId);
             }
         }, 0, 20);
     }
 
-    public static void removeGrave(int id, String graveId) {
-        Location loc = DeathStatement.getLocation(id, graveId);
+
+
+    public static void stopTimer(){
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.cancelTask(task);
-        if(!loc.isChunkLoaded()){
-            loc.getChunk().load();
-        }
-        for(ItemStack items : GraveStatement.getItems(id, graveId)){
-            loc.getWorld().dropItemNaturally(loc, items);
-        }
-        GraveStatement.deleteGrave(id, graveId);
-        DeathStatement.purge(id, graveId);
-        for(Grave grave : getGraveList()){
-            if(grave.graveId.equals(graveId)){
-                getGraveList().remove(grave);
-                break;
-            }
-        }
     }
 
     public void save() {
         DeathStatement.saveTime(id, graveId, time);
+        stopTimer();
     }
 }
