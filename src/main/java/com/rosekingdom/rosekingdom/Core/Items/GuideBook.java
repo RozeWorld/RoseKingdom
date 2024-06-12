@@ -68,5 +68,22 @@ public class GuideBook extends ItemStack {
 //                .append(Component.text())
 //                .append(Component.text())
 //                .append(Component.text()));
+        List<Component> pages = book.pages();
+        pages.add(Component.text(
+                "          Welcome\n" +
+                        "              to\n" +
+                        "       RoseKingdom\n" +
+                        "\n" +
+                        "===================\n" +
+                        "\n" +
+                        "  That is our server guide, where you can find all the needed information about everything we have made so far. \n" +
+                        "\n" +
+                        "==================="));
+        pages.add(Component.text(
+                "        Contents:\n" +
+                "1. Rules\n" +
+                "2. Features\n" +
+                "3. Credits"));
+        setItemMeta(book);
     }
 }
