@@ -9,26 +9,29 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 public class ProfilePlayTime extends ItemStack {
     public ProfilePlayTime(OfflinePlayer player){
         int rawTime = player.getStatistic(Statistic.PLAY_ONE_MINUTE)/20;
-        String date = UserStatement.getJoinDate(UserStatement.getId(player.getUniqueId()));
-        date = date.substring(0, date.indexOf('.')).replace('-', '/');
+        Timestamp timestamp = UserStatement.getJoinDate(UserStatement.getId(player.getUniqueId()));
+        Instant rawDate = timestamp.toInstant();
+        String date = rawDate.toString();
+        date = date.replace('-', '/');
         String time = String.format("Total time spent on the server: %s.", MillisToTime.withSymbol(rawTime));
-        String joinDate = String.format("First joined on %s (UTC+1).", date);
+        String joinDate = String.format("First joined on %s %s (UTC).", date.substring(0, 10), date.substring(11, 19));
         setAmount(1);
-        setType(Material.PLAYER_HEAD);
-        SkullMeta skull = (SkullMeta) getItemMeta();
-        skull.setOwningPlayer(player);
-        skull.setCustomModelData(2000);
-        skull.displayName(Component.text(time, TextColor.fromHexString("#17fc32"))
+        setType(Material.PAPER);
+        ItemMeta meta = getItemMeta();
+        meta.setCustomModelData(2103);
+        meta.displayName(Component.text(time, TextColor.fromHexString("#17fc32"))
                 .decoration(TextDecoration.ITALIC, false));
-        skull.lore(List.of(Component.text(joinDate, TextColor.fromHexString("#17fc32"))
+        meta.lore(List.of(Component.text(joinDate, TextColor.fromHexString("#17fc32"))
                 .decoration(TextDecoration.ITALIC, false)));
-        setItemMeta(skull);
+        setItemMeta(meta);
     }
 }

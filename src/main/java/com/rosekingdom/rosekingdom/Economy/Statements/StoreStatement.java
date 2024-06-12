@@ -5,7 +5,6 @@ import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -14,16 +13,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class StoreStatement extends Database {
 
-    public static void createStore(Player player, UUID uuid, String name){
+    public static void createStore(Player player, int id, String name){
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_store(name, owner, store_id, x, y, z, dim, yaw, bank) VALUES (?,?,?,?,?,?,?,?,?)")) {
             ps.setString(1, name);
             ps.setString(2, player.getUniqueId().toString());
-            ps.setString(3, uuid.toString());
+            ps.setInt(3, id);
             ps.setDouble(4, player.getX());
             ps.setDouble(5, player.getY());
             ps.setDouble(6, player.getZ());
@@ -36,11 +34,11 @@ public class StoreStatement extends Database {
         }
     }
 
-    public static boolean isStore(UUID store) {
+    public static boolean isStore(int store) {
         boolean isStore = false;
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT store_id FROM rk_store WHERE store_id=?")){
-            ps.setString(1, store.toString());
+            ps.setInt(1, store);
             try(ResultSet rs = ps.executeQuery()) {
                 isStore = rs.next();
             }
@@ -50,11 +48,11 @@ public class StoreStatement extends Database {
         return isStore;
     }
 
-    public static boolean owner(Player player, UUID store) {
+    public static boolean owner(Player player, int store) {
         boolean isOwner = false;
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM rk_store WHERE store_id=? AND owner=?")){
-            ps.setString(1, store.toString());
+            ps.setInt(1, store);
             ps.setString(2, player.getUniqueId().toString());
             try(ResultSet rs = ps.executeQuery()) {
                 isOwner = rs.next();
@@ -65,12 +63,11 @@ public class StoreStatement extends Database {
         return isOwner;
     }
 
-    //TODO: get the nearest to the player
-    public static String getStore(Entity storeId) {
+    public static String getStore(int storeId) {
         String store = null;
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT name FROM rk_store WHERE store_id=?")){
-            ps.setString(1, storeId.getUniqueId().toString());
+            ps.setInt(1, storeId);
             try(ResultSet rs = ps.executeQuery()) {
                 rs.next();
                 store = rs.getString(1);
@@ -140,15 +137,15 @@ public class StoreStatement extends Database {
         return exists;
     }
 
-    public static String getStoreId(Player player, String name) {
-        String storeId = null;
+    public static int getStoreId(Player player, String name) {
+        int storeId = 0;
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT store_id FROM rk_store WHERE owner=? AND name=?")){
             ps.setString(1, player.getUniqueId().toString());
             ps.setString(2, name);
             try(ResultSet rs = ps.executeQuery()) {
                 rs.next();
-                storeId = rs.getString(1);
+                storeId = rs.getInt(1);
             }
         }catch (SQLException e){
             Message.Exception("Unable to fetch and check data", e);
@@ -240,6 +237,17 @@ public class StoreStatement extends Database {
             Message.Exception("Can't update player's coins!", e);
         }
         return money;
+    }
+
+    public static void updateId(int id, String name){
+        try(Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement("UPDATE rk_store SET store_id = ? WHERE name = ? ")) {
+            ps.setInt(1, id);
+            ps.setString(2, name);
+            ps.executeUpdate();
+        }catch (SQLException e){
+            Message.Exception("Couldn't update the store id!", e);
+        }
     }
 
 }

@@ -27,7 +27,10 @@ public class Locations extends CommandRK {
     @Override
     public void execute(CommandSender sender, String[] args) {
         Player player = (Player) sender;
-
+        List<String> subs = new ArrayList<>();
+        subs.add("create");
+        subs.add("remove");
+        subs.add("delete");
         if (args.length == 0) {
             player.sendMessage(Component.text("Locations commands:", TextColor.fromHexString("#fff522")));
             player.sendMessage(Component.text("/locations create", TextColor.fromHexString("#FFF522")));
@@ -48,7 +51,7 @@ public class Locations extends CommandRK {
             player.sendMessage(Component.text(text, TextColor.fromHexString("#6be649")));
         } else if (args.length == 1 && LocationStatement.getLocations(id).isEmpty()) {
             player.sendMessage(Component.text("There aren't any locations saved!", TextColor.fromHexString("#e30000")));
-        }else if(args.length == 1){
+        }else if(args.length == 1 && !getSubAliases(0).contains(args[0].toLowerCase())){
             player.sendMessage(Component.text("No such location!", TextColor.fromHexString("#e30000")));
         }
     }

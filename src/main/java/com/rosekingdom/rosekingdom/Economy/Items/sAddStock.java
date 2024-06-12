@@ -11,12 +11,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class sStock extends ItemStack {
-    public sStock(String store){
+public class sAddStock extends ItemStack {
+    public sAddStock(String store){
         setAmount(1);
         setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
-        meta.setCustomModelData(2353);
+        meta.setCustomModelData(2354);
         meta.displayName(Component.text("Stock"));
         List<ItemStack> items = StockStatement.getItems(store);
         List<Component> lore = new ArrayList<>();

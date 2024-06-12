@@ -1,5 +1,6 @@
 package com.rosekingdom.rosekingdom.Economy.Events.GUI;
 
+import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Economy.GUIs.*;
 import com.rosekingdom.rosekingdom.Economy.Statements.PricingStatement;
@@ -7,7 +8,6 @@ import com.rosekingdom.rosekingdom.Economy.Statements.StockStatement;
 import com.rosekingdom.rosekingdom.Economy.Statements.StoreStatement;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,7 +16,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class sOwnerPanel implements Listener {
-    Entity storeId;
+    int storeId;
     String store;
     ItemStack rawItem;
     int price = 1;
@@ -40,7 +39,7 @@ public class sOwnerPanel implements Listener {
             if (e.getRawSlot() < 45) e.setCancelled(true);
             if (e.getClick().equals(ClickType.SHIFT_RIGHT) || e.getClick().equals(ClickType.SHIFT_LEFT)) e.setCancelled(true);
             List<Integer> slots = new ArrayList<>(Arrays.asList(10,11,12,28,29,30));
-            if(slots.contains(e.getRawSlot())){
+            if(slots.contains(e.getRawSlot()) && e.getInventory().getItem(e.getRawSlot()) != null){
                 rawItem = new ItemStack(items.get(slots.indexOf(e.getRawSlot())));
                 if(PricingStatement.hasOptions(rawItem, store)){
                     player.openInventory(new sItemStoreOptions(rawItem, store, true).getInventory());
@@ -292,11 +291,11 @@ public class sOwnerPanel implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
-    public void onMerchantClick(PlayerInteractEntityEvent e){
+    public void onMerchantClick(PlayerUseUnknownEntityEvent e){
         Player player = e.getPlayer();
-        Entity entity = e.getRightClicked();
-        if(StoreStatement.isStore(entity.getUniqueId()) && StoreStatement.owner(player, entity.getUniqueId())){
-            storeId = entity;
+        int npc = e.getEntityId();
+        if(e.isAttack() && StoreStatement.isStore(npc) && StoreStatement.owner(player, npc)){
+            storeId = npc;
             store = StoreStatement.getStore(storeId);
             player.openInventory(new Merchant(store).getInventory());
         }

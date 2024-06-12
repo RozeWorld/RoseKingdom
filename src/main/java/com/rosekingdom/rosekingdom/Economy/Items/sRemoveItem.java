@@ -7,13 +7,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class sPlus extends ItemStack {
-    public sPlus(){
+public class sRemoveItem extends ItemStack {
+    public sRemoveItem(){
         setAmount(1);
         setType(Material.STICK);
         ItemMeta meta = getItemMeta();
-        meta.setCustomModelData(2354);
-        meta.displayName(Component.text("Add offer for this item", TextColor.fromHexString("#10FF33")).decoration(TextDecoration.ITALIC, false));
+        meta.setCustomModelData(2352);
+        meta.displayName(Component.text("Remove Item", TextColor.fromHexString("#f70000")).decoration(TextDecoration.ITALIC, false));
         setItemMeta(meta);
     }
 }

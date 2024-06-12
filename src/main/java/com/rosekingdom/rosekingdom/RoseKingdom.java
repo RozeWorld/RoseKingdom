@@ -4,10 +4,16 @@ import com.rosekingdom.rosekingdom.Core.CommandManager.CommandManager;
 import com.rosekingdom.rosekingdom.Core.Config.Config;
 import com.rosekingdom.rosekingdom.Core.Database.Database;
 import com.rosekingdom.rosekingdom.Core.Events.EventHandler;
+import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
+import com.rosekingdom.rosekingdom.Core.NPCs.Statements.NPCStatement;
 import com.rosekingdom.rosekingdom.Graves.Grave;
+import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
-import com.rosekingdom.rosekingdom.Ranks.AFKstatus;
-import com.rosekingdom.rosekingdom.Ranks.RankSystem;
+import com.rosekingdom.rosekingdom.Tab.AFKstatus;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
+import com.rosekingdom.rosekingdom.Tab.RankHandler;
+import com.rosekingdom.rosekingdom.Tab.Statements.KingdomStatement;
+import com.rosekingdom.rosekingdom.Tab.Tab;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,15 +34,19 @@ public final class RoseKingdom extends JavaPlugin {
 
         EventHandler.events(this);
 
-        RankSystem.registerAllRanks();
         AFKstatus.check(this);
 
-        getLogger().info("RoseKingdom Loaded!");
+        RankHandler.registerBaseRanks();
+
+        KingdomStatement.loadKingdoms();
+        NPCStatement.loadNPCs();
+
         if(!Bukkit.getOnlinePlayers().isEmpty()){
             for(Player player : Bukkit.getOnlinePlayers()){
-                RankSystem.loadRank(player);
+                Tab.join(player);
             }
         }
+        getLogger().info("RoseKingdom Loaded!");
     }
 
     @Override
@@ -44,10 +54,16 @@ public final class RoseKingdom extends JavaPlugin {
         getLogger().info("Started Shutting Down!");
 
         getLogger().info("Saving Graves...");
-        if(!Grave.getGraveList().isEmpty()){
-            for(Grave grave : Grave.getGraveList()){
+        if(!GraveHandler.getGraveList().isEmpty()){
+            for(Grave grave : GraveHandler.getGraveList()){
                 grave.save();
             }
+        }
+
+        KingdomHandler.saveKingdoms();
+
+        for(int npc : NPCHandler.getIds()){
+            NPCHandler.removeNPC(npc);
         }
 
         getLogger().info("Successful shutdown!");
@@ -61,7 +77,7 @@ public final class RoseKingdom extends JavaPlugin {
             for(String graveId : DeathStatement.getGraves(id)){
                 Grave grave = new Grave(id, graveId);
                 grave.timer(DeathStatement.getTime(id, graveId));
-                Grave.addGrave(grave);
+                GraveHandler.addGrave(grave);
                 total_graves_loaded++;
             }
         }

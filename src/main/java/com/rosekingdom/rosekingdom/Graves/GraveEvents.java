@@ -1,8 +1,11 @@
 package com.rosekingdom.rosekingdom.Graves;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Core.NPCs.NPC;
+import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Graves.Statements.GraveStatement;
+import io.papermc.paper.event.packet.PlayerChunkLoadEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
@@ -46,7 +49,15 @@ public class GraveEvents implements Listener {
 
             Grave grave = new Grave(player);
             grave.setupGrave();
-            Grave.addGrave(grave);
+        }
+    }
+
+    @EventHandler
+    public void onChunkUpdate(PlayerChunkLoadEvent e){
+        for(Grave grave : GraveHandler.getGraveList()){
+            if(grave.location.getChunk().equals(e.getChunk())){
+                grave.showPlayerGrave();
+            }
         }
     }
 
@@ -63,12 +74,12 @@ public class GraveEvents implements Listener {
 
     @EventHandler
     public void graveClose(InventoryCloseEvent e){
-        Player player = (Player) e.getPlayer();
-        int id = UserStatement.getId(player.getUniqueId());
         if(e.getInventory().getHolder() instanceof GraveGUI grave){
-            GraveStatement.UpdateInventory(id, e.getInventory(), grave.getGraveId());
+            String graveID = grave.getGraveId();
+            int id = grave.id;
+            GraveStatement.UpdateInventory(id, e.getInventory(), graveID);
             if(e.getInventory().isEmpty()){
-                DeathStatement.purge(id, grave.getGraveId());
+                GraveHandler.removeGrave(id, graveID);
             }
         }
     }

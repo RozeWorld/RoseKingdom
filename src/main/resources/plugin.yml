@@ -8,16 +8,38 @@ prefix: RoseKingdom
 database: true
 
 commands:
+  timers:
+    permission: rk.MOD
+    description: Get timers
+  vanish:
+    permission: rk.MOD
+    aliases:
+      - vh
+  ban:
+    permission: rk.ADMIN
+    description: Used for banning people that break the rules
+  ban-ip:
+    permission: rk.ADMIN
+    description: Used for banning people that break the rules
   store:
+    permission: rk.ADMIN
     description: Opens store settings menu
   coins:
+    permission: rk.ADMIN
     description: Utility command
     aliases:
       - wallet
       - money
-  pt:
-    description: protocol test
-    permission: rk.OWNER
+  guidebook:
+    permission: rk.MOD
+    description: Gives the Server Guide
+  npc:
+    description: NPC Controller command
+    permission: rk.ADMIN
+  kingdom:
+    description: Creates a group
+    aliases:
+      - kd
   test:
     permission: rk.ADMIN
     description: test command
@@ -41,12 +63,13 @@ commands:
       - loc
       - l
   profile:
+    permission: rk.MOD
     description: Opens your game profile
   demo:
     permission: rk.ADMIN
     description: demoscreen testing
   rank:
-    permission: rk.OWNER
+    permission: rk.DEFAULT
     description: sets/removes ranks
     usage: /<command> <player> <rank>
   perms:

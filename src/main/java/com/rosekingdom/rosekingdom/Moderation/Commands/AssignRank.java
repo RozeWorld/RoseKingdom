@@ -1,9 +1,9 @@
-package com.rosekingdom.rosekingdom.Moderation;
+package com.rosekingdom.rosekingdom.Moderation.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
-import com.rosekingdom.rosekingdom.Ranks.Rank;
-import com.rosekingdom.rosekingdom.Ranks.RankSystem;
+import com.rosekingdom.rosekingdom.Tab.Rank;
+import com.rosekingdom.rosekingdom.Tab.Tab;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -31,7 +31,7 @@ public class AssignRank extends CommandRK {
         UUID uuid = player.getUniqueId();
         Rank rank = Rank.valueOf(args[1].toUpperCase());
         UserStatement.setRank(uuid.toString(), rank.name());
-        RankSystem.loadRank(player);
+        Tab.join(player);
     }
 
     @Override

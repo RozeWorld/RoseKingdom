@@ -35,7 +35,7 @@ public class Database {
     public static void createDatabaseTables(){
         try(Connection connection = getConnection();
         Statement statement = connection.createStatement()) {
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_user(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),name varchar(16),uuid varchar(64),rk_rank varchar(100), join_date timestamp,INDEX(rowid))");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_user(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),name varchar(16),uuid varchar(64),rk_rank varchar(100), join_date timestamp, vanished boolean,INDEX(rowid))");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_grave(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),id int,graveId varchar(64),data longblob)");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_profile(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), id int, streak int, highscore int)");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_death(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid),id int,graveId varchar(64),x double,y double,z double,dim varchar(100),yaw float,IA_uuid varchar(64),BD_uuid varchar(64),TBR int, INDEX(id,graveId,IA_uuid))");
@@ -44,6 +44,9 @@ public class Database {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_stock(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), store varchar(255), item longblob, stock int)");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_price(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), store varchar(255), pricedItem longblob, price int, rawItem blob, options boolean)");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_store(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), name varchar(255), owner varchar(64), store_id varchar(64), x double, y double, z double, dim varchar(100), yaw float, bank int)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_kingdom(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), name varchar(255), owner varchar(64), members int, public boolean)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_kMember(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), kingdom varchar(255), member varchar(64))");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS rk_npc(rowid int NOT NULL AUTO_INCREMENT, PRIMARY KEY(rowid), name varchar(255), id int, onTab boolean, shown boolean, x double, y double, z double, dim varchar(100), INDEX(id, onTab, shown))");
         }catch (SQLException e){
             Message.Exception("Unable to initialize tables!", e);
         }
