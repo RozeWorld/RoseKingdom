@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.Events;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Core.Items.GuideBook;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPC;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Core.Utils.ResourcePackLoader;
@@ -53,6 +54,7 @@ public class onJoin implements Listener {
             UserStatement.insert(player.getName(), player.getUniqueId().toString());
             EconomyStatement.insert(player);
             ProfileStatement.createProfile(player);
+            player.getInventory().addItem(new GuideBook());
         }
         //Rank
         Tab.join(player);
