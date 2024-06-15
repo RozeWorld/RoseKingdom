@@ -5,8 +5,6 @@ import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,8 +30,8 @@ public class KingdomStatement extends Database {
         try(Connection connection = getConnection();
             PreparedStatement ps = connection.prepareStatement("INSERT INTO rk_kMember(kingdom,member) VALUES (?,?)")){
             ps.setString(1, kingdom.getName());
-            for(Player member: kingdom.getMembers()){
-                ps.setString(2, member.getUniqueId().toString());
+            for(UUID member: kingdom.getMembers()){
+                ps.setString(2, member.toString());
                 ps.executeUpdate();
             }
         }catch (SQLException e){
@@ -55,11 +53,9 @@ public class KingdomStatement extends Database {
                 ds.executeUpdate();
             }
             while (rsm.next()){
-                OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(rsm.getString("member")));
                 Kingdom kingdom = KingdomHandler.getKingdom(rsm.getString("kingdom"));
                 if (kingdom != null) {
-                    kingdom.createSeparator();
-                    kingdom.addMember((Player) player);
+                    kingdom.addMember(UUID.fromString(rsm.getString("member")));
                     dsm.setString(1, kingdom.getName());
                     dsm.setString(2, rsm.getString("member"));
                     dsm.executeUpdate();

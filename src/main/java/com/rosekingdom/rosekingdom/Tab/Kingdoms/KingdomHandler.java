@@ -27,7 +27,7 @@ public class KingdomHandler {
             k.setKingdomNumber(order);
             k.createSeparator();
             k.createRanks();
-            for(Player member : k.getMembers()){
+            for(Player member : k.getOnlinePlayers()){
                 k.joinKingdom(member);
             }
             order++;
@@ -80,8 +80,8 @@ public class KingdomHandler {
 
     public static Kingdom getKingdom(Player player){
         for(Kingdom kingdom : getKingdoms()) {
-            for (Player members : kingdom.getMembers()) {
-                if (members.getName().equals(player.getName())) {
+            for (UUID members : kingdom.getMembers()) {
+                if (members.equals(player.getUniqueId())) {
                     return kingdom;
                 }
             }
@@ -99,7 +99,7 @@ public class KingdomHandler {
 
     public static void lastOnline(Kingdom kingdom){
         if(kingdom.getOnlinePlayers().size()<=1){
-            kingdom.hideSeparator();
+            kingdom.deleteSeparator();
         }
     }
 

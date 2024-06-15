@@ -18,7 +18,7 @@ public class onChatEvent implements Listener {
         if(KingdomHandler.getKingdomChatters().contains(player)){
             e.setCancelled(true);
             Kingdom kingdom = KingdomHandler.getChatterKingdom(player);
-            for(Player members : kingdom.getMembers()){
+            for(Player members : kingdom.getOnlinePlayers()){
                 members.sendMessage(
                         Component.text()
                                 .append(Component.text("["+kingdom.getName()+"] ", TextColor.fromHexString("#5ae630"))

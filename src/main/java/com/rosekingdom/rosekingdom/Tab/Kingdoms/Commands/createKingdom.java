@@ -29,6 +29,8 @@ public class createKingdom extends subCommandRK {
                 player.sendMessage(Message.Info("You are already in a kingdom!"));
                 player.sendMessage(Message.Warning("You need to abandon your kingdom to create a new one."));
             }
+        }else{
+            player.sendMessage(Message.Warning("Invalid number of arguments!"));
         }
     }
 }

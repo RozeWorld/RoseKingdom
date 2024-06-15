@@ -9,7 +9,7 @@ public class NPCUpdater implements Listener {
     @EventHandler
     public void onChunkUpdate(PlayerChunkLoadEvent e){
         for(NPC npc : NPCHandler.getNPCs()){
-            if(npc.getLocation().getChunk().equals(e.getChunk()) && !npc.isShown()){
+            if(npc.isShown() && npc.getLocation().getChunk().equals(e.getChunk())){
                 npc.spawn();
             }
         }
