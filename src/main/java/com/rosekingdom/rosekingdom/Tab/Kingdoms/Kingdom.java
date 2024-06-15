@@ -31,6 +31,7 @@ public class Kingdom extends Tab {
     List<Player> inChat = new ArrayList<>();
     List<String> invites = new ArrayList<>();
     boolean open;
+    boolean hasSeparatorOn;
 
     public int getKingdomNumber(){
         return kingdomNumber;
@@ -122,16 +123,20 @@ public class Kingdom extends Tab {
     }
 
     public void createSeparator(){
-        separatorTeam = getBoard().registerNewTeam("1" + kingdomNumber + "00" + name);
-        separatorTeam.prefix(Component.text("\uDB00\uDC02"));
-        separatorTeam.color(NamedTextColor.GRAY);
-        separator.addToTabOnly();
-        separatorTeam.addEntity(separator.getNPC().getBukkitEntity());
+        if(!hasSeparatorOn) {
+            separatorTeam = getBoard().registerNewTeam("1" + kingdomNumber + "00" + name);
+            separatorTeam.prefix(Component.text("\uDB00\uDC02"));
+            separatorTeam.color(NamedTextColor.GRAY);
+            separator.addToTabOnly();
+            separatorTeam.addEntity(separator.getNPC().getBukkitEntity());
+            hasSeparatorOn = true;
+        }
     }
 
     public void deleteSeparator(){
         separatorTeam.unregister();
         separator.despawn();
+        hasSeparatorOn = false;
     }
 
     public void createRanks(){

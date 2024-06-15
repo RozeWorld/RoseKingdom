@@ -1,6 +1,7 @@
 package com.rosekingdom.rosekingdom.Tab.Kingdoms;
 
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -78,7 +79,7 @@ public class KingdomHandler {
         return getKingdom(player) != null;
     }
 
-    public static Kingdom getKingdom(Player player){
+    public static Kingdom getKingdom(OfflinePlayer player){
         for(Kingdom kingdom : getKingdoms()) {
             for (UUID members : kingdom.getMembers()) {
                 if (members.equals(player.getUniqueId())) {

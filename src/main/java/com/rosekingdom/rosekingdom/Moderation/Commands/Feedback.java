@@ -23,7 +23,7 @@ public class Feedback extends CommandRK {
             return;
         }
         player.sendMessage(Message.Info("Suggest something we can change or add ")
-                .append(Component.text("here!").clickEvent(ClickEvent.openUrl("hi")).decorate(TextDecoration.UNDERLINED)));
+                .append(Component.text("here!").clickEvent(ClickEvent.openUrl("https://discord.gg/45tBe2kkJM")).decorate(TextDecoration.UNDERLINED)));
     }
 
     @Override

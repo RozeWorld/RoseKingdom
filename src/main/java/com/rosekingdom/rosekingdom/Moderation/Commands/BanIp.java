@@ -25,10 +25,8 @@ public class BanIp extends CommandRK {
         Player target = null;
         if(args.length >= 1) {
             target = Bukkit.getPlayer(args[0]);
-            Kingdom kingdom = KingdomHandler.getKingdom((Player) target);
-            if(kingdom == null) {
-                Message.Console("Couldn't fetch kingdom!");
-            }else{
+            Kingdom kingdom = KingdomHandler.getKingdom(target);
+            if(kingdom != null) {
                 KingdomHandler.lastOnline(kingdom);
             }
         }
