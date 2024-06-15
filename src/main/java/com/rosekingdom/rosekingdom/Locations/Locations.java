@@ -32,9 +32,10 @@ public class Locations extends CommandRK {
         subs.add("remove");
         subs.add("delete");
         if (args.length == 0) {
-            player.sendMessage(Component.text("Locations commands:", TextColor.fromHexString("#fff522")));
-            player.sendMessage(Component.text("/locations create", TextColor.fromHexString("#FFF522")));
-            player.sendMessage(Component.text("/locations delete", TextColor.fromHexString("#FFF522")));
+            player.sendMessage(Component.text("Locations commands:", TextColor.fromHexString("#ffb114")));
+            player.sendMessage(Component.text("/locations create <name>", TextColor.fromHexString("#FFF522")));
+            player.sendMessage(Component.text("/locations delete <name>", TextColor.fromHexString("#FFF522")));
+            player.sendMessage(Component.text("/locations <name>", TextColor.fromHexString("#FFF522")));
         }
 
         int id = UserStatement.getId(player.getUniqueId());

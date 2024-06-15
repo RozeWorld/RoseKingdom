@@ -63,7 +63,7 @@ commands:
       - loc
       - l
   profile:
-    permission: rk.MOD
+    permission: rk.DEFAULT
     description: Opens your game profile
   demo:
     permission: rk.ADMIN

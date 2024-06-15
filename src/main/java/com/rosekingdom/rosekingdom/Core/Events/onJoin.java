@@ -32,22 +32,15 @@ public class onJoin implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onJoinEvent(PlayerJoinEvent e){
         Player player = e.getPlayer();
-        new ResourcePackLoader().setResourcePack(player);
+        ResourcePackLoader.setResourcePack(player);
 
         //Join Message
-        e.joinMessage(
-                Component.text("[", TextColor.fromHexString("#696969"))
-                        .append(Component.text("+", TextColor.fromHexString("#3fd951"))
-                        .append(Component.text("] ", TextColor.fromHexString("#696969")))
-                        .append(player.displayName().color(TextColor.fromHexString("#7d7d7d")))));
-        player.sendPlayerListHeader(Component.text("\uEF02\n\n\n\n\n"));
-        BukkitScheduler scheduler = Bukkit.getScheduler();
-        scheduler.scheduleSyncDelayedTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
-            for(Player on : Bukkit.getServer().getOnlinePlayers()){
-                on.sendPlayerListFooter(Component.text("\nOnline Players: ", TextColor.fromHexString("#FFB415"))
-                        .append(Component.text(Bukkit.getOnlinePlayers().size(),TextColor.fromHexString("#2eff31"))));
-            }
-        }, 10);
+        e.joinMessage(Component.text("[", TextColor.fromHexString("#696969"))
+                .append(Component.text("+", TextColor.fromHexString("#3fd951"))
+                .append(Component.text("] ", TextColor.fromHexString("#696969")))
+                .append(player.displayName().color(TextColor.fromHexString("#7d7d7d")))));
+
+        Tab.display(player);
 
         //Database things
         if(!UserStatement.exists(player.getUniqueId())) {
