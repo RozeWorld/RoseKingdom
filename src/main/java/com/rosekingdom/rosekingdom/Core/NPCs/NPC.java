@@ -7,6 +7,7 @@ import com.mojang.authlib.properties.Property;
 import com.rosekingdom.rosekingdom.Core.NPCs.Statements.NPCStatement;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.RoseKingdom;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -14,6 +15,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ClientInformation;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
@@ -126,7 +128,7 @@ public class NPC {
             }
             if(shown){
                 //Shows the NPC
-                sendPacket(new ClientboundAddEntityPacket(npc), online);
+                sendPacket(new ClientboundAddEntityPacket(npc, 0, new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ())), online);
             }
             //Adds the second skin layer
             sendPacket(new ClientboundSetEntityDataPacket(npc.getId(), synchedEntityData.getNonDefaultValues()), online);
