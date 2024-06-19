@@ -11,8 +11,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ActivityIndicator extends ItemStack {
     public ActivityIndicator(OfflinePlayer player){
+        super(Material.PAPER);
         setAmount(1);
-        setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(2101);
         if(player.isOnline()){

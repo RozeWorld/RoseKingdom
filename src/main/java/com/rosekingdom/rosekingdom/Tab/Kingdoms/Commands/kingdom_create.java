@@ -7,9 +7,9 @@ import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class createKingdom extends subCommandRK {
+public class kingdom_create extends subCommandRK {
 
-    public createKingdom(int arg){
+    public kingdom_create(int arg){
         super(arg);
         setName("create");
     }

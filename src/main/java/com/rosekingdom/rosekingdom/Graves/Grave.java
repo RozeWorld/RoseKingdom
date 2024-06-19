@@ -17,9 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Grave {
     Player player;
     int id;
@@ -38,7 +35,8 @@ public class Grave {
     public Grave(int id, String graveId) {
         this.id = id;
         this.graveId = graveId;
-        createGrave(DeathStatement.getLocation(id, graveId));
+        this.location = DeathStatement.getLocation(id, graveId);
+        createGrave(location);
         GraveHandler.addGrave(this);
     }
 
@@ -58,7 +56,7 @@ public class Grave {
         timer(3600);
 
     }
-    @SuppressWarnings("Experimental")
+
     private void createGrave(Location loc){
         //Grave
         display = (ItemDisplay) loc.getWorld().spawnEntity(loc.toCenterLocation(), EntityType.ITEM_DISPLAY);
@@ -78,7 +76,6 @@ public class Grave {
         interaction.setVisibleByDefault(false);
     }
 
-    @SuppressWarnings("Experimental")
     public void showPlayerGrave(){
         JavaPlugin plugin = JavaPlugin.getPlugin(RoseKingdom.class);
         player.showEntity(plugin, display);

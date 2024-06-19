@@ -12,9 +12,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class KingdomInvite extends subCommandRK {
+public class kingdom_invite extends subCommandRK {
 
-    public KingdomInvite(int arg){
+    public kingdom_invite(int arg){
         super(arg);
         setName("invite");
         addAlias("inv");

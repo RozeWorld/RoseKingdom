@@ -9,9 +9,9 @@ import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class KingdomChat extends subCommandRK {
+public class kingdom_chat extends subCommandRK {
 
-    public KingdomChat(int arg){
+    public kingdom_chat(int arg){
         super(arg);
         setName("chat");
         addAlias("c");
@@ -22,7 +22,7 @@ public class KingdomChat extends subCommandRK {
         if(!(sender instanceof Player player)) return;
         Kingdom kingdom = KingdomHandler.getKingdom(player);
         if(kingdom != null){
-            if(!kingdom.getInChat().contains(player)) {
+            if(!kingdom.getInChat().contains(player.getUniqueId())) {
                 kingdom.joinChat(player);
                 KingdomHandler.addKingdomChatter(player, kingdom);
                 player.sendMessage(Component.text("Switched to the kingdom's chat!", TextColor.fromHexString("#5ae630")));

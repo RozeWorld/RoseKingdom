@@ -9,9 +9,9 @@ import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class leaveKingdom extends subCommandRK {
+public class kingdom_leave extends subCommandRK {
 
-    public leaveKingdom(int arg){
+    public kingdom_leave(int arg){
         super(arg);
         setName("leave");
         addAlias("l");

@@ -48,7 +48,7 @@ public class KingdomStatement extends Database {
             ResultSet rs = ps.executeQuery();
             ResultSet rsm = psm.executeQuery()){
             while (rs.next()){
-                Kingdom kingdom = new Kingdom(rs.getString("name"), Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("owner"))));
+                Kingdom kingdom = new Kingdom(rs.getString("name"), Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("owner"))), rs.getBoolean("public"));
                 ds.setString(1, kingdom.getName());
                 ds.executeUpdate();
             }

@@ -11,6 +11,8 @@ import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Profiles.Statements.ProfileStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import com.rosekingdom.rosekingdom.Tab.Tab;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -51,7 +53,10 @@ public class onJoin implements Listener {
         }
         //Rank
         Tab.join(player);
-
+        Kingdom kingdom = KingdomHandler.getKingdom(player);
+        if(kingdom != null && kingdom.getInChat().contains(player.getUniqueId())){
+            player.sendMessage(Component.text("You are currently chatting with " + kingdom.getName() + "'s members.", TextColor.fromHexString("#5ae630")));
+        }
         //Activity Streak Checker
         long lastOnline = player.getLastSeen();
         Instant instant = Instant.ofEpochMilli(lastOnline);

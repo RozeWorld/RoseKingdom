@@ -7,9 +7,9 @@ import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class removeKingdom extends subCommandRK {
+public class kingdom_remove extends subCommandRK {
 
-    public removeKingdom(int arg){
+    public kingdom_remove(int arg){
         super(arg);
         setName("remove");
         addAlias("delete");

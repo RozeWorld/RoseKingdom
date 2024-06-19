@@ -15,7 +15,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ClientInformation;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
@@ -35,7 +34,7 @@ import java.util.UUID;
 
 public class NPC {
 
-    private String name;
+    private final String name;
     private int task;
     private Location location;
     private boolean onTabList = false;

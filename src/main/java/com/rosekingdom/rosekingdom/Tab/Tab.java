@@ -25,7 +25,7 @@ public class Tab {
     public static void join(Player player){
         String rankName = UserStatement.getRank(player.getUniqueId());
         Rank rank = Rank.valueOf(rankName);
-
+        RankColor color = RankColor.valueOf(rankName);
         Kingdom kingdom = KingdomHandler.getKingdom(player);
         if(kingdom != null){
             kingdom.joinKingdom(player);
@@ -35,9 +35,10 @@ public class Tab {
         }else{
             for(Team ranks : RankHandler.getBaseRanks()){
                 if(ranks.getName().contains(rankName)){
+                    player.playerListName(Component.text(rank.prefix).append(Component.text(player.getName(), TextColor.fromHexString(color.color))));
+                    player.displayName(Component.text(rank.prefix).append(Component.text(player.getName(), TextColor.fromHexString(color.color))));
                     ranks.addPlayer(player);
                     ranks.prefix(Component.text(rank.prefix));
-                    player.displayName(Component.text(rank.prefix).append(Component.text(player.getName(), TextColor.fromHexString(""))));
                     RankHandler.setPlayerRank(player, ranks);
                     break;
                 }

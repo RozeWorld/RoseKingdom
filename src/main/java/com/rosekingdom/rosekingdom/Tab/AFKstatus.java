@@ -1,5 +1,6 @@
 package com.rosekingdom.rosekingdom.Tab;
 
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -30,6 +31,7 @@ public class AFKstatus implements Listener {
                     Player player = moved.getKey();
                     RankHandler.setStatusAFK(player);
                     player.sendMessage(Component.text("You are now AFK!", TextColor.fromHexString("#167ac7")));
+                    Message.Console(Component.text(player.getName() + " is now AFK!", TextColor.fromHexString("#167ac7")));
                     forRemoval.add(player);
                 }
             }

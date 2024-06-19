@@ -9,7 +9,7 @@ import java.util.*;
 public class KingdomHandler {
     private static final List<Kingdom> kingdomList = new ArrayList<>();
     public static Map<Kingdom, String> invites = new HashMap<>();
-    public static Map<Player, Kingdom> inChats = new HashMap<>();
+    public static Map<UUID, Kingdom> inChats = new HashMap<>();
 
     public static List<Kingdom> getKingdoms(){
         return kingdomList;
@@ -36,19 +36,19 @@ public class KingdomHandler {
     }
 
     public static void addKingdomChatter(Player player, Kingdom kingdom){
-        inChats.put(player, kingdom);
+        inChats.put(player.getUniqueId(), kingdom);
     }
 
     public static void removeKingdomChatter(Player player){
-        inChats.remove(player);
+        inChats.remove(player.getUniqueId());
     }
 
-    public static Set<Player> getKingdomChatters(){
+    public static Set<UUID> getKingdomChatters(){
         return inChats.keySet();
     }
 
     public static Kingdom getChatterKingdom(Player player){
-        return inChats.get(player);
+        return inChats.get(player.getUniqueId());
     }
 
     public static Collection<String> getInvites(){
@@ -107,6 +107,12 @@ public class KingdomHandler {
     public static void saveKingdoms(){
         for(Kingdom kingdom : getKingdoms()){
             kingdom.save();
+        }
+    }
+
+    public static void removeKingdomChatters(Kingdom kingdom) {
+        for(UUID chatter : kingdom.getInChat()){
+            inChats.remove(chatter);
         }
     }
 }

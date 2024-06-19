@@ -5,20 +5,19 @@ import com.rosekingdom.rosekingdom.Core.NPCs.NPC;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Tab.Rank;
+import com.rosekingdom.rosekingdom.Tab.RankColor;
 import com.rosekingdom.rosekingdom.Tab.RankHandler;
 import com.rosekingdom.rosekingdom.Tab.Statements.KingdomStatement;
 import com.rosekingdom.rosekingdom.Tab.Tab;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class Kingdom extends Tab {
     int kingdomNumber;
@@ -26,9 +25,9 @@ public class Kingdom extends Tab {
     UUID owner;
     Team separatorTeam;
     NPC separator;
-    List<UUID> members = new ArrayList<>();
+    Set<UUID> members = new HashSet<>();
     List<Team> ranks = new ArrayList<>();
-    List<Player> inChat = new ArrayList<>();
+    List<UUID> inChat = new ArrayList<>();
     List<String> invites = new ArrayList<>();
     boolean open;
     boolean hasSeparatorOn;
@@ -53,7 +52,7 @@ public class Kingdom extends Tab {
         this.name = name;
     }
 
-    public List<UUID> getMembers(){
+    public Set<UUID> getMembers(){
         return members;
     }
 
@@ -98,14 +97,14 @@ public class Kingdom extends Tab {
     }
 
     public void joinChat(Player player){
-        inChat.add(player);
+        inChat.add(player.getUniqueId());
     }
 
     public void leaveChat(Player player){
-        inChat.remove(player);
+        inChat.remove(player.getUniqueId());
     }
 
-    public List<Player> getInChat(){
+    public List<UUID> getInChat(){
         return inChat;
     }
 
@@ -114,6 +113,19 @@ public class Kingdom extends Tab {
         this.name = name;
         this.owner = player.getUniqueId();
         this.open = true;
+        this.separator = new NPC(name,
+                "ewogICJ0aW1lc3RhbXAiIDogMTcxMjM0MzcwNjEyMywKICAicHJvZmlsZUlkIiA6ICI1ZTdmY2RjYTU5YzI0NjkwODAwNjg4OTNkODU1ODM3NCIsCiAgInByb2ZpbGVOYW1lIiA6ICJKYWVsbGFyaSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS81ZWFkZjcxZDhkZDdjNGNiN2NlMzJhY2E1NGRiODE2YTkwNTA5YjQzMjIzMmNkODhkM2FlM2VlYWY4YzhmZTc2IgogICAgfQogIH0KfQ==",
+                "KMgAXxUwHyVt5VlXzLcjUSR14CcKXvMvSImOaGXjHvtuN7VaH62pr6YfBVPLQ/J120ULc4vUP5flVJQYiFtWBv0+QGdDCDZQjEPr/UPzG5W08GEWv3HMIaRgAH9bb90aDzyGaxcGtDpz/gb5ZpycKtXLUtLS4zHIiVq2VKW3eaJN87+HnecjP2DtY+PaicPOd5O9XObKB3mBCUXmxQcjyoLR7aMIZUc0NyJTNHwcKRJ8td+rdhC/xtvnzI9ZbbQuniDaTYw1HMVzc3SKvIhJeaz0FTJ99AGQoU2FE+/thq09bli4ha6ML+tNR/QQ5YLqxlOHYmfVz0LaXnlvbZGfoiExdQFPXH/e6vx3QkC3MNmMqYty8GwF3+1N3AJXREvNQ/WbPXs/Wo+cv/8Irbwh0hl+sj1sHEj3kNSNjSEBrXXfE1zWnQhMzUNan+QTZXDJOIrXAoukVq2oSXi2XRMli10fuwgCNRDZHB5d/dxNw/4XHn96wgH6TVmZpcoQbwj7vnNIqtdesC+HJALRrkoR4sZW376/NgGNhCiMN4KvIUurPv44FY2Vz+kVpeX6J6CraDz8+Zy5MXrXwi5Vcy9a1EHDCgxOtxGZu04aKDflZnUA871baHda34/TdrqJ/QevviWQI/fi+r4xA6D0bCS9RCahtzBAUwJUa5PKqETfLkw=");
+        this.separator.shown(false);
+        createRanks();
+        KingdomHandler.addKingdom(this);
+    }
+
+    public Kingdom(String name, OfflinePlayer player, boolean publicity){
+        kingdomNumber = KingdomHandler.getKingdoms().size()+1;
+        this.name = name;
+        this.owner = player.getUniqueId();
+        this.open = publicity;
         this.separator = new NPC(name,
                 "ewogICJ0aW1lc3RhbXAiIDogMTcxMjM0MzcwNjEyMywKICAicHJvZmlsZUlkIiA6ICI1ZTdmY2RjYTU5YzI0NjkwODAwNjg4OTNkODU1ODM3NCIsCiAgInByb2ZpbGVOYW1lIiA6ICJKYWVsbGFyaSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS81ZWFkZjcxZDhkZDdjNGNiN2NlMzJhY2E1NGRiODE2YTkwNTA5YjQzMjIzMmNkODhkM2FlM2VlYWY4YzhmZTc2IgogICAgfQogIH0KfQ==",
                 "KMgAXxUwHyVt5VlXzLcjUSR14CcKXvMvSImOaGXjHvtuN7VaH62pr6YfBVPLQ/J120ULc4vUP5flVJQYiFtWBv0+QGdDCDZQjEPr/UPzG5W08GEWv3HMIaRgAH9bb90aDzyGaxcGtDpz/gb5ZpycKtXLUtLS4zHIiVq2VKW3eaJN87+HnecjP2DtY+PaicPOd5O9XObKB3mBCUXmxQcjyoLR7aMIZUc0NyJTNHwcKRJ8td+rdhC/xtvnzI9ZbbQuniDaTYw1HMVzc3SKvIhJeaz0FTJ99AGQoU2FE+/thq09bli4ha6ML+tNR/QQ5YLqxlOHYmfVz0LaXnlvbZGfoiExdQFPXH/e6vx3QkC3MNmMqYty8GwF3+1N3AJXREvNQ/WbPXs/Wo+cv/8Irbwh0hl+sj1sHEj3kNSNjSEBrXXfE1zWnQhMzUNan+QTZXDJOIrXAoukVq2oSXi2XRMli10fuwgCNRDZHB5d/dxNw/4XHn96wgH6TVmZpcoQbwj7vnNIqtdesC+HJALRrkoR4sZW376/NgGNhCiMN4KvIUurPv44FY2Vz+kVpeX6J6CraDz8+Zy5MXrXwi5Vcy9a1EHDCgxOtxGZu04aKDflZnUA871baHda34/TdrqJ/QevviWQI/fi+r4xA6D0bCS9RCahtzBAUwJUa5PKqETfLkw=");
@@ -156,12 +168,16 @@ public class Kingdom extends Tab {
 
 
     public void joinKingdom(Player player){
-        String playerRankName = UserStatement.getRank(player.getUniqueId());
-        String rankName = "1" + kingdomNumber + "0" + RankHandler.getRankNumber(playerRankName) + playerRankName;
-        for(Team rank : getRanks()){
-            if(rank.getName().contains(rankName)){
-                rank.addPlayer(player);
-                RankHandler.setPlayerRank(player, rank);
+        String playerRank = UserStatement.getRank(player.getUniqueId());
+        String rankName = "1" + kingdomNumber + "0" + RankHandler.getRankNumber(playerRank) + playerRank;
+        Rank rank = Rank.valueOf(playerRank);
+        RankColor color = RankColor.valueOf(playerRank);
+        for(Team ranks : getRanks()){
+            if(ranks.getName().contains(rankName)){
+                player.playerListName(Component.text(rank.prefix).append(Component.text(player.getName(), TextColor.fromHexString(color.color))));
+                player.displayName(Component.text(rank.prefix).append(Component.text(player.getName(), TextColor.fromHexString(color.color))));
+                ranks.addPlayer(player);
+                RankHandler.setPlayerRank(player, ranks);
             }
         }
         for(UUID member : getMembers()){
@@ -189,7 +205,7 @@ public class Kingdom extends Tab {
             return;
         }
         if(owner.equals(player.getUniqueId())){
-            owner = getMembers().getFirst();
+            owner = getMembers().iterator().next();
         }
     }
 
@@ -213,6 +229,7 @@ public class Kingdom extends Tab {
             removeMember(members);
             join(members);
         }
+        KingdomHandler.removeKingdomChatters(this);
         KingdomHandler.removeKingdom(this);
         KingdomStatement.deleteKingdom(this);
         refreshScoreboard();
@@ -226,7 +243,12 @@ public class Kingdom extends Tab {
         KingdomStatement.insertKingdom(this);
         KingdomStatement.insertMembers(this);
         deleteSeparator();
+        NPCHandler.removeNPC(separator.getId());
         deleteRanks();
         deleteKingdom();
+    }
+
+    public void setPublic(boolean b) {
+        open = b;
     }
 }

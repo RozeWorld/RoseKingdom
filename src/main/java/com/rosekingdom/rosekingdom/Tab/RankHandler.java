@@ -50,8 +50,7 @@ public class RankHandler extends Tab {
         if(team == null){
             team = board.registerNewTeam(base.getName() + "_AFK");
         }
-        team.prefix(base.prefix());
-        team.suffix(Component.text("\uDB00\uDC03\uEa06"));
+        player.playerListName(player.playerListName().append(Component.text("\uDB00\uDC03\uEa06")));
         team.addPlayer(player);
         isAFK.put(player, team);
     }
