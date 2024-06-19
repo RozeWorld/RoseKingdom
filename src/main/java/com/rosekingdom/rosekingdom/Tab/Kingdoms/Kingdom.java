@@ -242,10 +242,6 @@ public class Kingdom extends Tab {
     public void save(){
         KingdomStatement.insertKingdom(this);
         KingdomStatement.insertMembers(this);
-        deleteSeparator();
-        NPCHandler.removeNPC(separator.getId());
-        deleteRanks();
-        deleteKingdom();
     }
 
     public void setPublic(boolean b) {

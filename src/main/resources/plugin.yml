@@ -69,10 +69,11 @@ commands:
     permission: rk.ADMIN
     description: demoscreen testing
   rank:
-    permission: rk.DEFAULT
+    permission: rk.OWNER
     description: sets/removes ranks
     usage: /<command> <player> <rank>
   perms:
+    permission: rk.MOD
     description: check your permissions
   bugs:
     description: Link for reporting bugs
@@ -83,6 +84,7 @@ commands:
     permission: rk.ARTIST
   playtime:
     description: Returns play time on the server
+
 
 permissions:
   rk.OWNER:

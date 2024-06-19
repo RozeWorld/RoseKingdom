@@ -17,13 +17,17 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.UUID;
+
 public class Grave {
     Player player;
+    UUID uuid;
     int id;
     Location location;
     ItemDisplay display;
     Interaction interaction;
     String graveId;
+    BukkitScheduler scheduler;
     int time;
     static int task;
 
@@ -36,11 +40,10 @@ public class Grave {
         this.id = id;
         this.graveId = graveId;
         this.location = DeathStatement.getLocation(id, graveId);
+        this.uuid = UUID.fromString(UserStatement.getUUID(id));
         createGrave(location);
         GraveHandler.addGrave(this);
     }
-
-
 
     public void setupGrave(){
         Location loc = player.getLocation();
@@ -78,30 +81,29 @@ public class Grave {
 
     public void showPlayerGrave(){
         JavaPlugin plugin = JavaPlugin.getPlugin(RoseKingdom.class);
+        if(player == null) return;
         player.showEntity(plugin, display);
         player.showEntity(plugin, interaction);
     }
 
     public void timer(int duration){
         time = duration;
-        BukkitScheduler scheduler = Bukkit.getScheduler();
+        scheduler = Bukkit.getScheduler();
         task = scheduler.scheduleSyncRepeatingTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
             time--;
             if(time <= 0){
                 GraveHandler.removeGrave(id, graveId);
+                scheduler.cancelTask(task);
             }
         }, 0, 20);
     }
 
-
-
-    public static void stopTimer(){
-        BukkitScheduler scheduler = Bukkit.getScheduler();
+    public void save() {
+        DeathStatement.saveTime(id, graveId, time);
         scheduler.cancelTask(task);
     }
 
-    public void save() {
-        DeathStatement.saveTime(id, graveId, time);
-        stopTimer();
+    public void setPlayer(Player player) {
+        if(this.player == null) this.player = player;
     }
 }

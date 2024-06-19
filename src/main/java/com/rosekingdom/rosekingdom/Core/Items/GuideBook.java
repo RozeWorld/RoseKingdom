@@ -48,14 +48,18 @@ public class GuideBook extends ItemStack {
                         .append(Component.text(" - When you die, a grave with all your items will spawn. The lifespan of the grave is one hour and can you can have up to three at once. If  you die while having three graves you will die normally. Graves drop all the items in")));
         page.add(Component.text("the end of their lifespan.\n")
                 .append(Component.text("\u2022 Kingdoms", TextColor.fromHexString("#ffb30f"))).append(Component.text(" - This is like your normal teams option. You can create a kingdom and invite your friends to it. Every kingdom has a separator in the tab that separates all kindom members from the rest of the players. (This feature is still WIP)")));
-        page.add(Component.text("\u2022 Locations", TextColor.fromHexString("#ffb30f")).append(Component.text(" - Allows you to save and share locations easily in-game.\n"))
-                .append(Component.text("\u2022 Coordinates/XYZ", TextColor.fromHexString("#ffb30f"))).append(Component.text(" - Makes sharing your coordinates easier with a command and a name.\n"))
-                .append(Component.text("\u2022 Profiles", TextColor.fromHexString("#ffb30f"))).append(Component.text(" - Gives you little information about you or a player.\n"))
-                .append(Component.text("\u2022 Stores", TextColor.fromHexString("#ffb30f"))).append(Component.text(" - Option to create a secure and unique way for selling\n")));
+        page.add(Component.text("\u2022 Locations", TextColor.fromHexString("#ffb30f"))
+                .append(Component.text(" - Allows you to save and share locations easily in-game.\n", TextColor.fromHexString("#000000"))
+                .append(Component.text("\u2022 Coordinates/XYZ", TextColor.fromHexString("#ffb30f")))
+                .append(Component.text(" - Makes sharing your coordinates easier with a command and a name.\n", TextColor.fromHexString("#000000")))
+                .append(Component.text("\u2022 Profiles", TextColor.fromHexString("#ffb30f")))
+                .append(Component.text(" - Gives you little information about you or a player.\n", TextColor.fromHexString("#000000")))
+                .append(Component.text("\u2022 Stores", TextColor.fromHexString("#ffb30f")))
+                .append(Component.text(" - Option to create a secure and unique way for selling\n", TextColor.fromHexString("#000000")))));
         page.add(Component.text("or buying items.\n")
                 .append(Component.text("\u2022 ---- (Coming soon)", TextColor.fromHexString("#c42d12"))));
         page.add(Component.text("           Staff\n")
-                .append(Component.text("===================\n, TextColor.fromHexString(\"#000000\")"))
+                .append(Component.text("===================\n", TextColor.fromHexString("#000000")))
                 .append(Component.text("Owner and Developer of the server:\n"))
                 .append(Component.text("RozeKing (TMG-8047KG)\n\n"))
                 .append(Component.text("Admins:\n"))

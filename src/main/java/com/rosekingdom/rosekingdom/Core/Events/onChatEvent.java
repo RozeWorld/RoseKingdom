@@ -19,16 +19,13 @@ public class onChatEvent implements Listener {
         if(KingdomHandler.getKingdomChatters().contains(player.getUniqueId())){
             e.setCancelled(true);
             Kingdom kingdom = KingdomHandler.getChatterKingdom(player);
+            Component message = Component.text("["+kingdom.getName()+"] ", TextColor.fromHexString("#5ae630")).clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/kingdom chat"))
+                    .append(player.name().color(TextColor.fromHexString("#c7c7c7")).clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + player.getName() + " ")))
+                    .append(Component.text(": ",TextColor.fromHexString("#9b9b9b")))
+                    .append(e.message());
+            Message.Console(message);
             for(Player members : kingdom.getOnlinePlayers()){
-                Component message = Component.text()
-                        .append(Component.text("["+kingdom.getName()+"] ", TextColor.fromHexString("#5ae630"))
-                                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/kingdom chat")))
-                        .append(player.name().color(TextColor.fromHexString("#c7c7c7")).clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + player.getName() + " ")))
-                        .append(Component.text(": ",TextColor.fromHexString("#9b9b9b")))
-                        .append(e.message())
-                        .build();
                 members.sendMessage(message);
-                Message.Console(message);
             }
         }
         e.renderer((source, sourceDisplayName, message, viewer) ->

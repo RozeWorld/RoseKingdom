@@ -52,7 +52,7 @@ public class CommandManager implements TabExecutor {
         addCommand(new Store());
         addCommand(new Ban());
         addCommand(new BanIp());
-        addCommand(new Vanish());
+        addCommand(new vanishCommand());
         addCommand(new TimersChecker());
         addCommand(new NPCOptions());
         addCommand(new kingdom_main_command());

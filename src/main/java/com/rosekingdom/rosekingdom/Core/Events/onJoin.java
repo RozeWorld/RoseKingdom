@@ -9,6 +9,7 @@ import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
 import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
+import com.rosekingdom.rosekingdom.Moderation.Utils.vanish;
 import com.rosekingdom.rosekingdom.Profiles.Statements.ProfileStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
@@ -35,6 +36,12 @@ public class onJoin implements Listener {
     public void onJoinEvent(PlayerJoinEvent e){
         Player player = e.getPlayer();
         ResourcePackLoader.setResourcePack(player);
+
+        if(UserStatement.isVanished(player)){
+            vanish.changePlayerVisibility(player, true);
+            e.joinMessage(Component.empty());
+            player.sendMessage(Component.text("You are vanished!", TextColor.fromHexString("#04cfde")));
+        }
 
         //Join Message
         e.joinMessage(Component.text("[", TextColor.fromHexString("#696969"))
@@ -76,6 +83,7 @@ public class onJoin implements Listener {
         int id = UserStatement.getId(player);
         if(DeathStatement.hasGraves(id)){
             for(Grave grave : GraveHandler.getGraves(id)){
+                grave.setPlayer(player);
                 grave.showPlayerGrave();
             }
         }

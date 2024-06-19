@@ -1,5 +1,6 @@
 package com.rosekingdom.rosekingdom.Graves;
 
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Graves.Statements.GraveStatement;
 import org.bukkit.Location;
@@ -15,7 +16,10 @@ public class GraveHandler {
     }
     public static void removeGrave(int id, String graveId) {
         Location loc = DeathStatement.getLocation(id, graveId);
-        Grave.stopTimer();
+        if(loc == null) {
+            Message.Console("Null Grave location!");
+            return;
+        }
         if(!loc.isChunkLoaded()){
             loc.getChunk().load();
         }
@@ -27,7 +31,7 @@ public class GraveHandler {
         for(Grave grave : getGraveList()){
             if(grave.graveId.equals(graveId)){
                 getGraveList().remove(grave);
-                break;
+                return;
             }
         }
     }
