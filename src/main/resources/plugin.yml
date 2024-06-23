@@ -84,6 +84,10 @@ commands:
     permission: rk.ARTIST
   playtime:
     description: Returns play time on the server
+  afk:
+    description: Sets your status to AFK
+  discord:
+    description: Discord link for our server
 
 
 permissions:

@@ -3,6 +3,7 @@ package com.rosekingdom.rosekingdom;
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandManager;
 import com.rosekingdom.rosekingdom.Core.Config.Config;
 import com.rosekingdom.rosekingdom.Core.Database.Database;
+import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Core.NPCs.Statements.NPCStatement;
@@ -11,6 +12,7 @@ import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Tab.AFKstatus;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
+import com.rosekingdom.rosekingdom.Tab.Rank;
 import com.rosekingdom.rosekingdom.Tab.RankHandler;
 import com.rosekingdom.rosekingdom.Tab.Statements.KingdomStatement;
 import com.rosekingdom.rosekingdom.Tab.Tab;
@@ -33,8 +35,9 @@ public final class RoseKingdom extends JavaPlugin {
         loadGraves();
 
         EventHandler.events(this);
-
         AFKstatus.check(this);
+
+        UserStatement.setRank("96022bb0-c25b-45da-8537-f323edbba03a", Rank.OWNER.name());
 
         RankHandler.registerBaseRanks();
 

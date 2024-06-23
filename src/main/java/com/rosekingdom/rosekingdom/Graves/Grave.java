@@ -29,7 +29,7 @@ public class Grave {
     String graveId;
     BukkitScheduler scheduler;
     int time;
-    static int task;
+    int task;
 
     public Grave(Player player){
         this.player = player;
@@ -92,10 +92,14 @@ public class Grave {
         task = scheduler.scheduleSyncRepeatingTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
             time--;
             if(time <= 0){
-                GraveHandler.removeGrave(id, graveId);
                 scheduler.cancelTask(task);
+                GraveHandler.removeGrave(id, graveId);
             }
         }, 0, 20);
+    }
+
+    public void stopTimer(){
+        scheduler.cancelTask(task);
     }
 
     public void save() {

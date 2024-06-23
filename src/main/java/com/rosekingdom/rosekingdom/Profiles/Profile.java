@@ -1,7 +1,7 @@
 package com.rosekingdom.rosekingdom.Profiles;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
-import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
+import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -10,7 +10,6 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Profile extends CommandRK {
 
@@ -25,9 +24,13 @@ public class Profile extends CommandRK {
         }
 
         if(args.length == 1){
-            OfflinePlayer target = Bukkit.getOfflinePlayer(UUID.fromString(UserStatement.getUUID(args[0])));
-            Inventory inventory = new UserGUI(target).getInventory();
-            player.openInventory(inventory);
+            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+            if(target.hasPlayedBefore()){
+                Inventory inventory = new UserGUI(target).getInventory();
+                player.openInventory(inventory);
+            }else{
+                Message.Warning(target.getName() + " hasn't played before!");
+            }
             return;
         }
         Inventory inventory = new UserGUI(player).getInventory();

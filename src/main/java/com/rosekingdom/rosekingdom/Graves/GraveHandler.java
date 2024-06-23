@@ -18,19 +18,20 @@ public class GraveHandler {
         Location loc = DeathStatement.getLocation(id, graveId);
         if(loc == null) {
             Message.Console("Null Grave location!");
-            return;
+        }else{
+            if(!loc.isChunkLoaded()) {
+                loc.getChunk().load();
+            }
+            for(ItemStack items : GraveStatement.getItems(id, graveId)){
+                loc.getWorld().dropItemNaturally(loc, items);
+            }
+            GraveStatement.deleteGrave(id, graveId);
+            DeathStatement.purge(id, graveId);
         }
-        if(!loc.isChunkLoaded()){
-            loc.getChunk().load();
-        }
-        for(ItemStack items : GraveStatement.getItems(id, graveId)){
-            loc.getWorld().dropItemNaturally(loc, items);
-        }
-        GraveStatement.deleteGrave(id, graveId);
-        DeathStatement.purge(id, graveId);
-        for(Grave grave : getGraveList()){
+        for(Grave grave : graveList){
             if(grave.graveId.equals(graveId)){
-                getGraveList().remove(grave);
+                grave.stopTimer();
+                graveList.remove(grave);
                 return;
             }
         }
@@ -48,6 +49,4 @@ public class GraveHandler {
         }
         return graves;
     }
-
-
 }

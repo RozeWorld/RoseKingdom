@@ -18,9 +18,18 @@ public class TimersChecker extends CommandRK {
     @Override
     public void execute(CommandSender sender, String[] args) {
         BukkitScheduler scheduler = Bukkit.getScheduler();
-        for(BukkitTask task : scheduler.getPendingTasks()){
-            sender.sendMessage(Component.text(task.getTaskId() + " : ")
-                    .append(Component.text(task.getOwner().getName())));
+        if(args.length == 0){
+            for(BukkitTask task : scheduler.getPendingTasks()){
+                sender.sendMessage(Component.text(task.getTaskId() + " : ")
+                        .append(Component.text(task.getOwner().getName())));
+            }
+        }
+        if(args.length == 1){
+            try {
+                scheduler.cancelTask(Integer.parseInt(args[0]));
+            }catch (Exception e){
+                sender.sendMessage(Component.text("Not a number"));
+            }
         }
     }
 
