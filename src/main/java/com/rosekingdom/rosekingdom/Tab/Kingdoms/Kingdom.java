@@ -40,6 +40,14 @@ public class Kingdom extends Tab {
         kingdomNumber = number;
     }
 
+    public boolean getHasSeparatorOn(){
+        return hasSeparatorOn;
+    }
+
+    public NPC getSeparator(){
+        return separator;
+    }
+
     public UUID getOwner(){
         return owner;
     }
@@ -146,8 +154,8 @@ public class Kingdom extends Tab {
     }
 
     public void deleteSeparator(){
-        separatorTeam.unregister();
         separator.despawn();
+        separatorTeam.unregister();
         hasSeparatorOn = false;
     }
 

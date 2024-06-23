@@ -29,6 +29,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 
 public class onJoin implements Listener {
 
@@ -75,7 +76,9 @@ public class onJoin implements Listener {
             ProfileStatement.updateStreak(player, 1);
         }
 
-        for(NPC npc : NPCHandler.getNPCs()){
+        List<NPC> npcList = NPCHandler.getNPCs();
+        npcList.removeAll(KingdomHandler.getSeparators());
+        for(NPC npc : npcList){
             npc.spawn();
         }
 
