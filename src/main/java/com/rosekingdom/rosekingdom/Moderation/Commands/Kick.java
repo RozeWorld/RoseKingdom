@@ -32,8 +32,8 @@ public class Kick extends CommandRK {
                     .append(Component.text("\n\n============================================", TextColor.fromHexString("#E36414"))), PlayerKickEvent.Cause.KICK_COMMAND);
         }
         if(args.length >= 2){
-            StringBuilder reason = new StringBuilder(args[2]);
-            for(int str = 3; str < args.length; str++){
+            StringBuilder reason = new StringBuilder(args[1]);
+            for(int str = 2; str < args.length; str++){
                 reason.append(" ").append(args[str]);
             }
             target.kick(Component.text("============================================\n\n", TextColor.fromHexString("#E36414"))
