@@ -9,8 +9,11 @@ import com.rosekingdom.rosekingdom.Economy.Statements.EconomyStatement;
 import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
+import com.rosekingdom.rosekingdom.Moderation.Utils.vanish;
 import com.rosekingdom.rosekingdom.Profiles.Statements.ProfileStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
+import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import com.rosekingdom.rosekingdom.Tab.Tab;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -26,28 +29,28 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 
 public class onJoin implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onJoinEvent(PlayerJoinEvent e){
         Player player = e.getPlayer();
-        new ResourcePackLoader().setResourcePack(player);
+        ResourcePackLoader.setResourcePack(player);
+
+        if(UserStatement.isVanished(player)){
+            vanish.changePlayerVisibility(player, true);
+            e.joinMessage(Component.empty());
+            player.sendMessage(Component.text("You are vanished!", TextColor.fromHexString("#04cfde")));
+        }
 
         //Join Message
-        e.joinMessage(
-                Component.text("[", TextColor.fromHexString("#696969"))
-                        .append(Component.text("+", TextColor.fromHexString("#3fd951"))
-                        .append(Component.text("] ", TextColor.fromHexString("#696969")))
-                        .append(player.displayName().color(TextColor.fromHexString("#7d7d7d")))));
-        player.sendPlayerListHeader(Component.text("\uEF02\n\n\n\n\n"));
-        BukkitScheduler scheduler = Bukkit.getScheduler();
-        scheduler.scheduleSyncDelayedTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
-            for(Player on : Bukkit.getServer().getOnlinePlayers()){
-                on.sendPlayerListFooter(Component.text("\nOnline Players: ", TextColor.fromHexString("#FFB415"))
-                        .append(Component.text(Bukkit.getOnlinePlayers().size(),TextColor.fromHexString("#2eff31"))));
-            }
-        }, 10);
+        e.joinMessage(Component.text("[", TextColor.fromHexString("#696969"))
+                .append(Component.text("+", TextColor.fromHexString("#3fd951"))
+                .append(Component.text("] ", TextColor.fromHexString("#696969")))
+                .append(player.displayName().color(TextColor.fromHexString("#7d7d7d")))));
+
+        Tab.display(player);
 
         //Database things
         if(!UserStatement.exists(player.getUniqueId())) {
@@ -58,7 +61,10 @@ public class onJoin implements Listener {
         }
         //Rank
         Tab.join(player);
-
+        Kingdom kingdom = KingdomHandler.getKingdom(player);
+        if(kingdom != null && kingdom.getInChat().contains(player.getUniqueId())){
+            player.sendMessage(Component.text("You are currently chatting with " + kingdom.getName() + "'s members.", TextColor.fromHexString("#5ae630")));
+        }
         //Activity Streak Checker
         long lastOnline = player.getLastSeen();
         Instant instant = Instant.ofEpochMilli(lastOnline);
@@ -70,7 +76,9 @@ public class onJoin implements Listener {
             ProfileStatement.updateStreak(player, 1);
         }
 
-        for(NPC npc : NPCHandler.getNPCs()){
+        List<NPC> npcList = NPCHandler.getNPCs();
+        npcList.removeAll(KingdomHandler.getSeparators());
+        for(NPC npc : npcList){
             npc.spawn();
         }
 
@@ -78,6 +86,7 @@ public class onJoin implements Listener {
         int id = UserStatement.getId(player);
         if(DeathStatement.hasGraves(id)){
             for(Grave grave : GraveHandler.getGraves(id)){
+                grave.setPlayer(player);
                 grave.showPlayerGrave();
             }
         }

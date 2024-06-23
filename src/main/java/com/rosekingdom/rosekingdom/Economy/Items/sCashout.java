@@ -12,8 +12,8 @@ import java.util.List;
 
 public class sCashout extends ItemStack {
     public sCashout(int coins){
+        super(Material.PAPER);
         setAmount(1);
-        setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(2357);
         meta.displayName(Component.text("Collect coins!", TextColor.fromHexString("#f5ae07")).decoration(TextDecoration.ITALIC, false));

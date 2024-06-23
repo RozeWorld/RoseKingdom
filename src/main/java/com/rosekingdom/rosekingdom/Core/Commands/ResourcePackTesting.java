@@ -17,12 +17,11 @@ public class ResourcePackTesting extends CommandRK {
     @Override
     public void execute(CommandSender sender, String[] args) {
         Player player = (Player) sender;
-        ResourcePackLoader packLoader = new ResourcePackLoader();
         if(args.length == 1 && args[0].equals("true")){
-            packLoader.removeResourcePack(player);
+            ResourcePackLoader.removeResourcePack(player);
         }
         if(args.length == 1 && args[0].equals("false")){
-            packLoader.setResourcePack(player);
+            ResourcePackLoader.removeTester(player);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.rosekingdom.rosekingdom.Moderation.Commands;
+package com.rosekingdom.rosekingdom.Tab.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AssignRank extends CommandRK {
+public class Ranking extends CommandRK {
 
-    public AssignRank(){
+    public Ranking(){
         setName("rank");
         setArgumentRequirement(true);
     }

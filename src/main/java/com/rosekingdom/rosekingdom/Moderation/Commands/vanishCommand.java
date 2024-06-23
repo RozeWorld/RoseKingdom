@@ -2,15 +2,17 @@ package com.rosekingdom.rosekingdom.Moderation.Commands;
 
 import com.rosekingdom.rosekingdom.Core.CommandManager.CommandRK;
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
-import org.bukkit.GameMode;
+import com.rosekingdom.rosekingdom.Moderation.Utils.vanish;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class Vanish extends CommandRK {
+public class vanishCommand extends CommandRK {
 
-    public Vanish(){
+    public vanishCommand(){
         setName("vanish");
         addAlias("vh");
     }
@@ -19,21 +21,16 @@ public class Vanish extends CommandRK {
     public void execute(CommandSender sender, String[] args) {
         if(!(sender instanceof Player player)) return;
         if(UserStatement.isVanished(player)){
-            player.setAllowFlight(player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR));
-            vanish(player, false);
+            vanish.changePlayerVisibility(player, false);
             UserStatement.vanish(player, false);
+            player.sendMessage(Component.text("You're are now un-vanished!", TextColor.fromHexString("#04cfde")));
+            vanish.removeVanished(player);
         }else {
-            player.setAllowFlight(true);
-            vanish(player, true);
+            vanish.changePlayerVisibility(player, true);
             UserStatement.vanish(player, true);
+            player.sendMessage(Component.text("You're now vanish!", TextColor.fromHexString("#04cfde")));
+            vanish.addVanished(player);
         }
-    }
-
-    private void vanish(Player player, boolean state){
-        player.setInvisible(state);
-        player.setInvulnerable(state);
-        player.setCanPickupItems(!state);
-        player.setSleepingIgnored(state);
     }
 
     @Override

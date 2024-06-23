@@ -63,16 +63,17 @@ commands:
       - loc
       - l
   profile:
-    permission: rk.MOD
+    permission: rk.DEFAULT
     description: Opens your game profile
   demo:
     permission: rk.ADMIN
     description: demoscreen testing
   rank:
-    permission: rk.DEFAULT
+    permission: rk.OWNER
     description: sets/removes ranks
     usage: /<command> <player> <rank>
   perms:
+    permission: rk.MOD
     description: check your permissions
   bugs:
     description: Link for reporting bugs
@@ -83,6 +84,11 @@ commands:
     permission: rk.ARTIST
   playtime:
     description: Returns play time on the server
+  afk:
+    description: Sets your status to AFK
+  discord:
+    description: Discord link for our server
+
 
 permissions:
   rk.OWNER:

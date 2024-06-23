@@ -13,8 +13,8 @@ import java.util.List;
 
 public class StreakScore extends ItemStack {
     public StreakScore(OfflinePlayer player){
+        super(Material.PAPER);
         setAmount(1);
-        setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(2102);
         meta.displayName(Component.text("Daily Streak: " + ProfileStatement.getStreak(player), TextColor.fromHexString("#fa9e14"))

@@ -27,10 +27,8 @@ public class Ban extends CommandRK {
         OfflinePlayer target = null;
         if(args.length >= 1) {
             target = Bukkit.getOfflinePlayer(args[0]);
-            Kingdom kingdom = KingdomHandler.getKingdom((Player) target);
-            if(kingdom == null) {
-                Message.Console("Couldn't fetch kingdom!");
-            }else{
+            Kingdom kingdom = KingdomHandler.getKingdom(target);
+            if(kingdom != null) {
                 KingdomHandler.lastOnline(kingdom);
             }
         }

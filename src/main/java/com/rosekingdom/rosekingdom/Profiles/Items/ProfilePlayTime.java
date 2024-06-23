@@ -17,6 +17,7 @@ import java.util.List;
 
 public class ProfilePlayTime extends ItemStack {
     public ProfilePlayTime(OfflinePlayer player){
+        super(Material.PAPER);
         int rawTime = player.getStatistic(Statistic.PLAY_ONE_MINUTE)/20;
         Timestamp timestamp = UserStatement.getJoinDate(UserStatement.getId(player.getUniqueId()));
         Instant rawDate = timestamp.toInstant();
@@ -25,7 +26,6 @@ public class ProfilePlayTime extends ItemStack {
         String time = String.format("Total time spent on the server: %s.", MillisToTime.withSymbol(rawTime));
         String joinDate = String.format("First joined on %s %s (UTC).", date.substring(0, 10), date.substring(11, 19));
         setAmount(1);
-        setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(2103);
         meta.displayName(Component.text(time, TextColor.fromHexString("#17fc32"))

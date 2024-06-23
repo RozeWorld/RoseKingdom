@@ -7,8 +7,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class sPriceItem extends ItemStack {
     public sPriceItem(int amount, int model, boolean plus){
+        super(Material.PAPER);
         setAmount(amount);
-        setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(model);
         if(plus){

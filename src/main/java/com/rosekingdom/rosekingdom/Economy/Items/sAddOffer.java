@@ -9,8 +9,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class sAddOffer extends ItemStack {
     public sAddOffer(){
+        super(Material.STICK);
         setAmount(1);
-        setType(Material.STICK);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(2353);
         meta.displayName(Component.text("Add offer for this item", TextColor.fromHexString("#10FF33")).decoration(TextDecoration.ITALIC, false));

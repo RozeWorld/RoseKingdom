@@ -33,7 +33,7 @@ import java.util.UUID;
 
 public class NPC {
 
-    private String name;
+    private final String name;
     private int task;
     private Location location;
     private boolean onTabList = false;
@@ -57,7 +57,7 @@ public class NPC {
 
         setRotation(true);
 
-        this.location = location;
+        this.location = location.toBlockLocation();
         this.name = name;
         NPCHandler.addNPC(this);
         NPCStatement.insertNPC(this);
@@ -126,7 +126,7 @@ public class NPC {
             }
             if(shown){
                 //Shows the NPC
-                sendPacket(new ClientboundAddEntityPacket(npc), online);
+                sendPacket(new ClientboundAddEntityPacket(npc, 0, npc.blockPosition()), online);
             }
             //Adds the second skin layer
             sendPacket(new ClientboundSetEntityDataPacket(npc.getId(), synchedEntityData.getNonDefaultValues()), online);

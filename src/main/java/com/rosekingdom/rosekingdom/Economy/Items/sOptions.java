@@ -9,8 +9,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class sOptions extends ItemStack {
     public sOptions(Component itemName){
+        super(Material.PAPER);
         setAmount(1);
-        setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(2356);
         meta.displayName(itemName.append(Component.text("'s options")).decoration(TextDecoration.ITALIC, false));

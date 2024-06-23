@@ -7,30 +7,30 @@ import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class joinKingdom extends subCommandRK {
+public class kingdom_create extends subCommandRK {
 
-    public joinKingdom(int arg){
+    public kingdom_create(int arg){
         super(arg);
-        setName("join");
+        setName("create");
     }
 
     @Override
     public void executeSub(CommandSender sender, String[] args) {
         if(!(sender instanceof Player player)) return;
         if(args.length == 2){
+            if(KingdomHandler.getKingdoms().size()+1 > 10){
+                player.sendMessage(Message.Warning("Unable to create a kingdom cause the exceeding number of kingdoms!"));
+            }
             if(!KingdomHandler.isInKingdom(player)){
-                for(Kingdom kingdom : KingdomHandler.getKingdoms()) {
-                    if (kingdom.getName().equals(args[1])) {
-                        kingdom.joinKingdom(player);
-                        return;
-                    } else {
-                        player.sendMessage(Message.Warning(args[1] + " doesn't exist!"));
-                    }
-                }
+                Kingdom kingdom = new Kingdom(args[1], player);
+                kingdom.createSeparator();
+                kingdom.joinKingdom(player);
             }else{
                 player.sendMessage(Message.Info("You are already in a kingdom!"));
-                player.sendMessage(Message.Warning("You need to abandon your kingdom to join a new one."));
+                player.sendMessage(Message.Warning("You need to abandon your kingdom to create a new one."));
             }
+        }else{
+            player.sendMessage(Message.Warning("Invalid number of arguments!"));
         }
     }
 }

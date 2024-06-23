@@ -13,8 +13,8 @@ import java.util.List;
 
 public class sAddStock extends ItemStack {
     public sAddStock(String store){
+        super(Material.PAPER);
         setAmount(1);
-        setType(Material.PAPER);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(2354);
         meta.displayName(Component.text("Stock"));

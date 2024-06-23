@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Checksymbol extends ItemStack {
     public Checksymbol(String title, List<Component> lore){
+        super(Material.STICK);
         setAmount(1);
-        setType(Material.STICK);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(1);
         meta.displayName(Component.text(title).decoration(TextDecoration.ITALIC, false));

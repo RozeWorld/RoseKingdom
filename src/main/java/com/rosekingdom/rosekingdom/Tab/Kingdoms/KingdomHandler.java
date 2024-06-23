@@ -1,6 +1,8 @@
 package com.rosekingdom.rosekingdom.Tab.Kingdoms;
 
+import com.rosekingdom.rosekingdom.Core.NPCs.NPC;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -8,14 +10,26 @@ import java.util.*;
 public class KingdomHandler {
     private static final List<Kingdom> kingdomList = new ArrayList<>();
     public static Map<Kingdom, String> invites = new HashMap<>();
-    public static Map<Player, Kingdom> inChats = new HashMap<>();
+    public static Map<UUID, Kingdom> inChats = new HashMap<>();
+    public static Map<Kingdom, NPC> separators = new HashMap<>();
 
     public static List<Kingdom> getKingdoms(){
         return kingdomList;
     }
 
+    public static List<NPC> getSeparators(){
+        List<NPC> npcs = new ArrayList<>();
+        for(Kingdom kingdom : kingdomList){
+            if(!kingdom.getHasSeparatorOn()){
+                npcs.add(separators.get(kingdom));
+            }
+        }
+        return npcs;
+    }
+
     public static void addKingdom(Kingdom kingdom){
         kingdomList.add(kingdom);
+        separators.put(kingdom, kingdom.getSeparator());
     }
 
     public static void removeKingdom(Kingdom kingdom) {
@@ -27,7 +41,7 @@ public class KingdomHandler {
             k.setKingdomNumber(order);
             k.createSeparator();
             k.createRanks();
-            for(Player member : k.getMembers()){
+            for(Player member : k.getOnlinePlayers()){
                 k.joinKingdom(member);
             }
             order++;
@@ -35,19 +49,19 @@ public class KingdomHandler {
     }
 
     public static void addKingdomChatter(Player player, Kingdom kingdom){
-        inChats.put(player, kingdom);
+        inChats.put(player.getUniqueId(), kingdom);
     }
 
     public static void removeKingdomChatter(Player player){
-        inChats.remove(player);
+        inChats.remove(player.getUniqueId());
     }
 
-    public static Set<Player> getKingdomChatters(){
+    public static Set<UUID> getKingdomChatters(){
         return inChats.keySet();
     }
 
     public static Kingdom getChatterKingdom(Player player){
-        return inChats.get(player);
+        return inChats.get(player.getUniqueId());
     }
 
     public static Collection<String> getInvites(){
@@ -78,10 +92,10 @@ public class KingdomHandler {
         return getKingdom(player) != null;
     }
 
-    public static Kingdom getKingdom(Player player){
+    public static Kingdom getKingdom(OfflinePlayer player){
         for(Kingdom kingdom : getKingdoms()) {
-            for (Player members : kingdom.getMembers()) {
-                if (members.getName().equals(player.getName())) {
+            for (UUID members : kingdom.getMembers()) {
+                if (members.equals(player.getUniqueId())) {
                     return kingdom;
                 }
             }
@@ -99,13 +113,19 @@ public class KingdomHandler {
 
     public static void lastOnline(Kingdom kingdom){
         if(kingdom.getOnlinePlayers().size()<=1){
-            kingdom.hideSeparator();
+            kingdom.deleteSeparator();
         }
     }
 
     public static void saveKingdoms(){
         for(Kingdom kingdom : getKingdoms()){
             kingdom.save();
+        }
+    }
+
+    public static void removeKingdomChatters(Kingdom kingdom) {
+        for(UUID chatter : kingdom.getInChat()){
+            inChats.remove(chatter);
         }
     }
 }
