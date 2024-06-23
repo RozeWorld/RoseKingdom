@@ -52,6 +52,7 @@ public class CommandManager implements TabExecutor {
         addCommand(new PlayTime());
         addCommand(new Coins());
         addCommand(new Store());
+        addCommand(new Kick());
         addCommand(new Ban());
         addCommand(new BanIp());
         addCommand(new vanishCommand());

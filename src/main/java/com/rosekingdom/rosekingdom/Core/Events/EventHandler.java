@@ -5,7 +5,8 @@ import com.rosekingdom.rosekingdom.Core.NPCs.NPCUpdater;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sOwnerPanel;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sPlayerPanel;
 import com.rosekingdom.rosekingdom.Graves.GraveEvents;
-import com.rosekingdom.rosekingdom.Moderation.Events.BanEvents;
+import com.rosekingdom.rosekingdom.Moderation.Events.BanEvent;
+import com.rosekingdom.rosekingdom.Moderation.Events.KickEvent;
 import com.rosekingdom.rosekingdom.Moderation.Events.vanishEvents;
 import com.rosekingdom.rosekingdom.Profiles.Events.GUI.eProfile;
 import com.rosekingdom.rosekingdom.Tab.AFKstatus;
@@ -27,7 +28,8 @@ public class EventHandler {
         getServer().getPluginManager().registerEvents(new sOwnerPanel(), plugin);
 
         //Moderation
-        getServer().getPluginManager().registerEvents(new BanEvents(), plugin);
+        getServer().getPluginManager().registerEvents(new BanEvent(), plugin);
+        getServer().getPluginManager().registerEvents(new KickEvent(), plugin);
         getServer().getPluginManager().registerEvents(new vanishEvents(), plugin);
 
         //Testing
