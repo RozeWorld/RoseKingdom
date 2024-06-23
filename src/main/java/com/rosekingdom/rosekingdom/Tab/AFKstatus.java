@@ -1,8 +1,5 @@
 package com.rosekingdom.rosekingdom.Tab;
 
-import com.rosekingdom.rosekingdom.Core.Utils.Message;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,8 +27,6 @@ public class AFKstatus implements Listener {
                 if((System.currentTimeMillis()-moved.getValue()) >= 3 * 60 * 1000){
                     Player player = moved.getKey();
                     RankHandler.setStatusAFK(player);
-                    player.sendMessage(Component.text("You are now AFK!", TextColor.fromHexString("#167ac7")));
-                    Message.Console(Component.text(player.getName() + " is now AFK!", TextColor.fromHexString("#167ac7")));
                     forRemoval.add(player);
                 }
             }
@@ -40,6 +35,10 @@ public class AFKstatus implements Listener {
             }
             forRemoval.clear();
         }, 0, 30 * 20);
+    }
+
+    public static void setAFK(Player player) {
+        lastMoved.remove(player);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

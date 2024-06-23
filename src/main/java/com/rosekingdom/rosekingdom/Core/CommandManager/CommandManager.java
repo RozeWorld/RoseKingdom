@@ -12,6 +12,8 @@ import com.rosekingdom.rosekingdom.Locations.CoordinatesBC;
 import com.rosekingdom.rosekingdom.Locations.Locations;
 import com.rosekingdom.rosekingdom.Moderation.Commands.*;
 import com.rosekingdom.rosekingdom.Profiles.Profile;
+import com.rosekingdom.rosekingdom.Tab.Commands.AFK;
+import com.rosekingdom.rosekingdom.Tab.Commands.Ranking;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands.kingdom_main_command;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
@@ -39,7 +41,7 @@ public class CommandManager implements TabExecutor {
         addCommand(new test());
         addCommand(new CoordinatesBC());
         addCommand(new Demoscreen());
-        addCommand(new AssignRank());
+        addCommand(new Ranking());
         addCommand(new CheckPermissions());
         addCommand(new Bugs());
         addCommand(new Feedback());
@@ -57,6 +59,8 @@ public class CommandManager implements TabExecutor {
         addCommand(new NPCOptions());
         addCommand(new kingdom_main_command());
         addCommand(new getGuideBook());
+        addCommand(new AFK());
+        addCommand(new Discord());
     }
 
     public List<CommandRK> getCommands() {
