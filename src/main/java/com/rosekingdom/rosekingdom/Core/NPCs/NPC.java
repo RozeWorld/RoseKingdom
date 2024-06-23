@@ -7,7 +7,6 @@ import com.mojang.authlib.properties.Property;
 import com.rosekingdom.rosekingdom.Core.NPCs.Statements.NPCStatement;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.RoseKingdom;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -58,7 +57,7 @@ public class NPC {
 
         setRotation(true);
 
-        this.location = location;
+        this.location = location.toBlockLocation();
         this.name = name;
         NPCHandler.addNPC(this);
         NPCStatement.insertNPC(this);
@@ -127,7 +126,7 @@ public class NPC {
             }
             if(shown){
                 //Shows the NPC
-                sendPacket(new ClientboundAddEntityPacket(npc, 0, new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ())), online);
+                sendPacket(new ClientboundAddEntityPacket(npc, 0, npc.blockPosition()), online);
             }
             //Adds the second skin layer
             sendPacket(new ClientboundSetEntityDataPacket(npc.getId(), synchedEntityData.getNonDefaultValues()), online);
