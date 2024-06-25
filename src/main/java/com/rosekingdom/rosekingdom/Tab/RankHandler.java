@@ -54,6 +54,8 @@ public class RankHandler extends Tab {
             team = board.registerNewTeam(base.getName() + "_AFK");
         }
         player.playerListName(player.playerListName().append(Component.text("\uDB00\uDC03\uEa06")));
+        //delete the sleep ignore
+        player.setSleepingIgnored(true);
         team.addPlayer(player);
         isAFK.put(player, team);
         player.sendMessage(Component.text("You are now AFK!", TextColor.fromHexString("#167ac7")));
@@ -68,6 +70,8 @@ public class RankHandler extends Tab {
                 team.unregister();
             }
             Tab.join(player);
+            //delete the sleep ignore
+            player.setSleepingIgnored(false);
             isAFK.remove(player);
         }
     }

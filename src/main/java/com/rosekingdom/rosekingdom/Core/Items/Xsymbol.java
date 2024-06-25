@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Xsymbol extends ItemStack {
     public Xsymbol(String title, List<Component> lore){
+        super(Material.STICK);
         setAmount(1);
-        setType(Material.STICK);
         ItemMeta meta = getItemMeta();
         meta.setCustomModelData(2);
         meta.displayName(Component.text(title).decoration(TextDecoration.ITALIC, false));
