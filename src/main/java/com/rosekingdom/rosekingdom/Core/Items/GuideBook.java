@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Core.Items;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
@@ -15,7 +16,7 @@ public class GuideBook extends ItemStack {
         super(Material.WRITTEN_BOOK);
         setAmount(1);
         ItemMeta meta = this.getItemMeta();
-        meta.displayName(Component.text("Server Guide"));
+        meta.displayName(Component.text("Server Guide", TextColor.fromHexString("#ffbf00")).decoration(TextDecoration.ITALIC, false));
         BookMeta book = (BookMeta) meta;
         book.setAuthor("RoseKing");
         List<Component> page = new ArrayList<>();
@@ -67,14 +68,8 @@ public class GuideBook extends ItemStack {
                 .append(Component.text("Mod and Artist:\n"))
                 .append(Component.text("for0ut (lookingforout)")));
         book.pages(page);
-        setItemMeta(book);
-
-//                .append(Component.text())
-//                .append(Component.text())
-//                .append(Component.text())
-//                .append(Component.text())
-//                .append(Component.text())
-//                .append(Component.text()));
+        book.setEnchantmentGlintOverride(false);
+        book.setCustomModelData(1);
         setItemMeta(book);
     }
 }

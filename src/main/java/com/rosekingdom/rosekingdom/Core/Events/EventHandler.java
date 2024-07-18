@@ -2,13 +2,14 @@ package com.rosekingdom.rosekingdom.Core.Events;
 
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCInteractions;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCUpdater;
+import com.rosekingdom.rosekingdom.Core.gui.GUIListener;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sOwnerPanel;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sPlayerPanel;
 import com.rosekingdom.rosekingdom.Graves.GraveEvents;
 import com.rosekingdom.rosekingdom.Moderation.Events.BanEvent;
 import com.rosekingdom.rosekingdom.Moderation.Events.KickEvent;
 import com.rosekingdom.rosekingdom.Moderation.Events.vanishEvents;
-import com.rosekingdom.rosekingdom.Profiles.Events.GUI.eProfile;
+import com.rosekingdom.rosekingdom.RoseKingdom;
 import com.rosekingdom.rosekingdom.Tab.AFKstatus;
 import org.bukkit.plugin.Plugin;
 
@@ -20,7 +21,6 @@ public class EventHandler {
         getServer().getPluginManager().registerEvents(new onJoin(), plugin);
         getServer().getPluginManager().registerEvents(new onLeave(), plugin);
         getServer().getPluginManager().registerEvents(new onChatEvent(), plugin);
-        getServer().getPluginManager().registerEvents(new eProfile(), plugin);
         getServer().getPluginManager().registerEvents(new AFKstatus(), plugin);
 
         //Store events
@@ -35,5 +35,7 @@ public class EventHandler {
         //Testing
         getServer().getPluginManager().registerEvents(new NPCInteractions(), plugin);
         getServer().getPluginManager().registerEvents(new NPCUpdater(), plugin);
+
+        getServer().getPluginManager().registerEvents(new GUIListener(RoseKingdom.getGuiManager()), plugin);
     }
 }
