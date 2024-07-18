@@ -57,7 +57,10 @@ public class Kingdom extends Tab {
     }
 
     public void setName(String name) {
+        deleteSeparator();
         this.name = name;
+        this.separator.setName(name);
+        createSeparator();
     }
 
     public Set<UUID> getMembers(){

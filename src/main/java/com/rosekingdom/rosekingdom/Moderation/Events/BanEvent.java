@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-public class BanEvents implements Listener {
+public class BanEvent implements Listener {
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent e){
         boolean permBan;

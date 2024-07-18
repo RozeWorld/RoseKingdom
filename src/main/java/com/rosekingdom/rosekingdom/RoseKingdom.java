@@ -7,6 +7,7 @@ import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Core.NPCs.Statements.NPCStatement;
+import com.rosekingdom.rosekingdom.Core.gui.GUIManager;
 import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
@@ -22,10 +23,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 
 public final class RoseKingdom extends JavaPlugin {
+    static GUIManager guiManager;
 
     @Override
     public void onEnable() {
         getLogger().info("RoseKingdom Started Loading!");
+        guiManager = new GUIManager();
         new CommandManager(this);
         new Config();
 
@@ -87,5 +90,7 @@ public final class RoseKingdom extends JavaPlugin {
         getLogger().info("Loaded " + total_graves_loaded + " graves!");
     }
 
-
+    public static GUIManager getGuiManager() {
+        return guiManager;
+    }
 }

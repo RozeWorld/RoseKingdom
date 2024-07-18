@@ -25,6 +25,7 @@ public class kingdom_main_command extends CommandRK {
         addSubCommand(new kingdom_invite(0));
         addSubCommand(new kingdom_chat(0));
         addSubCommand(new kingdom_publicity(0));
+        addSubCommand(new kingdom_rename(0));
     }
 
     @Override
@@ -33,6 +34,7 @@ public class kingdom_main_command extends CommandRK {
         if(args.length == 0){
             player.sendMessage(Component.text("Kingdom Commands:", TextColor.fromHexString("#ffb114")));
             player.sendMessage(Component.text("/kingdom create <name>", TextColor.fromHexString("#FFF522")));
+            player.sendMessage(Component.text("/kingdom rename <name>", TextColor.fromHexString("#FFF522")));
             player.sendMessage(Component.text("/kingdom delete <kingdom>", TextColor.fromHexString("#FFF522")));
             player.sendMessage(Component.text("/kingdom invite <player>", TextColor.fromHexString("#FFF522")));
             player.sendMessage(Component.text("/kingdom public <true/false>", TextColor.fromHexString("#FFF522")));
@@ -58,6 +60,7 @@ public class kingdom_main_command extends CommandRK {
             tabs.add("invite");
             tabs.add("chat");
             tabs.add("public");
+            tabs.add("rename");
         }
         if(args.length == 2) {
             switch (args[0].toLowerCase()) {
