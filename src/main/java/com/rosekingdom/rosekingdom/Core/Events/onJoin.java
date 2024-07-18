@@ -70,7 +70,7 @@ public class onJoin implements Listener {
         if(kingdom != null && kingdom.getInChat().contains(player.getUniqueId())){
             player.sendMessage(Component.text("You are currently chatting with " + kingdom.getName() + "'s members.", TextColor.fromHexString("#5ae630")));
         }
-
+      
         //Activity Streak Checker
         long lastOnline = player.getLastSeen();
         Instant instant = Instant.ofEpochMilli(lastOnline);

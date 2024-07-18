@@ -62,7 +62,6 @@ public class CommandManager implements TabExecutor {
         addCommand(new getGuideBook());
         addCommand(new AFK());
         addCommand(new Discord());
-
     }
 
     public List<CommandRK> getCommands() {

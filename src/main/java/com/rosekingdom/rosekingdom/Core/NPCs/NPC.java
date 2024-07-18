@@ -33,7 +33,7 @@ import java.util.UUID;
 
 public class NPC {
 
-    private String name;
+    private final String name;
     private int task;
     private Location location;
     private boolean onTabList = false;
