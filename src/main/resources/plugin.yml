@@ -43,13 +43,6 @@ commands:
     description: Creates a group
     aliases:
       - kd
-  test:
-    permission: rk.ADMIN
-    description: test command
-    usage: /<command>
-    aliases:
-      - t
-      - try
   coordinates:
     permission: rk.DEFAULT
     description: Gives you the ability to share your coordinates easier
@@ -59,12 +52,6 @@ commands:
   grave:
     description: Open the grave
     permission: rk.MOD
-  locations:
-    description: Saves location coordinates
-    usage: /<command> <location or subcommand>
-    aliases:
-      - loc
-      - l
   profile:
     permission: rk.DEFAULT
     description: Opens your game profile
