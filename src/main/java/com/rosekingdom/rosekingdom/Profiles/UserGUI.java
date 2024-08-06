@@ -2,7 +2,7 @@ package com.rosekingdom.rosekingdom.Profiles;
 
 import com.rosekingdom.rosekingdom.Core.Items.InvsibleItem;
 import com.rosekingdom.rosekingdom.Core.gui.InventoryButton;
-import com.rosekingdom.rosekingdom.Core.gui.InventoryGUI;
+import com.rosekingdom.rosekingdom.Core.gui.InventoryTypes.InventoryGUI;
 import com.rosekingdom.rosekingdom.Profiles.Items.ActivityIndicator;
 import com.rosekingdom.rosekingdom.Profiles.Items.ProfilePlayTime;
 import com.rosekingdom.rosekingdom.Profiles.Items.StreakScore;

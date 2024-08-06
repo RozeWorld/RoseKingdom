@@ -1,8 +1,8 @@
 package com.rosekingdom.rosekingdom.Core.Events;
 
+import com.rosekingdom.rosekingdom.Core.gui.GUIListener;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCInteractions;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCUpdater;
-import com.rosekingdom.rosekingdom.Core.gui.GUIListener;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sOwnerPanel;
 import com.rosekingdom.rosekingdom.Economy.Events.GUI.sPlayerPanel;
 import com.rosekingdom.rosekingdom.Graves.GraveEvents;
