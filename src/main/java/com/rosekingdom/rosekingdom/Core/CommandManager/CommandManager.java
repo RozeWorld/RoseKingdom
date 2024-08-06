@@ -1,15 +1,11 @@
 package com.rosekingdom.rosekingdom.Core.CommandManager;
 
-import com.rosekingdom.rosekingdom.Core.CommandManager.ExampleCommands.test;
-import com.rosekingdom.rosekingdom.Core.CommandManager.FeatureTesting.Demoscreen;
 import com.rosekingdom.rosekingdom.Core.Commands.*;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCOptions;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.Economy.Commands.Coins;
 import com.rosekingdom.rosekingdom.Economy.Commands.Store;
 import com.rosekingdom.rosekingdom.Graves.GraveCommand;
-import com.rosekingdom.rosekingdom.Locations.CoordinatesBC;
-import com.rosekingdom.rosekingdom.Locations.Locations;
 import com.rosekingdom.rosekingdom.Moderation.Commands.*;
 import com.rosekingdom.rosekingdom.Profiles.Profile;
 import com.rosekingdom.rosekingdom.Tab.Commands.AFK;
@@ -38,14 +34,10 @@ public class CommandManager implements TabExecutor {
     }
 
     private void commandList(){
-        addCommand(new test());
-        addCommand(new CoordinatesBC());
-        addCommand(new Demoscreen());
         addCommand(new Ranking());
         addCommand(new CheckPermissions());
         addCommand(new Bugs());
         addCommand(new Feedback());
-        addCommand(new Locations());
         addCommand(new GraveCommand());
         addCommand(new Profile());
         addCommand(new ResourcePackTesting());

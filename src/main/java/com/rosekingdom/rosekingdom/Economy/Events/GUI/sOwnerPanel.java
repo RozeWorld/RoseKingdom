@@ -33,9 +33,9 @@ public class sOwnerPanel implements Listener {
     public void movingItems(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
         InventoryHolder holder = e.getView().getTopInventory().getHolder();
-        List<ItemStack> items = StockStatement.getItems(store);
         //Main GUI
         if (holder instanceof Merchant) {
+            List<ItemStack> items = StockStatement.getItems(store);
             if (e.getRawSlot() < 45) e.setCancelled(true);
             if (e.getClick().equals(ClickType.SHIFT_RIGHT) || e.getClick().equals(ClickType.SHIFT_LEFT)) e.setCancelled(true);
             List<Integer> slots = new ArrayList<>(Arrays.asList(10,11,12,28,29,30));
@@ -70,6 +70,7 @@ public class sOwnerPanel implements Listener {
 
         //Item selecting
         if(holder instanceof sItemSelector) {
+            List<ItemStack> items = StockStatement.getItems(store);
             if (e.getRawSlot() < 9 && e.getRawSlot() != 4) e.setCancelled(true);
             if (e.getClick().equals(ClickType.SHIFT_RIGHT) || e.getClick().equals(ClickType.SHIFT_LEFT)) e.setCancelled(true);
             if (e.getAction().equals(InventoryAction.PLACE_ALL) && e.getRawSlot() == 4) {
@@ -238,6 +239,7 @@ public class sOwnerPanel implements Listener {
 
         //Stocking
         if(holder instanceof sStocking){
+            List<ItemStack> items = StockStatement.getItems(store);
             ItemStack item = e.getCursor();
             if(e.getRawSlot() < 9) e.setCancelled(true);
             if(e.getClick().equals(ClickType.SHIFT_RIGHT) || e.getClick().equals(ClickType.SHIFT_LEFT)) e.setCancelled(true);

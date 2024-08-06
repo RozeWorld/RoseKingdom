@@ -1,11 +1,16 @@
 name: RoseKingdom
 version: '${version}'
 main: com.rosekingdom.rosekingdom.RoseKingdom
-api-version: 1.20
-authors: [TMG8047KG]
+api-version: 1.21
+author: TMG8047KG
 website: https://github.com/RozeWorld/RoseKingdom
 prefix: RoseKingdom
 database: true
+description: RoseKingdom's core plugin
+depend:
+  - Locations
+loadbefore:
+  - Locations
 
 commands:
   timers:
@@ -43,34 +48,12 @@ commands:
     description: Creates a group
     aliases:
       - kd
-  test:
-    permission: rk.ADMIN
-    description: test command
-    usage: /<command>
-    aliases:
-      - t
-      - try
-  coordinates:
-    permission: rk.DEFAULT
-    description: Gives you the ability to share your coordinates easier
-    aliases:
-      - coords
-      - xyz
   grave:
     description: Open the grave
     permission: rk.MOD
-  locations:
-    description: Saves location coordinates
-    usage: /<command> <location or subcommand>
-    aliases:
-      - loc
-      - l
   profile:
     permission: rk.DEFAULT
     description: Opens your game profile
-  demo:
-    permission: rk.ADMIN
-    description: demoscreen testing
   rank:
     permission: rk.OWNER
     description: sets/removes ranks

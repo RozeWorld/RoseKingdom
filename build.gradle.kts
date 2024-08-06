@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.rosekingdom"
-version = "1.1.4-BETA"
+version = "1.1.6-BETA"
 description = "RoseKingdom's main plugin"
 
 java {

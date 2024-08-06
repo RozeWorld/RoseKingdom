@@ -1,5 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.gui;
 
+import com.rosekingdom.rosekingdom.Core.gui.InventoryTypes.InventoryGUI;
+import com.rosekingdom.rosekingdom.Core.gui.InventoryTypes.InventoryStorage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -13,6 +15,11 @@ public class GUIManager {
     private final Map<Inventory, InventoryHandler> activeInventories = new HashMap<>();
 
     public void openGUI(InventoryGUI gui, Player player) {
+        this.registerHandledInventory(gui.getInventory(), gui);
+        player.openInventory(gui.getInventory());
+    }
+
+    public void openGUI(InventoryStorage gui, Player player) {
         this.registerHandledInventory(gui.getInventory(), gui);
         player.openInventory(gui.getInventory());
     }

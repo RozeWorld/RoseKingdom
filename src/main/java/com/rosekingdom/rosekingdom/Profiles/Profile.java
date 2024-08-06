@@ -28,7 +28,7 @@ public class Profile extends CommandRK {
             if(target.hasPlayedBefore()){
                 RoseKingdom.getGuiManager().openGUI(new UserGUI(target), player);
             }else{
-                Message.Warning(target.getName() + " hasn't played before!");
+                player.sendMessage(Message.Warning(target.getName() + " hasn't played before!"));
             }
             return;
         }
