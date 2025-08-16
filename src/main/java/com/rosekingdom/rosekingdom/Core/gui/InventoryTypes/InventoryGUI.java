@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Core.gui.InventoryTypes;
 
 import com.rosekingdom.rosekingdom.Core.gui.InventoryButton;
 import com.rosekingdom.rosekingdom.Core.gui.InventoryHandler;
+import com.rosekingdom.rosekingdom.Core.gui.InventoryLocker;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -53,11 +54,13 @@ public abstract class InventoryGUI implements InventoryHandler {
 
     @Override
     public void onOpen(InventoryOpenEvent event) {
+        InventoryLocker.lock((Player) event.getPlayer());
         this.decorate((Player) event.getPlayer());
     }
 
     @Override
     public void onClose(InventoryCloseEvent event) {
+        InventoryLocker.restore((Player) event.getPlayer());
     }
 
     protected abstract Inventory createInventory();

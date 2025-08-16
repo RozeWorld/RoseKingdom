@@ -7,9 +7,13 @@ import com.rosekingdom.rosekingdom.Core.Events.EventHandler;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Core.NPCs.Statements.NPCStatement;
 import com.rosekingdom.rosekingdom.Core.gui.GUIManager;
+import com.rosekingdom.rosekingdom.Core.gui.InventoryLocker;
 import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -48,6 +52,10 @@ public final class RoseKingdom extends JavaPlugin {
 
         for(int npc : NPCHandler.getIds()){
             NPCHandler.removeNPC(npc);
+        }
+
+        for(Player player : Bukkit.getOnlinePlayers()){
+            InventoryLocker.restore(player);
         }
 
         getLogger().info("Successful shutdown!");
