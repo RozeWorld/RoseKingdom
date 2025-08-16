@@ -32,7 +32,7 @@ public class Message {
     public static Component Warning(String text){
         return Component.text("\uEf10\uDB00\uDC01")
                 .append(Component.text(text))
-                .color(TextColor.fromHexString("#FF0000"));
+                .color(TextColor.fromHexString("#cd0000"));
     }
     public static Component Info(String text){
         return Component.text("\uEf10\uDB00\uDC01")
@@ -54,17 +54,17 @@ public class Message {
     }
     public static Component Red(String text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#FF0000"));
+                .color(TextColor.fromHexString("#cd0000"));
     }
     public static Component Green(String text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#006400"));
+                .color(TextColor.fromHexString("#008d00"));
     }
     public static Component Lime(String text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#32CD32"));
     }
-    public static Component LightBlue(String text){
+    public static Component Cyan(String text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#00FFFF"));
     }
@@ -74,7 +74,7 @@ public class Message {
     }
     public static Component Blue(String text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#0000FF"));
+                .color(TextColor.fromHexString("#1750AC"));
     }
     public static Component Orange(String text){
         return Component.text(text)
@@ -86,7 +86,7 @@ public class Message {
     }
     public static Component Pink(String text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#FFc0cb"));
+                .color(TextColor.fromHexString("#ffb0cf"));
     }
     public static Component Bronze(String text){
         return Component.text(text)
@@ -99,6 +99,10 @@ public class Message {
     public static Component Gray(String text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#808080"));
+    }
+    public static Component LightGray(String text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#cdcdcd"));
     }
     public static Component White(String text){
         return Component.text(text)
@@ -114,17 +118,17 @@ public class Message {
     }
     public static Component Red(int text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#FF0000"));
+                .color(TextColor.fromHexString("#cd0000"));
     }
     public static Component Green(int text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#006400"));
+                .color(TextColor.fromHexString("#008d00"));
     }
     public static Component Lime(int text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#32CD32"));
     }
-    public static Component LightBlue(int text){
+    public static Component Cyan(int text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#00FFFF"));
     }
@@ -134,7 +138,7 @@ public class Message {
     }
     public static Component Blue(int text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#0000FF"));
+                .color(TextColor.fromHexString("#1750AC"));
     }
     public static Component Orange(int text){
         return Component.text(text)
@@ -146,7 +150,7 @@ public class Message {
     }
     public static Component Pink(int text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#FFc0cb"));
+                .color(TextColor.fromHexString("#ffb0cf"));
     }
     public static Component Bronze(int text){
         return Component.text(text)
@@ -159,6 +163,10 @@ public class Message {
     public static Component Gray(int text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#808080"));
+    }
+    public static Component LightGray(int text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#cdcdcd"));
     }
     public static Component White(int text){
         return Component.text(text)
@@ -173,17 +181,17 @@ public class Message {
     }
     public static Component Red(float text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#FF0000"));
+                .color(TextColor.fromHexString("#cd0000"));
     }
     public static Component Green(float text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#006400"));
+                .color(TextColor.fromHexString("#008d00"));
     }
     public static Component Lime(float text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#32CD32"));
     }
-    public static Component LightBlue(float text){
+    public static Component Cyan(float text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#00FFFF"));
     }
@@ -193,7 +201,7 @@ public class Message {
     }
     public static Component Blue(float text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#0000FF"));
+                .color(TextColor.fromHexString("#1750AC"));
     }
     public static Component Orange(float text){
         return Component.text(text)
@@ -205,7 +213,7 @@ public class Message {
     }
     public static Component Pink(float text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#FFc0cb"));
+                .color(TextColor.fromHexString("#ffb0cf"));
     }
     public static Component Bronze(float text){
         return Component.text(text)
@@ -218,6 +226,10 @@ public class Message {
     public static Component Gray(float text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#808080"));
+    }
+    public static Component LightGray(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#cdcdcd"));
     }
     public static Component White(float text){
         return Component.text(text)
@@ -232,17 +244,17 @@ public class Message {
     }
     public static Component Red(double text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#FF0000"));
+                .color(TextColor.fromHexString("#cd0000"));
     }
     public static Component Green(double text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#006400"));
+                .color(TextColor.fromHexString("#008d00"));
     }
     public static Component Lime(double text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#32CD32"));
     }
-    public static Component LightBlue(double text){
+    public static Component Cyan(double text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#00FFFF"));
     }
@@ -252,7 +264,7 @@ public class Message {
     }
     public static Component Blue(double text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#0000FF"));
+                .color(TextColor.fromHexString("#1750AC"));
     }
     public static Component Orange(double text){
         return Component.text(text)
@@ -264,7 +276,7 @@ public class Message {
     }
     public static Component Pink(double text){
         return Component.text(text)
-                .color(TextColor.fromHexString("#FFc0cb"));
+                .color(TextColor.fromHexString("#ffb0cf"));
     }
     public static Component Bronze(double text){
         return Component.text(text)
@@ -277,6 +289,10 @@ public class Message {
     public static Component Gray(double text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#808080"));
+    }
+    public static Component LightGray(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#cdcdcd"));
     }
     public static Component White(double text){
         return Component.text(text)
